@@ -11,7 +11,7 @@ request("https://api.nordvpn.com/server", { json: true }, (err, response, body) 
     .map(x => x.ip_address)
     .join("\n");
 
-  fs.writeFile("file.txt", ips, e => {
+  fs.writeFile("vpn-whitelist-se.txt", ips, e => {
     if (e) console.error(e);
   });
 });
