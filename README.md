@@ -16,4 +16,6 @@ This tool will fetch all Swedish server addresses from NordVPN, copy them to the
 
 #### Usage
 
-sudo bash ./install-sh \<yourrouterusername>@\<yourrouteraddress>
+```bash
+sudo bash ./install.sh <yourrouterusername>@<yourrouteraddress>
+```
