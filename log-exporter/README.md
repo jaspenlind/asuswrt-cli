@@ -12,7 +12,7 @@ The purpose of this tool is to export and analyze logs from the Skynet firewall.
 
 Create a .ssh.js file and fill out your ssh settings for the Skynet host.
 
-```json
+```js
 module.exports = {
   host: "",
   username: "",
