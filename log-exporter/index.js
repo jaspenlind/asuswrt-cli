@@ -1,6 +1,5 @@
-const node_ssh = require("node-ssh");
+const client = require("../ssh");
 const dateFormat = require("./dateFormat");
-const settings = require("./.ssh");
 
 const getDeviceBlockSummary = async (ssh, date) => {
   return ssh.execCommand(`sh /jffs/scripts/device-blocks ${date}`, {});
@@ -17,13 +16,8 @@ const handleHelp = () => {
 
 (async () => {
   handleHelp();
-  let ssh;
 
-  try {
-    ssh = new node_ssh();
-
-    await ssh.connect(settings);
-
+  client.use(async ssh => {
     let date = process.argv[2] || dateFormat.yesterday();
 
     console.log(`Device blocks ${date}`);
@@ -37,11 +31,5 @@ const handleHelp = () => {
       console.error(result.stderr);
       return;
     }
-  } catch (e) {
-    throw e;
-  } finally {
-    if (ssh) {
-      ssh.dispose();
-    }
-  }
+  });
 })();

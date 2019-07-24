@@ -1,7 +1,7 @@
 arg="$1"
 
 ShowHelp() {
-    echo "usage: router                       | Opens an ssh connection to the router"
+    echo "usage: router terminal              | Opens an ssh connection to the router"
     echo "       router firewall [args...]    | Executes the Skynet firewall with the given arguments"
     echo "       router log show              | Displays the stats log"
     echo "       router log show inbound      | Displays top 5 inbound blocked connections"
@@ -14,7 +14,12 @@ if [ "$arg" = "-h" ] || [ "$arg" = "--help" ]; then
     ShowHelp
 fi
 
-. .ssh.config
+if [ ! -f ssh/.ssh.config ]; then
+    echo Missing ssh/.ssh.config
+    exit 0
+fi
+
+. ssh/.ssh.config
 
 transfer=0
 upload=0
@@ -23,7 +28,9 @@ firewall="$scripts/firewall"
 stats="$scripts/firewall-stats"
 tmp="/tmp/mnt/USB/skynet"
 
-if [ "$1" = "log" ] && [ "$2" = "show" ] && [ "$3" = "inbound" ]; then
+if [ "$1" = "terminal" ]; then
+    arg=""
+elif [ "$1" = "log" ] && [ "$2" = "show" ] && [ "$3" = "inbound" ]; then
     arg="$stats top 5 INBOUND"
 elif [ "$1" = "log" ] && [ "$2" = "show" ] && [ "$3" = "outbound" ]; then
     arg="$stats top 5 OUTBOUND"
@@ -37,13 +44,15 @@ elif [ "$1" = "log" ] && [ "$2" = "transfer" ]; then
     transfer=1
     arg="$tmp/skynet.log"
 else
-    arg="$@"
+    #arg="$@"
+    ShowHelp
+    exit 0
 fi
 
 if [ "$upload" -eq 1 ]; then
-    scp -i $key $2 $host:$3
+    scp $2 $host:$3
 elif [ "$transfer" -eq 1 ]; then
-    scp -i $key $host:$arg .
+    scp $host:$arg .
 else
-    ssh -i $key $host $arg
+    ssh $username@$host $arg
 fi
