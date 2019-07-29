@@ -1,26 +1,23 @@
 # router
 
-Proxy script for executing Skynet commands on the router
+ASUS Router CLI
 
 ## Requirements
 
-Create a `.ssh.config` file in this directory
+- SSH
+- An ASUS Router with [Skynet](https://github.com/Adamm00/IPSet_ASUS) installed
 
-```bash
-host="yourrouteraddress"
-username="usernameonyourrouter"
-privateKey="/path/to/your/ssh/key/file"
-passphrase="passphraseofyourprivatekey"
-```
+```Shell
+Usage: router options [parameters]
+                     terminal                Opens an ssh connection to the router
+                     firewall                Executes the Skynet firewall with the given arguments
+                     firewall log            Copy or analyze firewall log
+                     writeconf               Generate SSH config
 
-## Usage
-
-```bash
-usage: router terminal              | Opens an ssh connection to the router
-       router firewall [args...]    | Executes the Skynet firewall with the given arguments
-       router log show              | Displays the stats log
-       router log show inbound      | Displays top 5 inbound blocked connections
-       router log show outbound     | Displays top 5 outbound blocked connections
-       router log transfer          | Transfers the debug log
-       router upload <src> <dest>   | Transfers the given source file to the given destination
+Help options:
+ -h                                          Show this help screen about the tool
+ -h terminal                                 Terminal options
+ -h firewall                                 Firewall options
+ -h firewall log                             Firewall logging options
+ -h net                                      Network options
 ```
