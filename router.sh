@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 DisplayUsage() {
     echo "Usage: $(basename "$0") options [parameters]
                      terminal                Opens an ssh connection to the router
@@ -16,10 +18,21 @@ Help options:
 "
 }
 
+script_path="$(readlink "$0")"
+
+if [ -z "$script_path" ]; then script_path="$0"; fi
+
+root_dir="$(
+    cd "$(dirname "$script_path")" || exit
+    pwd -P
+)"
+
+cd "$root_dir" || exit
+
 args="$*"
 command="$1"
 
-. utils/regex.sh
+source "utils/regex.sh"
 
 if [ "$args" == "-h" ]; then
     DisplayUsage
@@ -30,7 +43,7 @@ elif echo "$args" | Is_Help; then
     command="$2"
 fi
 
-command=./commands/router-$command.sh
+command="commands/router-$command.sh"
 
 if [ ! -f "$command" ]; then
     DisplayUsage
