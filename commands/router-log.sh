@@ -1,6 +1,6 @@
+#!/bin/bash
 . utils/regex.sh
 . ssh/ssh.sh
-
 if echo "$1" | Is_Help; then
     echo "Usage: $(basename "$0") [parameters]
  Examples:
@@ -62,8 +62,6 @@ grep '.*OUTBOUND' tmp/current.log | grep -oE ' SRC=[0-9,\.]*' | cut -c 6- | sort
     ipaddr="$(echo "$statdata" | awk '{print $2}')"
     localname="$(grep -F "$ipaddr " tmp/dnsmasq.leases | awk '{print $4}')"
     if [ -z "$localname" ]; then
-        localname="$model"
-    elif [ -z "$localname" ]; then
         localname="Unknown"
     fi
     printf "%-10s | %-16s | %-60s\\n" "${hits}x" "${ipaddr}" "$localname"

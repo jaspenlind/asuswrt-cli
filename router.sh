@@ -16,7 +16,7 @@ Help options:
 "
 }
 
-args="$@"
+args="$*"
 command="$1"
 
 . utils/regex.sh
@@ -32,9 +32,9 @@ fi
 
 command=./commands/router-$command.sh
 
-if [ ! -f $command ]; then
+if [ ! -f "$command" ]; then
     DisplayUsage
     exit 1
 fi
 
-$command $args
+$command "$@"

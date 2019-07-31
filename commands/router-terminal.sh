@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [ "$1" == "-h" ]; then
     echo "Usage: $(basename "$0") terminal [parameters]
  where parameters = any bash command"
@@ -6,4 +8,4 @@ fi
 
 . ssh/ssh.sh
 
-Execute ${@:2}
+Execute "${@:2}"

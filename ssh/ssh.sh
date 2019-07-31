@@ -1,3 +1,5 @@
+#!/bin/sh
+
 config=ssh/.ssh.config
 
 if [ ! -f $config ]; then
@@ -5,16 +7,16 @@ if [ ! -f $config ]; then
     exit 1
 fi
 
-. $config
+. ssh/.ssh.config
 
 Execute() {
-    ssh -i $privateKey $username@$host $@
+    ssh -i "$privateKey" "$username@$host" "$@"
 }
 
 Download() {
-    scp -i $privateKey $username@$host:$1 $2
+    scp -i "$privateKey" "$username@$host:$1" "$2"
 }
 
 Upload() {
-    scp -i $privateKey $1 $username@$host:$2
+    scp -i "$privateKey" "$1" "$username@$host:$2"
 }

@@ -1,0 +1,2 @@
+brew "npm"
+brew "shellcheck"
