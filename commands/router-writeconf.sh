@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ssh/ssh.sh
+config="ssh/.ssh.config"
 
 if [ -f "$config" ]; then
     read -r -p "A SSH config file ($config) does already exist. Overwrite? [y/N]: " overwrite

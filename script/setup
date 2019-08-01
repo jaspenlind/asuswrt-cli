@@ -40,4 +40,8 @@ if [ -f "$config_backup" ]; then
     rm "$config_backup"
 fi
 
+if [ ! -f "$config" ] 2>/dev/null; then
+    router writeconf
+fi
+
 echo "Setup done"
