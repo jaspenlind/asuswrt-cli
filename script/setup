@@ -41,7 +41,7 @@ if [ -f "$config_backup" ]; then
 fi
 
 if [ ! -f "$config" ] 2>/dev/null; then
-    router writeconf
+    "$install_dir/commands/router-writeconf.sh"
 fi
 
 echo "Setup done"

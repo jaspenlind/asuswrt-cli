@@ -36,6 +36,7 @@ New SSH configuration was written to $config"
 
 if [ ! -f "$privateKey" ]; then
     read -r -p "The key file $privateKey does not exist. Do you want to create it? [Y/n]" createprivkey
+    createprivkey=${createprivkey:-y}
 
     if [ "$createprivkey" == 'y' ]; then
         ssh-keygen -f "$privateKey" -P "$passphrase"
