@@ -2,7 +2,7 @@
 PACKAGE_DIR=$(mktemp -d)
 cd "$PACKAGE_DIR" || exit
 
-echo "aswrt-cli installer"
+echo "asuswrt-cli installer"
 echo "==================="
 echo "==> Downloading package…"
 curl -sSL --fail "https://github.com/jaspenlind/asuswrt-cli/archive/master.zip" -o "setup.zip"

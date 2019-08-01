@@ -1,4 +1,5 @@
 #!/bin/bash
+export LC_CTYPE=C
 
 config="ssh/.ssh.config"
 
@@ -16,12 +17,13 @@ username=${username:-admin}
 read -r -p 'SSH private key file [~/.ssh/id_rsa]: ' privateKey
 privateKey=${privateKey:-${HOME}/.ssh/id_rsa}
 
-if [ ! -f "$privateKey" ]; then
-    echo "The key file $privateKey does not exist. Generate a new key with ssh-keygen"
-fi
+passphrase=$(
+    tr </dev/urandom -dc '12345!@#$%qwertQWERTasdfgASDFGzxcvbZXCVB' | head -c8
+    echo ""
+)
 
-read -r -sp "Passphrase for private key: " passphrase
-
+read -r -sp "Passphrase for private key [$passphrase]: " passphraseinput
+passphrase=${passphraseinput:-$passphrase}
 {
     echo host=\""$host\""
     echo username=\""$username\""
@@ -31,3 +33,25 @@ read -r -sp "Passphrase for private key: " passphrase
 
 echo "
 New SSH configuration was written to $config"
+
+if [ ! -f "$privateKey" ]; then
+    read -r -p "The key file $privateKey does not exist. Do you want to create it? [Y/n]" createprivkey
+
+    if [ "$createprivkey" == 'y' ]; then
+        ssh-keygen -f "$privateKey" -P "$passphrase"
+    fi
+fi
+
+read -r -p "Do you want to add the key $privateKey to the SSH Agent? [Y/n]" addtoagent
+addtoagent=${addtoagent:-y}
+
+if [ $addtoagent == 'y' ]; then
+    ssh-add $privateKey
+fi
+
+echo "The access the router from the CLI you need to enable SSH."
+echo "1. Open the router web interface and go to Administration / System"
+echo "2. Set Enable SSH to 'LAN Only'"
+echo "3. Set Allow Password Login to 'No'"
+echo "4. Paste to content of '$privateKey.pub' in the Authorized Keys field"
+echo "5. Click Apply"
