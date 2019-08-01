@@ -3,7 +3,6 @@
 # script/test: Run test suite for application. Optionally pass in a path to an
 #              individual test file to run a single test.
 
-
 set -e
 
 cd "$(dirname "$0")/.."
@@ -34,5 +33,7 @@ echo "==> Running tests…"
 if [ -n "$1" ]; then
   shellcheck "$1"
 else
-  shellcheck -x script/* commands/* router.sh ssh/ssh.sh
+  shellcheck -x ./*.sh script/* commands/* ssh/ssh.sh
 fi
+
+echo "Testing done"

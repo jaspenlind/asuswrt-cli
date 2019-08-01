@@ -13,9 +13,12 @@ script/bootstrap
 
 symlink="/usr/local/bin/router"
 
+echo "==> Removing previous installation files…"
+
 if [ -f "$symlink" ]; then rm -rf "$symlink"; fi
 if [ -d "$install_dir" ]; then rm -rf "$install_dir"; fi
 
+echo "==> Copying files…"
 mkdir "$install_dir"
 cp router.sh "$install_dir"
 cp -R commands "$install_dir"
@@ -24,4 +27,4 @@ cp -R ssh "$install_dir"
 chmod +x "$install_dir/router.sh"
 ln -s "$install_dir/router.sh" $symlink
 
-echo "==> App is now ready to go!"
+echo "Setup done"

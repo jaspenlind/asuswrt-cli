@@ -1,6 +1,22 @@
 #!/bin/bash
+###########################################################################
+#                                                                         #
+#                    _ \   _ \  |   |__ __| ____|  _ \                    #
+#                   |   | |   | |   |   |   __|   |   |                   #
+#                   __ <  |   | |   |   |   |     __ <                    #
+#                  _| \_\\___/ \___/   _|  _____|_| \_\                   #
+#                                                                         #
+#                            ___| |    _ _|                               #
+#                           |     |      |                                #
+#                           |     |      |                                #
+#                          \____|_____|___|                               #
+#                                                                         #
+#                   ASUS Router Command Line Interface                    #
+#                https://github.com/jaspenlind/asuswrt-cli                #
+###########################################################################
 
-set -e
+clear
+sed -n '2,17p' "$0"
 
 DisplayUsage() {
     echo "Usage: $(basename "$0") options [parameters]
@@ -42,6 +58,8 @@ elif echo "$args" | Is_Log; then
 elif echo "$args" | Is_Help; then
     command="$2"
 fi
+
+if [ -z "$command" ]; then command="terminal"; fi
 
 command="commands/router-$command.sh"
 

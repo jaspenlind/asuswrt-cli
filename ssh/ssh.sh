@@ -1,6 +1,6 @@
 #!/bin/sh
 
-config=ssh/.ssh.config
+config="ssh/.ssh.config"
 
 if [ ! -f $config ]; then
     echo Missing $config
