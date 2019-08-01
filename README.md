@@ -1,11 +1,6 @@
-# router
+# asuswrt-cli
 
 ASUS Router CLI
-
-## Requirements
-
-- SSH
-- An ASUS Router with [Skynet](https://github.com/Adamm00/IPSet_ASUS) installed
 
 ```Shell
 Usage: router options [parameters]
