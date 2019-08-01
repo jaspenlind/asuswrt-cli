@@ -5,7 +5,7 @@ ASUS Router CLI
 ## Installation
 
 ```shell
-curl -s "https://raw.githubusercontent.com/jaspenlind/asuswrt-cli/master/install.sh" -o "router-install" && chmod 755 install && sh router-install
+curl -s "https://raw.githubusercontent.com/jaspenlind/asuswrt-cli/master/install.sh" -o "router-install" && chmod 755 router-install && sh router-install
 ```
 
 ## Usage
