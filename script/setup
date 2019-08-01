@@ -4,6 +4,8 @@
 #               back to the initial first unused state.
 
 install_dir="${HOME}/.router"
+config="$install_dir/ssh/.ssh.config"
+config_backup=""
 
 set -e
 
@@ -12,6 +14,12 @@ cd "$(dirname "$0")/.."
 script/bootstrap
 
 symlink="/usr/local/bin/router"
+
+if [ -f "$config" ]; then
+    echo "==> Backing up existing configuration…"
+    config_backup="$(mktemp)"
+    cp "$config" "$config_backup"
+fi
 
 echo "==> Removing previous installation files…"
 
@@ -26,5 +34,10 @@ cp -R utils "$install_dir"
 cp -R ssh "$install_dir"
 chmod +x "$install_dir/router.sh"
 ln -s "$install_dir/router.sh" $symlink
+
+if [ -f "$config_backup" ]; then
+    cp "$config_backup" "$config"
+    rm "$config_backup"
+fi
 
 echo "Setup done"

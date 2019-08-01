@@ -2,6 +2,14 @@
 
 ASUS Router CLI
 
+## Installation
+
+```shell
+curl -sSL "https://raw.githubusercontent.com/jaspenlind/asuswrt-cli/master/install.sh" | bash
+```
+
+## Usage
+
 ```Shell
 Usage: router options [parameters]
                      terminal                Opens an ssh connection to the router
