@@ -3,6 +3,9 @@ export LC_CTYPE=C
 
 config="ssh/.ssh.config"
 
+# Ensure stdin is emptied before start reading user input (https://superuser.com/a/276550)
+read -t 1 -n 10000 discard
+
 if [ -f "$config" ]; then
     read -r -p "A SSH config file ($config) does already exist. Overwrite? [y/N]: " overwrite
     if [ "$overwrite" != "y" ]; then
