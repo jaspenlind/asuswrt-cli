@@ -13,6 +13,8 @@ cd "$(dirname "$0")/.."
 
 script/bootstrap
 
+tools/nordvpn-server-lister/script/setup
+
 symlink="/usr/local/bin/router"
 
 if [ -f "$config" ]; then
@@ -30,6 +32,7 @@ echo "==> Copying files…"
 mkdir "$install_dir"
 cp router.sh "$install_dir"
 cp -R commands "$install_dir"
+cp -R tools "$install_dir"
 cp -R utils "$install_dir"
 cp -R ssh "$install_dir"
 chmod +x "$install_dir/router.sh"

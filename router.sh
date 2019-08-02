@@ -23,6 +23,7 @@ DisplayUsage() {
                      terminal                Opens an ssh connection to the router
                      firewall                Executes the Skynet firewall with the given arguments
                      firewall log            Copy or analyze firewall log
+                     firewall vpn whitelist  Whitelists vpn servers
                      writeconf               Generate SSH config
                      
 Help options:
@@ -54,7 +55,9 @@ if [ "$args" == "-h" ]; then
     DisplayUsage
     exit 0
 elif echo "$args" | Is_Log; then
-    command=log
+    command="log"
+elif echo "$args" | grep -qE 'firewall vpn whitelist'; then
+    command="firewall-whitelist"
 elif echo "$args" | Is_Help; then
     command="$2"
 fi

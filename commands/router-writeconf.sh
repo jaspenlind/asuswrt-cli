@@ -46,8 +46,8 @@ fi
 read -r -p "Do you want to add the key $privateKey to the SSH Agent? [Y/n]" addtoagent
 addtoagent=${addtoagent:-y}
 
-if [ $addtoagent == 'y' ]; then
-    ssh-add $privateKey
+if [ "$addtoagent" == "y" ]; then
+    ssh-add "$privateKey"
 fi
 
 echo "The access the router from the CLI you need to enable SSH."

@@ -9,4 +9,4 @@ if echo "$1" | Is_Help; then
     exit 0
 fi
 
-Execute sh /jffs/scripts/firewall "${@:2}"
+Execute sh /jffs/scripts/firewall "${*/firewall/}"
