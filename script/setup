@@ -13,7 +13,7 @@ cd "$(dirname "$0")/.."
 
 script/bootstrap
 
-tools/nordvpn-server-lister/script/setup
+find tools -name setup -exec sh {} \;
 
 symlink="/usr/local/bin/router"
 

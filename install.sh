@@ -10,7 +10,7 @@ curl -sSL "https://git.io/dependency-installer.sh" | bash
 echo "==> Downloading packages…"
 git clone "https://github.com/jaspenlind/asuswrt-cli.git"
 mkdir "asuswrt-cli/tools"
-git clone "https://github.com/jaspenlind/nordvpn-server-lister.git" "asuswrt/tools/nordvpn-server-lister"
+git clone "https://github.com/jaspenlind/nordvpn-server-lister.git" "asuswrt-cli/tools/nordvpn-server-lister"
 
 echo "==> Starting setup…"
 
