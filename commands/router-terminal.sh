@@ -1,11 +1,21 @@
 #!/bin/bash
+. utils/stringformat.sh
 
 if [ "$1" == "-h" ]; then
-    echo "Usage: $(basename "$0") terminal [parameters]
- where parameters = any bash command"
+    printf "Usage: router %b [parameters]
+  where parameters = any command
+" "$(italic "terminal")"
     exit 0
 fi
 
 . ssh/ssh.sh
 
-Execute "${@:2}"
+args="${*:2}"
+
+printf "Opening terminal\n\n"
+
+if [ -n "$args" ]; then
+    printf "Executing \"%s\"\n\n" "$args"
+fi
+
+Execute "$args"

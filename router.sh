@@ -20,20 +20,22 @@ sed -n '2,17p' "$0"
 
 DisplayUsage() {
     echo "Usage: $(basename "$0") options [parameters]
-                     terminal                Opens an ssh connection to the router
-                     job                     Handle cron jobs
-                     firewall                Executes the Skynet firewall with the given arguments
-                     firewall log            Copy or analyze firewall log
-                     firewall vpn whitelist  Whitelists vpn servers
-                     writeconf               Generate SSH config
+  terminal                Opens an ssh connection to the router
+  job                     Handle cron jobs
+  lan                     Handle lan options
+  firewall                Executes the Skynet firewall with the given arguments
+  firewall log            Copy or analyze firewall log
+  firewall vpn whitelist  Whitelists vpn servers
+  writeconf               Generate SSH config
                      
 Help options:
- -h        	                             Show this help screen about the tool
- -h terminal                                 Terminal options
- -h job                                      Job options
- -h firewall                                 Firewall options
- -h firewall log                             Firewall logging options
- -h net                                      Network options
+ -h                        Show this help screen about the tool
+ -h terminal               Terminal options
+ -h job                    Job options
+ -h lan                    LAN options
+ -h firewall               Firewall options
+ -h firewall log           Firewall logging options
+ -h net                    Network options
 "
 }
 

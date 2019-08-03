@@ -2,7 +2,7 @@
 # shellcheck disable=SC2039
 . ssh/ssh.sh
 . utils/stringformat.sh
-. utils/texts.sh
+. utils/messages.sh
 . utils/regex.sh
 
 Usage() {
@@ -23,7 +23,7 @@ Add() {
     local definition=$2
 
     if [ -z "$id" ] || [ -z "$definition" ]; then
-        printf Illegal_Params
+        Illegal_Params
         Usage
         exit 1
     fi
@@ -35,7 +35,7 @@ Delete() {
     local id=$1
 
     if [ -z "$id" ]; then
-        printf Illegal_Params
+        Illegal_Params
         Usage
         exit 1
     fi
@@ -65,7 +65,7 @@ case "$2" in
     printf "\nJob successfully deleted\n"
     ;;
 "*")
-    printf Illegal_Option
+    Illegal_Option
     Usage
     exit 1
     ;;
