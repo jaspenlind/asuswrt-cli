@@ -18,7 +18,7 @@ read -r -p 'SSH private key file [~/.ssh/id_rsa]: ' privateKey
 privateKey=${privateKey:-${HOME}/.ssh/id_rsa}
 
 passphrase=$(
-    tr </dev/urandom -dc '12345!@#$%qwertQWERTasdfgASDFGzxcvbZXCVB' | head -c8
+    tr </dev/urandom -dc '12345!@#$%qwertQWERTasdfgASDFGzxcvbZXCVB' | head -c16
     echo ""
 )
 
