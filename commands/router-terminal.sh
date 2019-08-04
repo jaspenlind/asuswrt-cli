@@ -1,10 +1,10 @@
 #!/bin/bash
+. utils/messages.sh
+. utils/regex.sh
 . utils/stringformat.sh
 
-if [ "$1" == "-h" ]; then
-    printf "Usage: router %b [parameters]
-  where parameters = any command
-" "$(italic "terminal")"
+if echo "$1" | Is_Help; then
+    Usage "terminal" " where parameters = any router command"
     exit 0
 fi
 

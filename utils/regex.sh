@@ -1,3 +1,4 @@
+#!/bin/bash
 Is_Help() {
     grep -qE '^-h'
 }
@@ -7,12 +8,12 @@ Is_Log() {
 }
 
 Is_Date() {
-    read d
+    read -r d
     date -j -f "%Y-%m-%d" "$d" >/dev/null 2>&1
 }
 
 To_LogDate() {
-    read d
+    read -r d
     date -j -f "%Y-%m-%d" "$d" +%b\ %e
 }
 

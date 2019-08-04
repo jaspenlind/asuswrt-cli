@@ -1,5 +1,12 @@
 #!/bin/bash
 export LC_CTYPE=C
+. utils/regex.sh
+. utils/messages.sh
+
+if echo "$1" | Is_Help; then
+    Usage "writeconf" "Command for configuring SSH setup for the router"
+    exit 0
+fi
 
 config="ssh/.ssh.config"
 

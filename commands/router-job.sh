@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # shellcheck disable=SC2039
 . ssh/ssh.sh
 . utils/stringformat.sh
@@ -24,7 +24,7 @@ Add() {
 
     if [ -z "$id" ] || [ -z "$definition" ]; then
         Illegal_Params
-        Usage
+        Usage "$@"
         exit 1
     fi
     printf "Adding job with id ""%s""\n\n" "$id"
@@ -36,7 +36,7 @@ Delete() {
 
     if [ -z "$id" ]; then
         Illegal_Params
-        Usage
+        Usage "$@"
         exit 1
     fi
     printf "Deleting job with id ""%s""\n\n" "$id"
@@ -46,7 +46,7 @@ Delete() {
 CRU="cru"
 
 if echo "$1" | Is_Help; then
-    Usage
+    Usage "$@"
     exit 0
 fi
 

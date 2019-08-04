@@ -14,7 +14,7 @@ Usage() {
 }
 
 if echo "$1" | Is_Help; then
-    Usage
+    Usage "$@"
     exit 0
 fi
 
@@ -27,5 +27,5 @@ if [ "$2" = "hosts" ]; then
     ListHosts
 else
     Illegal_Option
-    Usage
+    Usage "$@"
 fi

@@ -33,7 +33,7 @@ echo "==> Running tests…"
 if [ -n "$1" ]; then
   shellcheck "$1"
 else
-  shellcheck -x ./*.sh script/* commands/* ssh/ssh.sh
+  shellcheck -x ./*.sh script/* commands/* utils/*.sh ssh/ssh.sh
 fi
 
 echo "Testing done"
