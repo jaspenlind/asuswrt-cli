@@ -1,22 +1,27 @@
 #!/bin/bash
 set -e
+
 readonly PACKAGE_DIR="$(mktemp -d)"
 cd "$PACKAGE_DIR"
 
-echo "asuswrt-cli installer"
-echo "====================="
+main() {
+  echo "asuswrt-cli installer"
+  echo "====================="
 
-curl -sSL "https://git.io/dependency-installer.sh" | bash
+  curl -sSL "https://git.io/dependency-installer.sh" | bash
 
-echo "==> Downloading packages…"
-git clone "https://github.com/jaspenlind/asuswrt-cli.git"
-mkdir "asuswrt-cli/tools"
-git clone "https://github.com/jaspenlind/nordvpn-server-lister.git" "$PACKAGE_DIR/asuswrt-cli/tools/nordvpn-server-lister"
+  echo "==> Downloading packages…"
+  git clone "https://github.com/jaspenlind/asuswrt-cli.git"
+  mkdir "$PACKAGE_DIR/asuswrt-cli/tools"
+  git clone "https://github.com/jaspenlind/nordvpn-server-lister.git" "$PACKAGE_DIR/asuswrt-cli/tools/nordvpn-server-lister"
 
-echo "==> Starting setup…"
+  echo "==> Starting setup…"
 
-"$PACKAGE_DIR/asuswrt-cli/script/setup"
+  "$PACKAGE_DIR/asuswrt-cli/script/setup"
 
-rm -rf "$PACKAGE_DIR"
+  rm -rf "$PACKAGE_DIR"
 
-echo "Type \""router -h\"" to start using the cli"
+  echo "Type \""router -h\"" to start using the cli"
+}
+
+main

@@ -15,6 +15,8 @@
 #                https://github.com/jaspenlind/asuswrt-cli                #
 ###########################################################################
 
+set -e
+
 clear
 sed -n '2,17p' "$0"
 
@@ -25,7 +27,7 @@ if [ -z "$script_path" ]; then script_path="$0"; fi
 export readonly ROOT_PATH
 
 ROOT_PATH="$(
-  cd "$(dirname "$script_path")" || exit
+  cd "$(dirname "$script_path")"
   pwd -P
 )"
 
