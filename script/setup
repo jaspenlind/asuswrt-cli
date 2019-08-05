@@ -3,48 +3,54 @@
 # script/setup: Set up application for the first time after cloning, or set it
 #               back to the initial first unused state.
 
-install_dir="${HOME}/.router"
-config="$install_dir/ssh/.ssh.config"
-config_backup=""
-
 set -e
 
-cd "$(dirname "$0")/.."
+readonly SETUP_PATH="$(
+  cd "$(dirname "$0")/.."
+  pwd -P
+)"
 
-script/bootstrap
+readonly TARGET_DIR="${HOME}/.router"
+readonly SSH_CONFIG="$TARGET_DIR/ssh/.ssh.config"
+readonly COMMAND_SHORTCUT="/usr/local/bin/router"
 
-find tools -name setup -exec sh {} \;
+config_backup=""
 
-symlink="/usr/local/bin/router"
+"$SETUP_PATH/script/bootstrap"
 
-if [ -f "$config" ]; then
-    echo "==> Backing up existing configuration…"
-    config_backup="$(mktemp)"
-    cp "$config" "$config_backup"
+if [ -d "$SETUP_PATH/tools" ]; then
+  echo "==> Setting of tools"
+  find "$SETUP_PATH/tools" -name setup -exec sh {} \;
+fi
+
+if [ -f "$SSH_CONFIG" ]; then
+  echo "==> Backing up existing configuration…"
+  config_backup="$(mktemp)"
+  cp "$SSH_CONFIG" "$config_backup"
 fi
 
 echo "==> Removing previous installation files…"
 
-if [ -f "$symlink" ]; then rm -rf "$symlink"; fi
-if [ -d "$install_dir" ]; then rm -rf "$install_dir"; fi
+if [ -f "$COMMAND_SHORTCUT" ]; then rm -rf "$COMMAND_SHORTCUT"; fi
+if [ -d "$TARGET_DIR" ]; then rm -rf "$TARGET_DIR"; fi
 
 echo "==> Copying files…"
-mkdir "$install_dir"
-cp router.sh "$install_dir"
-cp -R commands "$install_dir"
-cp -R tools "$install_dir"
-cp -R utils "$install_dir"
-cp -R ssh "$install_dir"
-chmod +x "$install_dir/router.sh"
-ln -s "$install_dir/router.sh" $symlink
+mkdir "$TARGET_DIR"
+cp "$SETUP_PATH/router.sh" "$TARGET_DIR"
+cp -R "$SETUP_PATH/commands" "$TARGET_DIR"
+[[ -d "$SETUP_PATH/tools" ]] && cp -R "$SETUP_PATH/tools" "$TARGET_DIR"
+cp -R "$SETUP_PATH/utils" "$TARGET_DIR"
+cp -R "$SETUP_PATH/ssh" "$TARGET_DIR"
+chmod +x "$TARGET_DIR/router.sh"
+ln -s "$TARGET_DIR/router.sh" $COMMAND_SHORTCUT
 
 if [ -f "$config_backup" ]; then
-    cp "$config_backup" "$config"
-    rm "$config_backup"
+  cp "$config_backup" "$SSH_CONFIG"
+  rm "$config_backup"
 fi
 
-if [ ! -f "$config" ] 2>/dev/null; then
-    router writeconf
+if [ ! -f "$SSH_CONFIG" ] 2>/dev/null; then
+  router writeconf
 fi
 
 echo "Setup done"

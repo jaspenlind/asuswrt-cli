@@ -1,13 +1,13 @@
 #!/bin/sh
 
-config="ssh/.ssh.config"
+config="$ROOT_PATH/ssh/.ssh.config"
 
 if [ ! -f $config ]; then
     echo Missing $config
     exit 1
 fi
 
-. ssh/.ssh.config
+. "$ROOT_PATH/ssh/.ssh.config"
 
 Execute() {
     ssh -i "$privateKey" "$username@$host" "$@"

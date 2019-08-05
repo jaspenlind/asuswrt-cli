@@ -1,5 +1,5 @@
 #!/bin/bash
-. utils/stringformat.sh
+. "$ROOT_PATH/utils/stringformat.sh"
 
 Illegal_Params() { printf "Illegal parameters\n\n"; }
 Illegal_Option() { printf "Illegal option\n\n"; }

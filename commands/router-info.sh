@@ -1,10 +1,10 @@
 #!/bin/bash
 set -e
 
-. ssh/ssh.sh
-. utils/regex.sh
-. utils/stringformat.sh
-. utils/messages.sh
+. "$ROOT_PATH/ssh/ssh.sh"
+. "$ROOT_PATH/utils/regex.sh"
+. "$ROOT_PATH/utils/stringformat.sh"
+. "$ROOT_PATH/utils/messages.sh"
 
 commands=(
     "uptime!!uptime!!Display router uptime"
@@ -17,12 +17,12 @@ commands=(
 
 command="${1:-2}"
 
-Help() {
+help() {
     Usage "info" "${commands[@]}"
 }
 
 if echo "$command" | Is_Help; then
-    Help
+    help
     exit 0
 fi
 
@@ -32,6 +32,6 @@ if [ -n "$command" ]; then
     Execute "$command"
 else
     Illegal_Option
-    Help
+    help
     Exit 1
 fi

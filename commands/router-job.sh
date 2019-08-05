@@ -1,11 +1,14 @@
 #!/bin/bash
 # shellcheck disable=SC2039
-. ssh/ssh.sh
-. utils/stringformat.sh
-. utils/messages.sh
-. utils/regex.sh
 
-Usage() {
+readonly CRU="cru"
+
+. "$ROOT_PATH/ssh/ssh.sh"
+. "$ROOT_PATH/utils/stringformat.sh"
+. "$ROOT_PATH/utils/messages.sh"
+. "$ROOT_PATH/utils/regex.sh"
+
+help() {
     printf "Usage: router %b options [parameters]
  list                                                    List all jobs
  add <unique id> <\"min hour day month week command\">     Create a new job
@@ -13,25 +16,25 @@ Usage() {
 " "$(italic "job")"
 }
 
-List() {
+list() {
     printf "Listing cron jobs\n\n"
     Execute "$CRU l"
 }
 
-Add() {
+add() {
     local id=$1
     local definition=$2
 
     if [ -z "$id" ] || [ -z "$definition" ]; then
         Illegal_Params
-        Usage "$@"
+        help "$@"
         exit 1
     fi
     printf "Adding job with id ""%s""\n\n" "$id"
     Execute "$CRU a $id \"$definition\""
 }
 
-Delete() {
+delete() {
     local id=$1
 
     if [ -z "$id" ]; then
@@ -43,30 +46,28 @@ Delete() {
     Execute "$CRU d $id"
 }
 
-CRU="cru"
-
-if echo "$1" | Is_Help; then
-    Usage "$@"
+if [ -z "$2" ] || echo "$1" | Is_Help; then
+    help "$@"
     exit 0
 fi
 
 case "$2" in
 "list")
-    List
+    list
     ;;
 "add")
-    Add "$3" "$4"
-    List
+    add "$3" "$4"
+    list
     printf "\nJob successfully added\n"
     ;;
 "delete")
-    Delete "$3"
-    List
+    delete "$3"
+    list
     printf "\nJob successfully deleted\n"
     ;;
 "*")
     Illegal_Option
-    Usage
+    help
     exit 1
     ;;
 esac

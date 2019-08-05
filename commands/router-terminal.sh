@@ -1,14 +1,13 @@
 #!/bin/bash
-. utils/messages.sh
-. utils/regex.sh
-. utils/stringformat.sh
+. "$ROOT_PATH/utils/messages.sh"
+. "$ROOT_PATH/utils/regex.sh"
+. "$ROOT_PATH/utils/stringformat.sh"
+. "$ROOT_PATH/ssh/ssh.sh"
 
 if echo "$1" | Is_Help; then
     Usage "terminal" " where parameters = any router command"
     exit 0
 fi
-
-. ssh/ssh.sh
 
 args="${*:2}"
 

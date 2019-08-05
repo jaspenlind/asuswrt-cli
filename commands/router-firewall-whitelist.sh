@@ -1,8 +1,8 @@
 #!/bin/bash
-. ssh/ssh.sh
+. "$ROOT_PATH/ssh/ssh.sh"
 
 vpn_whitelist="vpnwhitelist.txt"
-vpn_src="tmp/$vpn_whitelist"
+vpn_src="$ROOT_PATH/tmp/$vpn_whitelist"
 vpn_dst="/tmp/home/root/$vpn_whitelist"
 
 if [ ! -d "tmp" ]; then mkdir "tmp"; fi
