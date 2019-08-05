@@ -30,10 +30,13 @@ fi
 
 echo "==> Running tests…"
 
+# shellcheck disable=SC2002
+exclusions=$(cat ./.shellcheck-ignore | tr -d " \t\n\r")
+
 if [ -n "$1" ]; then
   shellcheck "$1"
 else
-  shellcheck -x ./*.sh script/* commands/* utils/*.sh ssh/ssh.sh
+  shellcheck -x ./*.sh script/* commands/* utils/*.sh ssh/ssh.sh -e "$exclusions"
 fi
 
 echo "Testing done"

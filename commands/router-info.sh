@@ -33,5 +33,5 @@ if [ -n "$command" ]; then
 else
     Illegal_Option
     help
-    Exit 1
+    exit 1
 fi

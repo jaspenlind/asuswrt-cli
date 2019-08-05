@@ -1,20 +1,21 @@
 #!/bin/bash
-PACKAGE_DIR=$(mktemp -d)
-cd "$PACKAGE_DIR" || exit
+set -e
+readonly PACKAGE_DIR="$(mktemp -d)"
+cd "$PACKAGE_DIR"
 
 echo "asuswrt-cli installer"
 echo "====================="
-echo "==> Installing package manager…"
+
 curl -sSL "https://git.io/dependency-installer.sh" | bash
 
 echo "==> Downloading packages…"
 git clone "https://github.com/jaspenlind/asuswrt-cli.git"
 mkdir "asuswrt-cli/tools"
-git clone "https://github.com/jaspenlind/nordvpn-server-lister.git" "asuswrt-cli/tools/nordvpn-server-lister"
+git clone "https://github.com/jaspenlind/nordvpn-server-lister.git" "$PACKAGE_DIR/asuswrt-cli/tools/nordvpn-server-lister"
 
 echo "==> Starting setup…"
 
-asuswrt-cli/script/setup
+"$PACKAGE_DIR/asuswrt-cli/script/setup"
 
 rm -rf "$PACKAGE_DIR"
 

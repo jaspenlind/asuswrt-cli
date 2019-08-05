@@ -22,8 +22,10 @@ script_path="$(readlink "$0")"
 
 if [ -z "$script_path" ]; then script_path="$0"; fi
 
-export readonly ROOT_PATH="$(
-  cd "$(dirname "$script_path")"
+export readonly ROOT_PATH
+
+ROOT_PATH="$(
+  cd "$(dirname "$script_path")" || exit
   pwd -P
 )"
 
@@ -55,7 +57,7 @@ Help options:
 args="$*"
 command="$1"
 
-if [ "$args" == "-h" ]; then
+if [ "$args" = "-h" ]; then
   help
   exit 0
 elif echo "$args" | Is_Log; then

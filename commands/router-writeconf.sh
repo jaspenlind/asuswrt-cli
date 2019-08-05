@@ -1,7 +1,7 @@
 #!/bin/bash
 export LC_CTYPE=C
-. utils/regex.sh
-. utils/messages.sh
+. "$ROOT_PATH/utils/regex.sh"
+. "$ROOT_PATH/utils/messages.sh"
 
 if echo "$1" | Is_Help; then
   Usage "writeconf" "Command for configuring SSH setup for the router"

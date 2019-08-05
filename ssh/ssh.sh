@@ -1,13 +1,14 @@
 #!/bin/sh
+# shellcheck disable=SC2154
 
-config="$ROOT_PATH/ssh/.ssh.config"
+readonly CONFIG_FILE="$ROOT_PATH/ssh/.ssh.config"
 
-if [ ! -f $config ]; then
-    echo Missing $config
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo "Missing $CONFIG_FILE"
     exit 1
 fi
 
-. "$ROOT_PATH/ssh/.ssh.config"
+. "$CONFIG_FILE"
 
 Execute() {
     ssh -i "$privateKey" "$username@$host" "$@"

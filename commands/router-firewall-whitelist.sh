@@ -7,7 +7,7 @@ vpn_dst="/tmp/home/root/$vpn_whitelist"
 
 if [ ! -d "tmp" ]; then mkdir "tmp"; fi
 
-sh ./tools/nordvpn-server-lister/script/run -filter.flag=\"SE\" -output=ip_address -raw >$vpn_src
+sh ./tools/nordvpn-server-lister/script/run -filter.flag=\"SE\" -output=ip_address -raw >"$vpn_src"
 
 Upload "$vpn_src" "$vpn_dst"
 
