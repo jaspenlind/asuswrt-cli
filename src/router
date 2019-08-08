@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+//
+/*
+###########################################################################
+#                                                                         #
+#                    _ \   _ \  |   |__ __| ____|  _ \                    #
+#                   |   | |   | |   |   |   __|   |   |                   #
+#                   __ <  |   | |   |   |   |     __ <                    #
+#                  _| \_\\___/ \___/   _|  _____|_| \_\                   #
+#                                                                         #
+#                            ___| |    _ _|                               #
+#                           |     |      |                                #
+#                           |     |      |                                #
+#                          \____|_____|___|                               #
+#                                                                         #
+#                   ASUS Router Command Line Interface                    #
+#                https://github.com/jaspenlind/asuswrt-cli                #
+###########################################################################
+*/
+
+const sh = require("shelljs");
+const help = require("./common/help");
+const args = process.argv.slice(2);
+const parser = require("./common/commandParser");
+
+const commands = parser(args);
+
+const command = commands.find(args);
+
+if (commands.isDebug) {
+  console.log(command);
+} else {
+  console.clear();
+  sh.exec(`sed -n '4,18p' "${process.argv[1]}"`);
+}
+
+if (commands.isHelp) {
+  help(command);
+} else if (command && command.run) {
+  command.run(command.args);
+} else {
+  console.error("Unknown command");
+  help(command);
+  process.exit(1);
+}

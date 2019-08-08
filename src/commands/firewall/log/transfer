@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+const ssh = require("../../../common/ssh");
+
+const transfer = () => {
+  //TODO
+  ssh.execute("cat /tmp/mnt/USB/skynet/skynet.log");
+};
+
+module.exports = {
+  run: transfer,
+  description: "Transfers the firewall log"
+};

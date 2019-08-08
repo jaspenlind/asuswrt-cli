@@ -1,6 +1,4 @@
-tmp
-ssh/.ssh.config
-vpn-whitelist-se.txt
+src/common/ssh/.ssh.config.json
 .DS_STORE
 
 # Logs

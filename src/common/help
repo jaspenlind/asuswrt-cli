@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+const expander = require("./commandParser");
+const chalk = require("chalk");
+
+const toColumns = (strings, width = 40) => {
+  let all = [...(strings || [])];
+  let left = all.slice(0, -1).map(x => x.padEnd(width, " "));
+  let right = all.slice(all.length - 1);
+
+  return left.concat(right).join(" ");
+};
+
+const help = command => {
+  const isRootHelp = !command;
+  const commandName = isRootHelp ? "" : chalk.bold(` ${command.fullname}`);
+
+  let lines = [`Usage: router${commandName} options [parameters]`];
+
+  const commands = isRootHelp ? expander().all() : command.subCommands || [command];
+
+  for (command of commands) {
+    let line = toColumns([` ${command.helpname || command.name}`, command.description]);
+    lines.push(line);
+  }
+
+  if (isRootHelp || commands.filter(x => x.subCommands && x.subCommands.length > 0)) {
+    lines.push("");
+    lines.push("Help options:");
+    lines.push(toColumns([" -h", "Show this help screen about the tool"]));
+
+    for (command of commands) {
+      let line = toColumns([` -h ${command.name}`, `${command.name} options`]);
+      lines.push(line);
+    }
+  }
+  console.log(lines.join("\n"));
+};
+
+module.exports = exports = help;

@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+const ssh = require("../../common/ssh");
+
+const uptime = () => {
+  ssh.execute(["uptime"]);
+};
+
+module.exports = {
+  run: uptime,
+  description: "Display router uptime"
+};

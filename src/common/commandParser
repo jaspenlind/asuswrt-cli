@@ -1,0 +1,100 @@
+#!/usr/bin/env node
+const path = require("path");
+const fs = require("fs");
+
+const ROOT_COMMAND_FOLDER = "../commands";
+
+const isHelp = args => {
+  return (args.length > 0 && args[0] == "-h") || false;
+};
+
+const isDebug = args => args.filter(x => x === "--debug").length > 0;
+
+const getCommandArgs = args => {
+  const commandArgs = getMostSpecificCommand(args);
+
+  return args.length > commandArgs.length ? args.slice(commandArgs.length) : [];
+};
+
+const buildCommandPath = args => path.join(__dirname, [ROOT_COMMAND_FOLDER].concat(args).join("/"));
+
+const getMostSpecificCommand = args => {
+  const commandPath = buildCommandPath(args);
+
+  return fs.existsSync(commandPath) ? args : getMostSpecificCommand(args.slice(0, -1));
+};
+
+const getCommandName = args => {
+  const hit = getMostSpecificCommand(args);
+  const commandPath = buildCommandPath(hit);
+
+  const parts = commandPath.split("/");
+
+  return parts[parts.length - 1];
+};
+
+const getCommandFullName = args => {
+  return (getMostSpecificCommand(args) || []).join(" ");
+};
+
+const getAvailableCommands = () => {
+  const commandPath = buildCommandPath();
+
+  return fs.readdirSync(commandPath).map(x => command([x]));
+};
+
+const command = args => {
+  const hit = getMostSpecificCommand(args);
+  let commandPath = buildCommandPath(hit);
+
+  if (fs.existsSync(commandPath)) {
+    const isDirectory = fs.lstatSync(commandPath).isDirectory();
+
+    let cmd;
+    let subCommands;
+    if (isDirectory && fs.existsSync(`${commandPath}/index`)) {
+      cmd = require(`${commandPath}/index`);
+      subCommands = fs
+        .readdirSync(commandPath)
+        .filter(x => {
+          const stat = fs.lstatSync(`${commandPath}/${x}`);
+
+          return x !== "index" && stat.isFile();
+        })
+        .map(x => command(args.concat([x])));
+    } else if (isDirectory == false) {
+      cmd = require(commandPath);
+    }
+
+    return (
+      cmd && {
+        name: getCommandName(args),
+        fullname: getCommandFullName(args),
+        run: cmd.run,
+        helpname: cmd.helpname,
+        description: cmd.description,
+        subCommands
+      }
+    );
+  }
+};
+
+const commandParser = args => {
+  this.args = [...(args || [])];
+  this.cleanArgs = this.args.filter(x => x !== "-h" && x !== "--debug");
+
+  return {
+    all: () => getAvailableCommands(),
+    find: () => {
+      const cmd = command(this.cleanArgs);
+      if (cmd) {
+        cmd.args = getCommandArgs(this.cleanArgs);
+      }
+      return cmd;
+    },
+    isHelp: isHelp(this.args),
+    isDebug: isDebug(this.args)
+  };
+};
+
+module.exports = commandParser;
