@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-const sh = require("shelljs");
-const config = require("./.ssh.config.json");
 
-const execute = args => {
+import sh from "shelljs";
+import config from "./.ssh.config.json";
+
+const execute = (args: any): void => {
   const ssh = `ssh -i  '${config.privateKey}' ${config.username}@${config.host}`;
-  //console.log(args);
   if (!Array.isArray(args)) {
     sh.exec(`osascript -e 'tell app "Terminal"
     activate
@@ -15,6 +15,4 @@ const execute = args => {
   }
 };
 
-module.exports = {
-  execute: execute
-};
+export default { execute };

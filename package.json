@@ -1,0 +1,48 @@
+{
+  "name": "asuswrt-cli",
+  "version": "1.0.0",
+  "description": "ASUS Router CLI",
+  "main": "src/router.ts",
+  "scripts": {
+    "start": "node dist/router.js",
+    "start-ts": "ts-node src/router.ts",
+    "check-lint": "prettier --list-different '**/*.{js,ts}' && eslint '**/*.{js,ts}' --quiet",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "npm run watch-ts",
+    "watch-ts": "tsc -w",
+    "build": "npm run build-ts && npm run lint",
+    "build-ts": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    ""
+  ],
+  "author": "jaspenlind",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "extensionless": "^0.1.0",
+    "shelljs": "^0.8.3",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.1",
+    "@types/shelljs": "^0.8.5",
+    "@types/winston": "^2.4.4",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-config-airbnb-typescript": "^4.0.1",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.0",
+    "prettier": "^1.18.2",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
+  }
+}

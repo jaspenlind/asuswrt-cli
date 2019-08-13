@@ -1,45 +1,48 @@
 #!/usr/bin/env node
-//
-/*
+import chalk from "chalk";
+import help from "./common/help";
+import parser from "./common/commandParser";
+import moduleLogger from "./common/logger";
+
+/* eslint-disable no-useless-escape */
+const header = `
 ###########################################################################
 #                                                                         #
-#                    _ \   _ \  |   |__ __| ____|  _ \                    #
+#                    _ \\   _ \\  |   |__ __| ____|  _ \\                    #
 #                   |   | |   | |   |   |   __|   |   |                   #
 #                   __ <  |   | |   |   |   |     __ <                    #
-#                  _| \_\\___/ \___/   _|  _____|_| \_\                   #
+#                  _| \\_\\\\___/ \\___/   _|  _____|_| \\_\\                   #
 #                                                                         #
 #                            ___| |    _ _|                               #
 #                           |     |      |                                #
 #                           |     |      |                                #
-#                          \____|_____|___|                               #
+#                          \\____|_____|___|                               #
 #                                                                         #
 #                   ASUS Router Command Line Interface                    #
 #                https://github.com/jaspenlind/asuswrt-cli                #
-###########################################################################
-*/
+###########################################################################`;
+/* eslint-enable no-useless-escape */
 
-const sh = require("shelljs");
-const help = require("./common/help");
+const logger = moduleLogger.createLogger(module);
+
 const args = process.argv.slice(2);
-const parser = require("./common/commandParser");
 
 const commands = parser(args);
 
 const command = commands.find(args);
 
-if (commands.isDebug) {
-  console.log(command);
-} else {
-  console.clear();
-  sh.exec(`sed -n '4,18p' "${process.argv[1]}"`);
-}
+logger.debug(undefined, { meta: { args, command } });
 
-if (commands.isHelp) {
+// if (!commands.isDebug) {
+//   console.clear();
+//   console.log(header);
+// }
+
+if (commands.isHelp || args.length < 1) {
   help(command);
 } else if (command && command.run) {
   command.run(command.args);
 } else {
-  console.error("Unknown command");
   help(command);
-  process.exit(1);
+  console.error(chalk.red("\nUnknown command\n"));
 }

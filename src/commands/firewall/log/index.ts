@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-module.exports = {
+export default {
   description: "Copy or analyze firewall log"
 };

@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-const ssh = require("../../common/ssh");
+import ssh from "../../common/ssh";
 
-const firewall = args => {
+const firewall = (args: string[]): void => {
   ssh.execute(`sh /jffs/scripts/firewall ${args.join(" ")}`);
 };
 
-module.exports = {
+export default {
   run: firewall,
   helpname: "firewall [args]",
   description: "Opens the Skynet firewall with the passes args (optional)"
