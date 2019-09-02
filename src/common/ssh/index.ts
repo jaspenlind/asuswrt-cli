@@ -1,7 +1,18 @@
 #!/usr/bin/env node
-
+import { existsSync, readFileSync } from "fs";
 import sh from "shelljs";
-import config from "./.ssh.config.json";
+
+const sshConfigFile = "./ssh.config.json";
+
+let config = {
+  host: "n/a",
+  username: "n/a",
+  privateKey: "n/a"
+};
+
+if (existsSync(sshConfigFile)) {
+  config = JSON.parse(readFileSync(sshConfigFile, "utf8"));
+}
 
 const execute = (args: any): void => {
   const ssh = `ssh -i  '${config.privateKey}' ${config.username}@${config.host}`;
