@@ -5,7 +5,7 @@
   "main": "src/router.ts",
   "types": "dist/index.d.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "ts-node src/router.ts",
     "commit": "npm run lint-check && npm run test",
     "push": "npm run test",
     "pretest": "npm run lint && npm run build",

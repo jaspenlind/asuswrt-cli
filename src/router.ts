@@ -29,24 +29,30 @@ const args = process.argv.slice(2);
 
 const commands = parser(...args);
 
+console.log(commands.all().map(x => x.name));
+
 const command = commands.find(args);
 
 logger.debug(undefined, { meta: { args, command } });
 
-// if (!commands.isDebug) {
-//   console.clear();
-//   console.log(header);
-// }
+if (!commands.isDebug) {
+  console.clear();
+  console.log(header);
+}
 
 if (commands.isHelp || args.length < 1) {
-  if (command !== null) {
+  if (command) {
     help(command);
+  } else {
+    help();
   }
 } else if (command !== null && command.run) {
   command.run(command.args);
 } else {
-  if (command !== null) {
+  if (command) {
     help(command);
+  } else {
+    help();
   }
   console.error(chalk.red("\nUnknown command\n"));
 }

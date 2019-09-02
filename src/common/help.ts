@@ -14,9 +14,12 @@ const toColumns = (strings: string[], width = 40): string => {
   return left.concat(right).join(" ");
 };
 
-const help = (command: Command): void => {
-  const isRootHelp = !command;
-  const commandName = isRootHelp ? "" : chalk.bold(` ${command.fullname}`);
+const help = (command?: Command): void => {
+  const isRootHelp = command === undefined;
+  const guardCheckedCommand = command as Command;
+  const commandName = isRootHelp
+    ? ""
+    : chalk.bold(` ${guardCheckedCommand.fullname}`);
   logger.debug(undefined, {
     functionName: "help",
     meta: { isRootHelp, commandName }
@@ -25,7 +28,7 @@ const help = (command: Command): void => {
 
   const commands = isRootHelp
     ? parser().all()
-    : command.subCommands || [command];
+    : guardCheckedCommand.subCommands || [command];
 
   commands.forEach(x =>
     lines.push(toColumns([` ${x.helpname || x.name}`, x.description]))
