@@ -2,6 +2,12 @@
 
 ASUS Router CLI
 
+[![Build Status](https://travis-ci.com/jaspenlind/asuswrt-cli.svg?branch=node)](https://travis-ci.com/jaspenlind/asuswrt-cli)
+![GitHub top language](https://img.shields.io/github/languages/top/jaspenlind/asuswrt-cli?branch=node)
+[![Coverage Status](https://coveralls.io/repos/jaspenlind/asuswrt-cli/badge.svg?branch=node)](https://coveralls.io/r/jaspenlind/asuswrt-cli?branch=node)
+![David](https://david-dm.org/jaspenlind/asuswrt-cli.svg)
+![GitHub](https://img.shields.io/github/license/jaspenlind/asuswrt-cli)
+
 ## Usage
 
 ```Shell
