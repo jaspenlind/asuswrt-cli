@@ -3,24 +3,41 @@
   "plugins": ["prettier"],
   "extends": [
     "airbnb-base",
-    "prettier",
-    "prettier/@typescript-eslint",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "plugin:jest/recommended",
+    "plugin:prettier/recommended",
+    "prettier",
+    "prettier/@typescript-eslint"
   ],
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
+  "overrides": [
+    {
+      "env": {
+        "jest": true
+      },
+      "files": ["**/*.test.ts"],
+      "plugins": ["jest"]
+    }
+  ],
   "rules": {
     "prettier/prettier": "error",
     "semi": "off",
-    "@typescript-eslint/semi": ["error"],
+    "@typescript-eslint/semi": ["off"],
     "quotes": ["error", "double"],
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/indent": "2",
-    "no-console": "off"
+    "no-console": "off",
+    "indent": "off",
+    "prefer-template": "warn",
+    "@typescript-eslint/indent": ["error", 2],
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "off",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error"
   },
   "settings": {
     "import/resolver": {
@@ -30,5 +47,3 @@
     }
   }
 }
-
-// "lint": "prettier --write '**/*.{js,ts}' && eslint --fix '**/*.{js,ts}'",

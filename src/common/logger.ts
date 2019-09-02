@@ -12,7 +12,7 @@ const filterCategories = process.argv
   .filter(x => x.startsWith(CATEGORY_ARG))
   .map(x => x.substring(CATEGORY_ARG.length));
 
-const createCategory = (loggerName: string, functionName: string): string => {
+const createCategory = (loggerName: string, functionName = ""): string => {
   let category = loggerName;
 
   if (functionName) {
@@ -72,7 +72,7 @@ export interface Logger {
 
 export interface LogMethod {
   (
-    message: string,
+    message?: string,
     options?: {
       functionName?: string;
       meta?: any;
@@ -87,7 +87,7 @@ const createModuleLogger = (module: NodeModule): Logger => {
   });
 
   const log = (
-    name: string,
+    name: string | null,
     level: string,
     message: string,
     options: {
@@ -95,7 +95,7 @@ const createModuleLogger = (module: NodeModule): Logger => {
       meta?: any;
     } = {}
   ): void => {
-    const category = createCategory(name, options.functionName);
+    const category = createCategory(name || "", options.functionName);
 
     const categoryShouldBeLogged =
       filterCategories.length === 0 ||
@@ -116,18 +116,18 @@ const createModuleLogger = (module: NodeModule): Logger => {
 
   const logger = {
     name: moduleName,
-    verbose: (message: string, options?: any) =>
-      log("verbose", message, options),
-    debug: (message: string, options?: any) =>
-      log(moduleName, "debug", message, options),
-    info: (message: string, options?: any) =>
-      log(moduleName, "info", message, options),
-    warn: (message: string, options?: any) =>
-      log(moduleName, "warn", message, options),
-    error: (message: string, options?: any) =>
-      log(moduleName, "error", message, options),
-    fatal: (message: string, options?: any) =>
-      log(moduleName, "fatal", message, options)
+    verbose: (message?: string, options?: any) =>
+      log(null, "verbose", message || "", options),
+    debug: (message?: string, options?: any) =>
+      log(moduleName, "debug", message || "", options),
+    info: (message?: string, options?: any) =>
+      log(moduleName, "info", message || "", options),
+    warn: (message?: string, options?: any) =>
+      log(moduleName, "warn", message || "", options),
+    error: (message?: string, options?: any) =>
+      log(moduleName, "error", message || "", options),
+    fatal: (message?: string, options?: any) =>
+      log(moduleName, "fatal", message || "", options)
   };
 
   logger.info(`Logger for module ${moduleName} created`, {

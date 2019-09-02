@@ -1,1 +1,2 @@
-export default (filePath: string): string => (filePath || "").split("/").pop();
+export default (filePath: string): string =>
+  ((filePath && filePath.split("/")) || []).pop() || "";

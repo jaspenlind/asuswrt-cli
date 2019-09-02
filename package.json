@@ -1,22 +1,29 @@
 {
   "name": "asuswrt-cli",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "ASUS Router CLI",
   "main": "src/router.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "start": "node dist/router.js",
-    "start-ts": "ts-node src/router.ts",
-    "check-lint": "prettier --list-different '**/*.{js,ts}' && eslint '**/*.{js,ts}' --quiet",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "npm run watch-ts",
-    "watch-ts": "tsc -w",
-    "build": "npm run build-ts && npm run lint",
-    "build-ts": "tsc"
+    "start": "ts-node src/index.ts",
+    "commit": "npm run lint-check && npm run test",
+    "push": "npm run test",
+    "pretest": "npm run lint && npm run build",
+    "lint": "eslint --ext .ts,.js ./",
+    "build": "tsc",
+    "clean": "rm -rf dist && rm -rf coverage",
+    "test": "npm run test-ci -- --forceExit --detectOpenHandles --coverage -t",
+    "test-ci": "jest --verbose",
+    "watch-test": "npm run test-ci -- --watchAll -t",
+    "prettier": "npm run prettier-base -- -c",
+    "prettier-base": "prettier --ignore-path .eslintignore '**/*.{js,ts}'",
+    "lint-check": "npm run prettier-base -- --list-different && npm run lint -- --quiet",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
+    "debug": "node --nolazy --inspect-brk=9229 node_modules/jest/bin/jest.js -i"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/jaspenlind/asuswrt-cli.git"
   },
   "keywords": [
     ""
@@ -24,25 +31,45 @@
   "author": "jaspenlind",
   "license": "MIT",
   "dependencies": {
+    "@types/shelljs": "^0.8.5",
     "chalk": "^2.4.2",
     "extensionless": "^0.1.0",
     "shelljs": "^0.8.3",
     "winston": "^3.2.1"
   },
   "devDependencies": {
-    "@types/node": "^12.7.1",
-    "@types/shelljs": "^0.8.5",
-    "@types/winston": "^2.4.4",
-    "@typescript-eslint/eslint-plugin": "^1.13.0",
-    "@typescript-eslint/parser": "^1.13.0",
-    "eslint": "^5.3.0",
-    "eslint-config-airbnb-base": "^13.2.0",
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
+    "@types/expect": "^1.20.4",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.2",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "coveralls": "^3.0.6",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-airbnb-typescript": "^4.0.1",
-    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-prettier": "^5.1.0",
     "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.15.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "expect": "^24.9.0",
+    "husky": "^3.0.4",
+    "jest": "^24.9.0",
+    "jest-extended": "^0.11.2",
+    "jest-matcher-utils": "^24.9.0",
     "prettier": "^1.18.2",
+    "ts-jest": "^24.0.2",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run commit",
+      "pre-push": "npm run push",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   }
 }

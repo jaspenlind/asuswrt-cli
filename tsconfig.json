@@ -3,16 +3,19 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es6",
+    "target": "es2019",
     "noImplicitAny": true,
+    "importHelpers": true,
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "resolveJsonModule": true,
+    "strict": true,
+    "declaration": true,
     "paths": {
-      "*": ["node_modules/*", "src/types/*"]
+      "*": ["../node_modules/*", "types/*"]
     }
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "test/**/*"]
 }

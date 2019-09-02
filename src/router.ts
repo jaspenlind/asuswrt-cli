@@ -27,7 +27,7 @@ const logger = moduleLogger.createLogger(module);
 
 const args = process.argv.slice(2);
 
-const commands = parser(args);
+const commands = parser(...args);
 
 const command = commands.find(args);
 
@@ -39,10 +39,14 @@ logger.debug(undefined, { meta: { args, command } });
 // }
 
 if (commands.isHelp || args.length < 1) {
-  help(command);
-} else if (command && command.run) {
+  if (command !== null) {
+    help(command);
+  }
+} else if (command !== null && command.run) {
   command.run(command.args);
 } else {
-  help(command);
+  if (command !== null) {
+    help(command);
+  }
   console.error(chalk.red("\nUnknown command\n"));
 }
