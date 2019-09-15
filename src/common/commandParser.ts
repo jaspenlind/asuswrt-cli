@@ -1,21 +1,22 @@
 #!/usr/bin/env node
-import { join } from "path";
-import { existsSync, lstatSync, readdirSync } from "fs";
+import flexi, { until } from "flexi-path";
+import {
+  FlexiPath,
+  WalkedPath,
+  Path,
+  PathType
+} from "flexi-path/dist/src/types";
 import extensionless from "extensionless";
-import Command from "../models/Command";
-import CommandParser from "../models/CommandParser";
+
+import { Command, CommandParser } from "../types";
 import moduleLogger from "./logger";
 
-const ROOT_COMMAND_FOLDER = "../commands";
+const rootCommandPath = flexi
+  .path(__dirname)
+  .parent(x => x.name === "src")
+  .append("commands/");
 
 const logger = moduleLogger.createLogger(module);
-
-const scriptExtension = () => {
-  const scriptName = process.argv[1];
-
-  return scriptName.substring(scriptName.length - 2);
-};
-const index = (): string => `index.${scriptExtension()}`;
 
 const isHelp = (...args: string[]): boolean => {
   return (args.length > 0 && args[0] === "-h") || false;
@@ -24,186 +25,97 @@ const isHelp = (...args: string[]): boolean => {
 const isDebug = (...args: string[]): boolean =>
   args.filter(x => x === "--debug").length > 0;
 
-const checkExists = (commandPath: string): boolean => {
-  const pathExists = existsSync(commandPath);
-  const pathWithExtExists = existsSync(`${commandPath}.${scriptExtension()}`);
-
-  logger.debug(undefined, {
-    functionName: checkExists.name,
-    meta: { commandPath, pathExists, pathWithExtExists }
+const mostSpecificCommand = (args: Path): WalkedPath<FlexiPath> => {
+  return flexi.walk.back(args, {
+    until: until.exists({ ignoreFileExtensions: true })
   });
-
-  return pathExists || pathWithExtExists;
 };
 
-const buildCommandPath = (...args: string[]): string => {
-  const commandPath = join(
-    __dirname,
-    [ROOT_COMMAND_FOLDER].concat(args).join("/")
-  );
+const commandName = (args: Path): string => {
+  const { result } = mostSpecificCommand(args);
 
-  logger.debug(undefined, {
-    functionName: buildCommandPath.name,
-    meta: { args, commandPath }
-  });
+  let { name } = result;
 
-  return commandPath;
-};
-
-const getMostSpecificCommand = (...args: string[]): string[] => {
-  const commandPath = buildCommandPath(...args);
-
-  const exists = checkExists(commandPath)
-    ? args
-    : getMostSpecificCommand(...args.slice(0, -1));
-
-  logger.debug(undefined, {
-    functionName: getMostSpecificCommand.name,
-    meta: { args, commandPath, exists }
-  });
-
-  return exists;
-};
-
-const getCommandArgs = (...args: string[]): string[] => {
-  const commandArgs = getMostSpecificCommand(...args);
-
-  return args.length > commandArgs.length ? args.slice(commandArgs.length) : [];
-};
-
-const getCommandName = (...args: string[]): string => {
-  const hit = getMostSpecificCommand(...args);
-  const commandPath = buildCommandPath(...hit);
-  const parts = commandPath.split("/");
-
-  return extensionless(parts[parts.length - 1]);
-};
-
-const getCommandFullName = (...args: string[]): string => {
-  return extensionless((getMostSpecificCommand(...args) || []).join(" "));
-};
-
-const createCommand = (
-  commandPath: string,
-  args: string[],
-  subCommands: Command[]
-): Command | null => {
-  if (!commandPath || !lstatSync(commandPath).isFile()) {
-    return null;
+  if (result.type() === PathType.File && result.name === "index") {
+    name = result.parent().name;
   }
 
-  // eslint-disable-next-line import/no-dynamic-require,global-require,@typescript-eslint/no-var-requires
-  const content = require(commandPath).default;
+  return extensionless(name);
+};
 
+const commandFullName = (args: Path): string => {
+  const { result } = mostSpecificCommand(args);
+
+  return result
+    .except(rootCommandPath)
+    .flatten()
+    .map(x => x.name)
+    .join(" ");
+};
+
+const requireContent = (path: FlexiPath): any | undefined => {
+  let modulePath: FlexiPath | undefined = path;
+  if (path.type() === PathType.Directory) {
+    modulePath = path.files().find(x => x.name === "index");
+  }
+
+  if (modulePath !== undefined) {
+    // eslint-disable-next-line import/no-dynamic-require,global-require,@typescript-eslint/no-var-requires
+    return require(modulePath.path).default;
+  }
+
+  return undefined;
+};
+
+const isCommand = (path: FlexiPath) => {
+  const { result } = mostSpecificCommand(path);
+
+  return (
+    result.type() === PathType.File ||
+    result.files().find(x => x.name === "index") !== undefined
+  );
+};
+
+const createCommand = (path: FlexiPath): Command => {
+  const { result, diff } = mostSpecificCommand(path);
+
+  const content = requireContent(result);
   return {
-    name: getCommandName(...args),
-    fullname: getCommandFullName(...args),
+    name: commandName(result),
+    fullname: commandFullName(result),
     run: content.run,
     helpname: content.helpname,
     description: content.description,
-    subCommands
+    args: diff.path.split(" "),
+    subCommands: result
+      .children()
+      .filter(x => isCommand(x))
+      .map(x => createCommand(x))
   };
 };
 
-const command = (...args: string[]): Command | null => {
-  const deepestCommand = getMostSpecificCommand(...args);
-  const commandPath = buildCommandPath(...deepestCommand);
-  const commandPathExists = checkExists(commandPath);
-  const isDirectory =
-    existsSync(commandPath) && lstatSync(commandPath).isDirectory();
-
-  logger.debug(undefined, {
-    functionName: command.name,
-    meta: { deepestCommand, commandPath, commandPathExists, isDirectory }
-  });
-
-  if (commandPathExists === false) {
-    return null;
-  }
-
-  let commandDefinition;
-  const subCommands: Command[] = [];
-
-  if (isDirectory === false) {
-    const extension = scriptExtension();
-    commandDefinition = commandPath;
-    if (commandDefinition && !commandDefinition.endsWith(extension)) {
-      commandDefinition = `${commandDefinition}.${extension}`;
-    }
-  } else if (isDirectory && checkExists(`${commandPath}/${index()}`)) {
-    commandDefinition = `${commandPath}/${index()}`;
-    readdirSync(commandPath)
-      .filter(x => {
-        const stat = lstatSync(`${commandPath}/${x}`);
-
-        return stat.isFile() && x !== index() && !x.endsWith(".map");
-      })
-      .forEach(x => {
-        const temp = command(...args.concat([extensionless(x)]));
-        if (temp !== null) {
-          subCommands.push(temp);
-        }
-      });
-  }
-
-  let result: Command | null = null;
-
-  if (commandDefinition !== undefined) {
-    if (checkExists(commandDefinition)) {
-      result = createCommand(commandDefinition, args, subCommands);
-    }
-  }
-  logger.debug(undefined, {
-    functionName: command.name,
-    meta: { commandDefinition, subCommands, result }
-  });
-
-  return result;
-};
-
-const getAvailableCommands = (): Command[] => {
-  const commandPath = buildCommandPath();
-
-  const commands: Command[] = [];
-
-  readdirSync(commandPath)
-    .filter(x => !/.*\.map$/.test(x))
-    .forEach(x => {
-      const temp = command(x);
-      if (temp !== null) {
-        commands.push(temp);
-      }
-    });
-
-  logger.debug(undefined, {
-    functionName: getAvailableCommands.name,
-    meta: { commandPath, commands }
-  });
-
-  return commands;
+const allCommands = (): Command[] => {
+  return rootCommandPath
+    .children()
+    .filter(x => isCommand(x))
+    .map(x => createCommand(x));
 };
 
 const withoutOptions = (...args: string[]): string[] =>
   args.filter(x => !x.startsWith("-"));
 
 const parse = (...args: string[]): Command | null => {
-  const result = command(...args);
+  const path = rootCommandPath.append(args);
 
-  if (result) {
-    result.args = getCommandArgs(...args);
-  }
-
-  logger.debug(undefined, { functionName: parse.name, meta: { args, result } });
-
-  return result;
+  return isCommand(path) ? createCommand(path) : null;
 };
 
 const commandParser = (...args: string[]): CommandParser => {
   const commandArgs = [...(args || [])];
-  const cleanArgs = withoutOptions(...args); // commandArgs.filter(x => !x.startsWith("-"));
+  const cleanArgs = withoutOptions(...args);
 
   return {
-    all: () => getAvailableCommands(),
+    all: () => allCommands(),
     find: () => parse(...cleanArgs),
     isHelp: isHelp(...commandArgs),
     isDebug: isDebug(...commandArgs)

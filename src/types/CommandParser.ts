@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import Command from "./Command";
+import { Command } from ".";
 
-export default interface CommandParser {
+export interface CommandParser {
   all(): Command[];
   find(args: string[]): Command | null;
   isHelp: boolean;

@@ -2,7 +2,8 @@
 import chalk from "chalk";
 import moduleLogger from "./logger";
 import parser from "./commandParser";
-import Command from "../models/Command";
+
+import { Command } from "../types";
 
 const logger = moduleLogger.createLogger(module);
 

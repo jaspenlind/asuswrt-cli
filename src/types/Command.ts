@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-export default interface Command {
+export interface Command {
   name: string;
   fullname: string;
   run: any;
