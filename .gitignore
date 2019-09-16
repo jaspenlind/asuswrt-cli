@@ -1,5 +1,6 @@
 dist
-src/common/ssh/.ssh.config.json
+src/lib/ssh/.ssh.config.json
+package
 .DS_STORE
 
 # Logs

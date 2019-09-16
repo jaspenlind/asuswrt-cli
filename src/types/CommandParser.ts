@@ -3,7 +3,7 @@ import { Command } from ".";
 
 export interface CommandParser {
   all(): Command[];
-  find(args: string[]): Command | null;
+  find(): Command | null;
   isHelp: boolean;
   isDebug: boolean;
 }

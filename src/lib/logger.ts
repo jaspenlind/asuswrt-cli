@@ -31,7 +31,7 @@ const createMeta = (meta: any): string => {
 };
 
 const rootLogger = createLogger({
-  level: isDebug ? "debug" : "info",
+  level: isDebug ? "debug" : "warn",
   format: combine(
     format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
     align(),

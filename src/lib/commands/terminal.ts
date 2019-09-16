@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import ssh from "../common/ssh";
+import ssh from "../ssh";
 
 const terminal = (args: string[]): void => {
-  ssh.execute(args);
+  ssh.executeInTerminal(args);
 };
 
 export default {

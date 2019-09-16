@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import ssh from "../../common/ssh";
+import ssh from "../../ssh";
 
 const commands = (): void => {
   ssh.execute("ls -1 /usr/bin/ | grep -v '^d'");

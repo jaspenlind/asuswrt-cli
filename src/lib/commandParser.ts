@@ -11,10 +11,7 @@ import extensionless from "extensionless";
 import { Command, CommandParser } from "../types";
 import moduleLogger from "./logger";
 
-const rootCommandPath = flexi
-  .path(__dirname)
-  .parent(x => x.name === "src")
-  .append("commands/");
+const rootCommandPath = flexi.path(__dirname).append("commands/");
 
 const logger = moduleLogger.createLogger(module);
 
@@ -25,11 +22,10 @@ const isHelp = (...args: string[]): boolean => {
 const isDebug = (...args: string[]): boolean =>
   args.filter(x => x === "--debug").length > 0;
 
-const mostSpecificCommand = (args: Path): WalkedPath<FlexiPath> => {
-  return flexi.walk.back(args, {
+const mostSpecificCommand = (args: Path): WalkedPath<FlexiPath> =>
+  flexi.walk.back(args, {
     until: until.exists({ ignoreFileExtensions: true })
   });
-};
 
 const commandName = (args: Path): string => {
   const { result } = mostSpecificCommand(args);
@@ -79,6 +75,8 @@ const isCommand = (path: FlexiPath) => {
 const createCommand = (path: FlexiPath): Command => {
   const { result, diff } = mostSpecificCommand(path);
 
+  const args = diff.isEmpty() ? [] : diff.path.split(" ");
+
   const content = requireContent(result);
   return {
     name: commandName(result),
@@ -86,7 +84,7 @@ const createCommand = (path: FlexiPath): Command => {
     run: content.run,
     helpname: content.helpname,
     description: content.description,
-    args: diff.path.split(" "),
+    args,
     subCommands: result
       .children()
       .filter(x => isCommand(x))
@@ -107,7 +105,9 @@ const withoutOptions = (...args: string[]): string[] =>
 const parse = (...args: string[]): Command | null => {
   const path = rootCommandPath.append(args);
 
-  return isCommand(path) ? createCommand(path) : null;
+  const command = isCommand(path) ? createCommand(path) : null;
+
+  return command;
 };
 
 const commandParser = (...args: string[]): CommandParser => {

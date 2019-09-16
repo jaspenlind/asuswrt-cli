@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import ssh from "../../common/ssh";
+import ssh from "../../ssh";
 
 const uptime = (): void => {
-  ssh.execute(["uptime"]);
+  ssh.execute("uptime");
 };
 
 export default {

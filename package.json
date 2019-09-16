@@ -1,11 +1,28 @@
 {
-  "name": "asuswrt-cli",
-  "version": "0.0.1",
+  "bin": {
+    "router": "dist/src/bin/router.js"
+  },
   "description": "ASUS Router CLI",
-  "main": "src/router.ts",
-  "types": "dist/index.d.ts",
+  "files": [
+    "dist/src/*"
+  ],
+  "keywords": [
+    "firewall",
+    "vpn",
+    "asuswrt",
+    "cli",
+    "tools"
+  ],
+  "main": "dist/src/bin/router.js",
+  "name": "asuswrt-cli",
+  "version": "0.0.1-beta.1",
+  "types": "dist/src/types/index.d.ts",
+  "repository": "github:jaspenlind/asuswrt-cli",
+  "readme": "https://github.com/jaspenlind/asuswrt-cli#readme",
+  "author": "jaspenlind",
+  "license": "MIT",
   "scripts": {
-    "start": "ts-node src/router.ts",
+    "start": "ts-node src/bin/router.ts",
     "commit": "npm run lint-check && npm run test",
     "push": "npm run test",
     "pretest": "npm run lint && npm run build",
@@ -21,15 +38,6 @@
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "debug": "node --nolazy --inspect-brk=9229 node_modules/jest/bin/jest.js -i"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jaspenlind/asuswrt-cli.git"
-  },
-  "keywords": [
-    ""
-  ],
-  "author": "jaspenlind",
-  "license": "MIT",
   "dependencies": {
     "@types/shelljs": "^0.8.5",
     "chalk": "^2.4.2",

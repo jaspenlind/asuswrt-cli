@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import chalk from "chalk";
-import help from "./common/help";
-import parser from "./common/commandParser";
-import moduleLogger from "./common/logger";
+import help from "./help";
+import parser from "./commandParser";
+import moduleLogger from "./logger";
 
 /* eslint-disable no-useless-escape */
 const header = `
@@ -23,36 +23,40 @@ const header = `
 ###########################################################################`;
 /* eslint-enable no-useless-escape */
 
-const logger = moduleLogger.createLogger(module);
+const cli = {
+  run: () => {
+    const logger = moduleLogger.createLogger(module);
 
-const args = process.argv.slice(2);
+    const args = process.argv.slice(2);
 
-const commands = parser(...args);
+    const commands = parser(...args);
 
-console.log(commands.all().map(x => x.name));
+    const command = commands.find();
 
-const command = commands.find(args);
+    logger.debug(undefined, { meta: { args, command } });
 
-logger.debug(undefined, { meta: { args, command } });
+    if (!commands.isDebug) {
+      console.clear();
+      console.log(header);
+    }
 
-if (!commands.isDebug) {
-  console.clear();
-  console.log(header);
-}
-
-if (commands.isHelp || args.length < 1) {
-  if (command) {
-    help(command);
-  } else {
-    help();
+    if (commands.isHelp || args.length < 1) {
+      if (command) {
+        help(command);
+      } else {
+        help();
+      }
+    } else if (command !== null && command.run) {
+      command.run(command.args);
+    } else {
+      if (command) {
+        help(command);
+      } else {
+        help();
+      }
+      console.error(chalk.red("\nUnknown command\n"));
+    }
   }
-} else if (command !== null && command.run) {
-  command.run(command.args);
-} else {
-  if (command) {
-    help(command);
-  } else {
-    help();
-  }
-  console.error(chalk.red("\nUnknown command\n"));
-}
+};
+
+export default cli;
