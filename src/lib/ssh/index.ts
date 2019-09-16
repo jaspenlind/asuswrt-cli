@@ -1,23 +1,25 @@
 #!/usr/bin/env node
-import { existsSync, readFileSync } from "fs";
-import { join } from "path";
-
 import sh from "shelljs";
 
-const getConfig = () => {
-  const sshConfigFile = join(__dirname, ".ssh.config.json");
+import flexi, { TextTransform } from "flexi-path";
 
-  let config = {
+import { SshConfig } from "../../types";
+
+const getConfig = (): SshConfig => {
+  const sshConfigFile = flexi.path({
+    basePath: __dirname,
+    path: ".ssh.config.json"
+  });
+
+  const emptyConfig = {
     host: "n/a",
     username: "n/a",
     privateKey: "n/a"
   };
 
-  if (existsSync(sshConfigFile)) {
-    config = JSON.parse(readFileSync(sshConfigFile, "utf8"));
-  }
-
-  return config;
+  return sshConfigFile.exists()
+    ? sshConfigFile.read({ transform: TextTransform.JSON })
+    : emptyConfig;
 };
 
 const execute = (...args: string[]): void => {

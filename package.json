@@ -39,9 +39,11 @@
     "debug": "node --nolazy --inspect-brk=9229 node_modules/jest/bin/jest.js -i"
   },
   "dependencies": {
+    "@types/promptly": "^3.0.0",
     "@types/shelljs": "^0.8.5",
     "chalk": "^2.4.2",
-    "flexi-path": "^0.1.2-beta.7",
+    "flexi-path": "^0.1.2-beta.8",
+    "promptly": "^3.0.3",
     "shelljs": "^0.8.3",
     "winston": "^3.2.1"
   },

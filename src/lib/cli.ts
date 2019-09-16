@@ -5,6 +5,7 @@ import help from "./help";
 import commandParser from "./commandParser";
 import moduleLogger from "./logger";
 import { Command } from "../types";
+import createConfig from "./ssh/createConfig";
 
 const cli = {
   run: () => {
@@ -18,6 +19,8 @@ const cli = {
       console.clear();
       console.log(header());
     }
+
+    // console.log(createConfig());
 
     const currentCommand = parser.find();
 
