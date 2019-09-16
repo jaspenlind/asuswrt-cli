@@ -41,8 +41,7 @@
   "dependencies": {
     "@types/shelljs": "^0.8.5",
     "chalk": "^2.4.2",
-    "extensionless": "^0.1.0",
-    "flexi-path": "^0.1.2-beta.3",
+    "flexi-path": "^0.1.2-beta.7",
     "shelljs": "^0.8.3",
     "winston": "^3.2.1"
   },

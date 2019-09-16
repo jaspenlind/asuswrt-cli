@@ -17,5 +17,5 @@ const firewall = (args: string[]): void => {
 export default {
   run: firewall,
   helpname: "firewall [args]",
-  description: "Opens the Skynet firewall with the passes args (optional)"
+  description: "Opens the Skynet firewall with (optional) arguments"
 };

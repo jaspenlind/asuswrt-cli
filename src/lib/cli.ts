@@ -1,27 +1,10 @@
 #!/usr/bin/env node
 import chalk from "chalk";
+import header from "../resources/header";
 import help from "./help";
-import parser from "./commandParser";
+import commandParser from "./commandParser";
 import moduleLogger from "./logger";
-
-/* eslint-disable no-useless-escape */
-const header = `
-###########################################################################
-#                                                                         #
-#                    _ \\   _ \\  |   |__ __| ____|  _ \\                    #
-#                   |   | |   | |   |   |   __|   |   |                   #
-#                   __ <  |   | |   |   |   |     __ <                    #
-#                  _| \\_\\\\___/ \\___/   _|  _____|_| \\_\\                   #
-#                                                                         #
-#                            ___| |    _ _|                               #
-#                           |     |      |                                #
-#                           |     |      |                                #
-#                          \\____|_____|___|                               #
-#                                                                         #
-#                   ASUS Router Command Line Interface                    #
-#                https://github.com/jaspenlind/asuswrt-cli                #
-###########################################################################`;
-/* eslint-enable no-useless-escape */
+import { Command } from "../types";
 
 const cli = {
   run: () => {
@@ -29,32 +12,32 @@ const cli = {
 
     const args = process.argv.slice(2);
 
-    const commands = parser(...args);
+    const parser = commandParser(...args);
 
-    const command = commands.find();
-
-    logger.debug(undefined, { meta: { args, command } });
-
-    if (!commands.isDebug) {
+    if (!parser.isDebug) {
       console.clear();
-      console.log(header);
+      console.log(header());
     }
 
-    if (commands.isHelp || args.length < 1) {
-      if (command) {
-        help(command);
-      } else {
-        help();
+    const currentCommand = parser.find();
+
+    const showHelp =
+      parser.isHelp || args.length === 0 || currentCommand === null;
+
+    const invalidCommand =
+      parser.stripOptions().length > 0 &&
+      (currentCommand === null || currentCommand.run === undefined);
+
+    logger.debug(undefined, { meta: { args, currentCommand } });
+
+    if (showHelp || invalidCommand) {
+      help(currentCommand);
+
+      if (invalidCommand) {
+        console.error(chalk.red("\nUnknown command\n"));
       }
-    } else if (command !== null && command.run) {
-      command.run(command.args);
     } else {
-      if (command) {
-        help(command);
-      } else {
-        help();
-      }
-      console.error(chalk.red("\nUnknown command\n"));
+      (currentCommand as Command).run();
     }
   }
 };

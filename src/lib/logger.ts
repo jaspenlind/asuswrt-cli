@@ -1,6 +1,6 @@
 import { createLogger, format, transports, addColors } from "winston";
-import extensionless from "extensionless";
-import pathless from "./pathless";
+
+import flexi from "flexi-path";
 
 const { combine, align, printf, colorize } = format;
 
@@ -31,7 +31,7 @@ const createMeta = (meta: any): string => {
 };
 
 const rootLogger = createLogger({
-  level: isDebug ? "debug" : "warn",
+  level: isDebug ? "debug" : "info",
   format: combine(
     format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
     align(),
@@ -81,7 +81,7 @@ export interface LogMethod {
 }
 
 const createModuleLogger = (module: NodeModule): Logger => {
-  const moduleName = extensionless(pathless(module.filename));
+  const moduleName = flexi.path(module.filename).name; // extensionless(pathless(module.filename));
   const moduleLogger = rootLogger.child({
     moduleName
   });

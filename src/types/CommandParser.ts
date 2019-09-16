@@ -6,4 +6,5 @@ export interface CommandParser {
   find(): Command | null;
   isHelp: boolean;
   isDebug: boolean;
+  stripOptions: () => string[];
 }

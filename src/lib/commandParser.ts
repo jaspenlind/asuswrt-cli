@@ -1,12 +1,5 @@
 #!/usr/bin/env node
-import flexi, { until } from "flexi-path";
-import {
-  FlexiPath,
-  WalkedPath,
-  Path,
-  PathType
-} from "flexi-path/dist/src/types";
-import extensionless from "extensionless";
+import flexi, { FlexiPath, WalkedPath, PathType, until } from "flexi-path";
 
 import { Command, CommandParser } from "../types";
 import moduleLogger from "./logger";
@@ -22,12 +15,12 @@ const isHelp = (...args: string[]): boolean => {
 const isDebug = (...args: string[]): boolean =>
   args.filter(x => x === "--debug").length > 0;
 
-const mostSpecificCommand = (args: Path): WalkedPath<FlexiPath> =>
+const mostSpecificCommand = (args: FlexiPath): WalkedPath<FlexiPath> =>
   flexi.walk.back(args, {
     until: until.exists({ ignoreFileExtensions: true })
   });
 
-const commandName = (args: Path): string => {
+const commandName = (args: FlexiPath): string => {
   const { result } = mostSpecificCommand(args);
 
   let { name } = result;
@@ -36,10 +29,10 @@ const commandName = (args: Path): string => {
     name = result.parent().name;
   }
 
-  return extensionless(name);
+  return name;
 };
 
-const commandFullName = (args: Path): string => {
+const commandFullName = (args: FlexiPath): string => {
   const { result } = mostSpecificCommand(args);
 
   return result
@@ -66,9 +59,13 @@ const requireContent = (path: FlexiPath): any | undefined => {
 const isCommand = (path: FlexiPath) => {
   const { result } = mostSpecificCommand(path);
 
+  const isFile = result.type() === PathType.File;
+  const dir = isFile ? result.parent() : result;
+
   return (
-    result.type() === PathType.File ||
-    result.files().find(x => x.name === "index") !== undefined
+    (isFile && result.exists()) ||
+    dir.files().find(x => x.name === "index" || x.name === result.name) !==
+      undefined
   );
 };
 
@@ -87,7 +84,7 @@ const createCommand = (path: FlexiPath): Command => {
     args,
     subCommands: result
       .children()
-      .filter(x => isCommand(x))
+      .filter(x => isCommand(x) && x.name !== "index")
       .map(x => createCommand(x))
   };
 };
@@ -118,7 +115,8 @@ const commandParser = (...args: string[]): CommandParser => {
     all: () => allCommands(),
     find: () => parse(...cleanArgs),
     isHelp: isHelp(...commandArgs),
-    isDebug: isDebug(...commandArgs)
+    isDebug: isDebug(...commandArgs),
+    stripOptions: () => cleanArgs
   };
 };
 

@@ -15,8 +15,8 @@ const toColumns = (strings: string[], width = 40): string => {
   return left.concat(right).join(" ");
 };
 
-const help = (command?: Command): void => {
-  const isRootHelp = command === undefined;
+const help = (command?: Command | null): void => {
+  const isRootHelp = !command;
   const guardCheckedCommand = command as Command;
   const commandName = isRootHelp
     ? ""
@@ -35,10 +35,7 @@ const help = (command?: Command): void => {
     lines.push(toColumns([` ${x.helpname || x.name}`, x.description]))
   );
 
-  if (
-    isRootHelp ||
-    commands.filter(x => x.subCommands && x.subCommands.length > 0)
-  ) {
+  if (isRootHelp || commands.filter(x => x.subCommands.length > 0)) {
     lines.push("");
     lines.push("Help options:");
     lines.push(toColumns([" -h", "Show this help screen about the tool"]));
