@@ -1,5 +1,5 @@
 dist
-src/lib/ssh/.ssh.config.json
+src/lib/ssh/config/.ssh.config.json
 package
 .DS_STORE
 

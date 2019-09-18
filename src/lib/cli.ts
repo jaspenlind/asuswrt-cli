@@ -5,7 +5,7 @@ import help from "./help";
 import commandParser from "./commandParser";
 import moduleLogger from "./logger";
 import { Command } from "../types";
-import createConfig from "./ssh/createConfig";
+import config from "./ssh/config";
 
 const cli = {
   run: () => {
@@ -19,9 +19,6 @@ const cli = {
       console.clear();
       console.log(header());
     }
-
-    // console.log(createConfig());
-
     const currentCommand = parser.find();
 
     const showHelp =
@@ -40,7 +37,9 @@ const cli = {
         console.error(chalk.red("\nUnknown command\n"));
       }
     } else {
-      (currentCommand as Command).run();
+      config.check().then(() => {
+        (currentCommand as Command).run();
+      });
     }
   }
 };

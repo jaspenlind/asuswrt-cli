@@ -45,6 +45,8 @@
     "flexi-path": "^0.1.2-beta.8",
     "promptly": "^3.0.3",
     "shelljs": "^0.8.3",
+    "ssh-agent": "^0.2.4",
+    "ssh-keygen": "^0.4.2",
     "winston": "^3.2.1"
   },
   "devDependencies": {

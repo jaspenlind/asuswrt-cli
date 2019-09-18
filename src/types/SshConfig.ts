@@ -1,5 +1,5 @@
 export interface SshConfig {
   host: string;
-  username: string;
+  userName: string;
   privateKey: string;
 }
