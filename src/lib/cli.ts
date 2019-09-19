@@ -37,9 +37,14 @@ const cli = {
         console.error(chalk.red("\nUnknown command\n"));
       }
     } else {
-      config.check().then(() => {
-        (currentCommand as Command).run();
-      });
+      config
+        .check()
+        .then(ok => {
+          if (ok) {
+            (currentCommand as Command).run();
+          }
+        })
+        .catch((err: Error) => console.log(chalk.red(err.message)));
     }
   }
 };

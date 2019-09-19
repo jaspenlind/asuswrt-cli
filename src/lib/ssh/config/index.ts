@@ -20,7 +20,7 @@ export const empty: SshConfig = {
   privateKey: "n/a"
 };
 
-export const exists = (): boolean => file.exists();
+export const exists = () => file.exists();
 
 export const get = (): SshConfig | null => {
   return exists() ? file.read({ transform: TextTransform.JSON }) : null;
@@ -28,8 +28,16 @@ export const get = (): SshConfig | null => {
 
 const jsonProperties = Object.keys(empty);
 
-export const set = (current: SshConfig): void => {
-  file = file.write(JSON.stringify(current, jsonProperties, 2));
+export const set = (current: SshConfig): Promise<SshConfig> => {
+  return new Promise<SshConfig>((resolve, reject) => {
+    try {
+      file = file.write(JSON.stringify(current, jsonProperties, 2));
+
+      resolve(get() || empty);
+    } catch (err) {
+      reject(err);
+    }
+  });
 };
 
 export default {

@@ -32,7 +32,7 @@
     "no-console": "off",
     "indent": "off",
     "prefer-template": "warn",
-    "@typescript-eslint/indent": ["error", 2],
+    "@typescript-eslint/indent": ["off"],
     "jest/no-disabled-tests": "warn",
     "jest/no-focused-tests": "error",
     "jest/no-identical-title": "off",

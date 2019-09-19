@@ -2,23 +2,25 @@
 
 export = ssh_keygen;
 
-declare interface KeyGenOptions {
-  location: string;
-  comment?: string;
-  password?: string;
-  read?: boolean;
-  force?: boolean;
-  destroy?: boolean;
-}
+declare namespace ssh_keygen {
+  interface KeyGenOptions {
+    location: string;
+    comment?: string;
+    password?: string;
+    read?: boolean;
+    force?: boolean;
+    destroy?: boolean;
+  }
 
-declare interface KeyGenCreationData {
-  key: string;
-  pubKey: string;
-}
+  interface KeyGenCreationData {
+    key: string;
+    pubKey: string;
+  }
 
-declare type KeyGenCallback = (err?: any, out?: KeyGenCreationData) => void;
+  type KeyGenCallback = (err?: any, out?: KeyGenCreationData) => void;
+}
 
 declare function ssh_keygen(
-  opts: KeyGenOptions,
-  callback: KeyGenCallback
+  opts: ssh_keygen.KeyGenOptions,
+  callback: ssh_keygen.KeyGenCallback
 ): void;

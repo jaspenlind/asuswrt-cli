@@ -1,4 +1,3 @@
-import chalk from "chalk";
 import os from "os";
 import promptly from "promptly";
 
@@ -26,7 +25,7 @@ const line = async <T>(
   });
 };
 
-export const prompt = async (): Promise<ConfigCreationData | null> => {
+export const prompt = async (): Promise<ConfigCreationData> => {
   const yes = "y";
   const yesNo = "Y/n";
 
@@ -39,61 +38,43 @@ export const prompt = async (): Promise<ConfigCreationData | null> => {
     addKeyToAgent: true
   };
 
-  try {
-    const host = await line("Router address", defaults.host);
-    const userName = await line("User name", defaults.userName);
-    const privateKey = await line("SSH private key file", defaults.privateKey);
-    const passPhrase = await line(
-      "Passphrase for private key",
-      defaults.passPhrase,
-      PromptType.Password
-    );
+  const host = await line("Router address", defaults.host);
+  const userName = await line("User name", defaults.userName);
+  const privateKey = await line("SSH private key file", defaults.privateKey);
+  const passPhrase = await line(
+    "Passphrase for private key",
+    defaults.passPhrase,
+    PromptType.Password
+  );
 
-    const keyFileExists = flexi.exists(privateKey as string);
+  const keyFileExists = flexi.exists(privateKey as string);
 
-    let createKeyFile = false;
+  let createKeyFile = false;
 
-    if (!keyFileExists) {
-      createKeyFile = await line(
-        `The key file "${privateKey}" does not exist. Do you want to create it?`,
-        yes,
-        PromptType.Confirm,
-        yesNo
-      );
-    }
-
-    const addKeyToAgent = await line(
-      `Do you want to add the key "${privateKey}" to the SSH Agent?`,
+  if (!keyFileExists) {
+    createKeyFile = await line(
+      `The key file "${privateKey}" does not exist. Do you want to create it?`,
       yes,
       PromptType.Confirm,
       yesNo
     );
-
-    return {
-      host,
-      userName,
-      privateKey,
-      passPhrase,
-      createKeyFile,
-      addKeyToAgent
-    } as ConfigCreationData;
-  } catch (err) {
-    console.log(chalk.red(err.message));
-    return null;
   }
-  // SSH private key file [~/.ssh/id_rsa]:
-  // Passphrase for private key [$passphrase]:
-  // The key file $privateKey does not exist. Do you want to create it? [Y/n]
-  // Do you want to add the key $privateKey to the SSH Agent? [Y/n]
 
-  /*
-    echo "The access the router from the CLI you need to enable SSH."
-echo "1. Open the router web interface and go to Administration / System"
-echo "2. Set Enable SSH to 'LAN Only'"
-echo "3. Set Allow Password Login to 'No'"
-echo "4. Paste to content of '$privateKey.pub' in the Authorized Keys field"
-echo "5. Click Apply"
-     */
+  const addKeyToAgent = await line(
+    `Do you want to add the key "${privateKey}" to the SSH Agent?`,
+    yes,
+    PromptType.Confirm,
+    yesNo
+  );
+
+  return {
+    host,
+    userName,
+    privateKey,
+    passPhrase,
+    createKeyFile,
+    addKeyToAgent
+  } as ConfigCreationData;
 };
 
 export default prompt;
