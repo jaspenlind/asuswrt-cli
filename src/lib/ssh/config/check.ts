@@ -62,6 +62,10 @@ export const check = (): Promise<boolean> => {
         ) {
           reject(err);
         }
+
+        if (err.message === skipConfig) {
+          resolve(false);
+        }
       });
   });
 };
