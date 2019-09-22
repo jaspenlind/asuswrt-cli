@@ -4,10 +4,12 @@ import check from "./check";
 import generateSshKey from "./generateSshKey";
 
 import prompt from "./prompt";
+import routerInfo from "./routerInfo";
 
 export { default as check } from "./check";
 export { default as generateSshKey } from "./generateSshKey";
 export { default as prompt } from "./prompt";
+export { default as routerInfo } from "./routerInfo";
 
 let file = flexi.path({
   basePath: __dirname,
@@ -47,5 +49,6 @@ export default {
   generateSshKey,
   get,
   prompt,
+  routerInfo,
   set
 };
