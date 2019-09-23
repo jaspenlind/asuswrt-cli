@@ -25,7 +25,7 @@ const line = async <T>(
   });
 };
 
-export const prompt = async (): Promise<ConfigCreationData> => {
+const prompt = async (): Promise<ConfigCreationData> => {
   const yes = "y";
   const yesNo = "Y/n";
 

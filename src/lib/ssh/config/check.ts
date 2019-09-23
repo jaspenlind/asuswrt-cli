@@ -2,7 +2,7 @@ import promptly from "promptly";
 
 import { exists, generateSshKey, prompt, routerInfo, set } from ".";
 
-export const check = async (): Promise<boolean> => {
+const check = async (): Promise<boolean> => {
   if (exists()) {
     return true;
   }
