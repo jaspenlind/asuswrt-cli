@@ -11,7 +11,6 @@ declare namespace ssh_keygen {
     force?: boolean;
     destroy?: boolean;
   }
-
   interface KeyGenCreationData {
     key: string;
     pubKey: string;

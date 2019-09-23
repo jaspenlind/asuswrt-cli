@@ -68,12 +68,12 @@ export const prompt = async (): Promise<ConfigCreationData> => {
   );
 
   return {
-    host,
-    userName,
-    privateKey,
-    passPhrase,
+    addKeyToAgent,
     createKeyFile,
-    addKeyToAgent
+    host,
+    passPhrase,
+    privateKey,
+    userName
   } as ConfigCreationData;
 };
 

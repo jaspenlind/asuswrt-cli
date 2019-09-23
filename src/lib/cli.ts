@@ -7,6 +7,8 @@ import moduleLogger from "./logger";
 import { Command } from "../types";
 import config from "./ssh/config";
 
+const empty = 0;
+
 const cli = {
   run: () => {
     const logger = moduleLogger.createLogger(module);
@@ -22,10 +24,10 @@ const cli = {
     const currentCommand = parser.find();
 
     const showHelp =
-      parser.isHelp || args.length === 0 || currentCommand === null;
+      parser.isHelp || args.length === empty || currentCommand === null;
 
     const invalidCommand =
-      parser.stripOptions().length > 0 &&
+      parser.stripOptions().length > empty &&
       (currentCommand === null || currentCommand.run === undefined);
 
     logger.debug(undefined, { meta: { args, currentCommand } });

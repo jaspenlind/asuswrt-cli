@@ -2,9 +2,9 @@
 import { Command } from ".";
 
 export interface CommandParser {
-  all(): Command[];
-  find(): Command | null;
   isHelp: boolean;
   isDebug: boolean;
+  all(): Command[];
+  find(): Command | null;
   stripOptions: () => string[];
 }

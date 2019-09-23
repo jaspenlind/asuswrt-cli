@@ -6,6 +6,6 @@ const commands = (): void => {
 };
 
 export default {
-  run: commands,
-  description: "Lists files in /usr/bin"
+  description: "Lists files in /usr/bin",
+  run: commands
 };

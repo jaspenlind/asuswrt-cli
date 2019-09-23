@@ -18,8 +18,8 @@ let file = flexi.path({
 
 export const empty: SshConfig = {
   host: "n/a",
-  userName: "n/a",
-  privateKey: "n/a"
+  privateKey: "n/a",
+  userName: "n/a"
 };
 
 export const exists = () => file.exists();

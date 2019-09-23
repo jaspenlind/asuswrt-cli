@@ -6,7 +6,7 @@
 
 ///<reference types="node"/>
 
-import stream = require("stream");
+import stream from "stream";
 
 interface Callback {
   (err: Error, value: string): void;

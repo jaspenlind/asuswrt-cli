@@ -3,11 +3,6 @@ import keygen, { KeyGenCreationData } from "ssh-keygen";
 
 import { ConfigCreationData } from "../../../types";
 
-export const empty: KeyGenCreationData = {
-  pubKey: "",
-  key: ""
-};
-
 export const generateSshKey = (
   data: ConfigCreationData
 ): Promise<KeyGenCreationData> => {

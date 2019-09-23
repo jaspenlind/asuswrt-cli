@@ -2,11 +2,8 @@
 import flexi, { FlexiPath, WalkedPath, PathType, until } from "flexi-path";
 
 import { Command, CommandParser } from "../types";
-import moduleLogger from "./logger";
 
 const rootCommandPath = flexi.path(__dirname).append("commands/");
-
-const logger = moduleLogger.createLogger(module);
 
 const isHelp = (...args: string[]): boolean => {
   return (args.length > 0 && args[0] === "-h") || false;

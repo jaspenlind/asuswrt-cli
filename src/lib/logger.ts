@@ -30,6 +30,9 @@ const createMeta = (meta: any): string => {
   return (meta && `=${meta}`) || "";
 };
 
+const levelMinWidth = 9;
+const categoryMinWidth = 40;
+
 const rootLogger = createLogger({
   level: isDebug ? "debug" : "info",
   format: combine(
@@ -37,8 +40,8 @@ const rootLogger = createLogger({
     align(),
     printf(info => {
       const { timestamp, level, message, category, meta } = info;
-      const logLevel = `[${level}]`.padEnd(9);
-      const logCategory = `[${category}]`.padEnd(40);
+      const logLevel = `[${level}]`.padEnd(levelMinWidth);
+      const logCategory = `[${category}]`.padEnd(categoryMinWidth);
       const logMeta = createMeta(meta);
 
       return `${timestamp} ${logLevel} ${logCategory} ${message}${logMeta}`;
@@ -52,22 +55,22 @@ const rootLogger = createLogger({
 });
 
 addColors({
-  verbose: "grey",
   debug: "white",
-  info: "green",
-  warn: "yellow",
   error: "red",
-  fatal: "red"
+  fatal: "red",
+  info: "green",
+  verbose: "grey",
+  warn: "yellow"
 });
 
 export interface Logger {
-  name: string;
-  verbose: LogMethod;
   debug: LogMethod;
-  info: LogMethod;
-  warn: LogMethod;
   error: LogMethod;
   fatal: LogMethod;
+  info: LogMethod;
+  name: string;
+  verbose: LogMethod;
+  warn: LogMethod;
 }
 
 export interface LogMethod {

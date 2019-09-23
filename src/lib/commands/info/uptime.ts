@@ -6,6 +6,6 @@ const uptime = (): void => {
 };
 
 export default {
-  run: uptime,
-  description: "Display router uptime"
+  description: "Display router uptime",
+  run: uptime
 };
