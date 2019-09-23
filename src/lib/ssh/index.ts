@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import sh from "shelljs";
-import config from "./config";
+import sh = require("shelljs");
+import config = require("./config");
 
 const execute = (...args: string[]): void => {
   const sshConfig = config.get() || config.empty;

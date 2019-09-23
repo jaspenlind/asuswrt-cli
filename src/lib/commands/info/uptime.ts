@@ -6,9 +6,9 @@ const uptime = (): void => {
   ssh.execute("uptime");
 };
 
-const declaration = (): CommandDeclaration => ({
+const declaration: CommandDeclaration = {
   description: "Display router uptime",
   run: uptime
-});
+};
 
 export default declaration;

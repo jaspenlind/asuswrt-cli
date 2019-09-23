@@ -24,7 +24,7 @@ const check = async (): Promise<boolean> => {
   let pubKey: string | undefined;
   if (newConfig.createKeyFile) {
     const keyCreationData = await generateSshKey(newConfig);
-    pubKey = keyCreationData.pubKey;
+    ({ pubKey } = keyCreationData);
   }
 
   routerInfo(pubKey);

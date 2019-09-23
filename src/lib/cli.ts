@@ -10,10 +10,8 @@ import config from "./ssh/config";
 const empty = 0;
 
 const cli = {
-  run: () => {
+  run: (...args: string[]) => {
     const logger = moduleLogger.createLogger(module);
-
-    const args = process.argv.slice(2);
 
     const parser = commandParser(...args);
 
@@ -21,6 +19,7 @@ const cli = {
       console.clear();
       console.log(header());
     }
+
     const currentCommand = parser.find();
 
     const showHelp =
@@ -42,8 +41,8 @@ const cli = {
       config
         .check()
         .then(ok => {
-          if (ok) {
-            (currentCommand as Command).run();
+          if (ok && currentCommand !== null) {
+            currentCommand.run();
           }
         })
         .catch((err: Error) => console.log(chalk.red(err.message)));

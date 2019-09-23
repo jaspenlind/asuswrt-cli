@@ -1,14 +1,8 @@
-import os from "os";
-import promptly from "promptly";
-
+import { homedir } from "os";
 import flexi from "flexi-path";
-import { ConfigCreationData, PromptBody, PromptType } from "../../../types";
 
-const promptTypes = new Map<PromptType, PromptBody>([
-  [PromptType.Text, promptly.prompt],
-  [PromptType.Password, promptly.password],
-  [PromptType.Confirm, promptly.confirm]
-]);
+import { ConfigCreationData, PromptBody, PromptType } from "../../../types";
+import promptTypes from "./promptTypes";
 
 const line = async <T>(
   text: string,
@@ -25,18 +19,18 @@ const line = async <T>(
   });
 };
 
+export const defaults: ConfigCreationData = {
+  host: "192.168.1.1",
+  userName: "admin",
+  privateKey: flexi.path(homedir()).append(".ssh/id_rsa").path,
+  passPhrase: "",
+  createKeyFile: true,
+  addKeyToAgent: true
+};
+
 const prompt = async (): Promise<ConfigCreationData> => {
   const yes = "y";
   const yesNo = "Y/n";
-
-  const defaults: ConfigCreationData = {
-    host: "192.168.1.1",
-    userName: "admin",
-    privateKey: flexi.path(os.homedir()).append(".ssh/id_rsa").path,
-    passPhrase: "",
-    createKeyFile: true,
-    addKeyToAgent: true
-  };
 
   const host = await line("Router address", defaults.host);
   const userName = await line("User name", defaults.userName);
@@ -67,7 +61,7 @@ const prompt = async (): Promise<ConfigCreationData> => {
     yesNo
   );
 
-  return {
+  const result = {
     addKeyToAgent,
     createKeyFile,
     host,
@@ -75,6 +69,8 @@ const prompt = async (): Promise<ConfigCreationData> => {
     privateKey,
     userName
   } as ConfigCreationData;
+
+  return result;
 };
 
 export default prompt;

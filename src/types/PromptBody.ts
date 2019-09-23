@@ -1,5 +1,5 @@
-import promptly from "promptly";
+import { Options } from "promptly";
 
-type PromptBody = (message: string, opts: promptly.Options) => any;
+type PromptBody = (message: string, opts: Options) => any;
 
 export default PromptBody;

@@ -15,10 +15,10 @@ const firewall = (args: string[]): void => {
   }
 };
 
-const declaration = (): CommandDeclaration => ({
+const declaration: CommandDeclaration = {
   run: firewall,
   helpName: "firewall [args]",
   description: "Opens the Skynet firewall with (optional) arguments"
-});
+};
 
 export default declaration;

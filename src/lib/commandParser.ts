@@ -23,7 +23,7 @@ const commandName = (args: FlexiPath): string => {
   let { name } = result;
 
   if (result.type() === PathType.File && result.name === "index") {
-    name = result.parent().name;
+    ({ name } = result.parent());
   }
 
   return name;
@@ -72,6 +72,7 @@ const createCommand = (path: FlexiPath): Command => {
   const args = diff.isEmpty() ? [] : diff.path.split(" ");
 
   const content = requireContent(result);
+
   return {
     args,
     description: content.description,

@@ -6,4 +6,4 @@ process.once("uncaughtException", err => {
   process.exitCode = 2;
 });
 
-cli.run();
+cli.run(...process.argv.slice(2));

@@ -7,9 +7,9 @@ const transfer = (): void => {
   ssh.execute("cat /tmp/mnt/USB/skynet/skynet.log");
 };
 
-const declaration = (): CommandDeclaration => ({
+const declaration: CommandDeclaration = {
   run: transfer,
   description: "Transfers the firewall log"
-});
+};
 
 export default declaration;
