@@ -11,7 +11,7 @@ before_deploy:
   - tar -zcf coverage.tar.tgz coverage
 deploy:
   - provider: releases
-    api_key: $DEPLOYMENT_KEY
+    api_key: $api_key
     file_glob: true
     file: "**/*.tgz"
     skip_cleanup: true
