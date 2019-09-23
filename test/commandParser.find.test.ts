@@ -36,7 +36,7 @@ describe("commandParser", () => {
       const terminalCommand = result as Command;
 
       expect(terminalCommand.name).toBe(terminal);
-      expect(terminalCommand.fullname).toBe(terminal);
+      expect(terminalCommand.fullName).toBe(terminal);
       expect(terminalCommand.subCommands).toBeEmpty();
     });
 
@@ -50,7 +50,7 @@ describe("commandParser", () => {
       const uptimeCommand = result as Command;
 
       expect(uptimeCommand.name).toBe(level2);
-      expect(uptimeCommand.fullname).toBe(`${level1} ${level2}`);
+      expect(uptimeCommand.fullName).toBe(`${level1} ${level2}`);
     });
   });
 });

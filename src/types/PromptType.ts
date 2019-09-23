@@ -1,5 +1,7 @@
-export enum PromptType {
+enum PromptType {
   Text,
   Password,
   Confirm
 }
+
+export default PromptType;

@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-export interface Command {
-  name: string;
-  fullname: string;
-  run: any;
-  helpname: string;
-  description: string;
+export default interface Command {
   args?: string[];
+  description: string;
+  fullName: string;
+  helpName: string;
+  name: string;
+  run: any;
   subCommands: Command[];
 }

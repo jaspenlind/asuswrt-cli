@@ -1,13 +1,16 @@
 #!/usr/bin/env node
 import ssh from "../ssh";
+import { CommandDeclaration } from "../../types";
 
 const terminal = (args: string[]): void => {
   ssh.executeInTerminal(args);
 };
 
-export default {
-  run: terminal,
-  helpname: "terminal [args]",
+const declaration = (): CommandDeclaration => ({
   description:
-    "Opens an ssh connection to the router and executes the args (optional)"
-};
+    "Opens an ssh connection to the router and executes the args (optional)",
+  helpName: "terminal [args]",
+  run: terminal
+});
+
+export default declaration;

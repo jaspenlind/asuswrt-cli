@@ -1,4 +1,8 @@
 #!/usr/bin/env node
-export default {
+import { CommandDeclaration } from "../../../types";
+
+const declaration = (): CommandDeclaration => ({
   description: "Shows router information"
-};
+});
+
+export default declaration;

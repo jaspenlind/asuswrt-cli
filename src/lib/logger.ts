@@ -34,7 +34,6 @@ const levelMinWidth = 9;
 const categoryMinWidth = 40;
 
 const rootLogger = createLogger({
-  level: isDebug ? "debug" : "info",
   format: combine(
     format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
     align(),
@@ -48,6 +47,7 @@ const rootLogger = createLogger({
     }),
     colorize({ all: true })
   ),
+  level: isDebug ? "debug" : "info",
   transports: [
     new transports.Console(),
     new transports.File({ filename: "combined.log", handleExceptions: true })

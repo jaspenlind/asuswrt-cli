@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { CommandDeclaration } from "../../../../types";
 import ssh from "../../../ssh";
 
 const transfer = (): void => {
@@ -6,7 +7,9 @@ const transfer = (): void => {
   ssh.execute("cat /tmp/mnt/USB/skynet/skynet.log");
 };
 
-export default {
+const declaration = (): CommandDeclaration => ({
   run: transfer,
   description: "Transfers the firewall log"
-};
+});
+
+export default declaration;

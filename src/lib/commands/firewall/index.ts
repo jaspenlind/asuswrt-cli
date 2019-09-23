@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { CommandDeclaration } from "../../../types";
 import ssh from "../../ssh";
 
 const firewall = (args: string[]): void => {
@@ -14,8 +15,10 @@ const firewall = (args: string[]): void => {
   }
 };
 
-export default {
+const declaration = (): CommandDeclaration => ({
   run: firewall,
-  helpname: "firewall [args]",
+  helpName: "firewall [args]",
   description: "Opens the Skynet firewall with (optional) arguments"
-};
+});
+
+export default declaration;

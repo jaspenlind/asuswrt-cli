@@ -1,6 +1,7 @@
-export * from "./ConfigCreationData";
-export * from "./Command";
-export * from "./CommandParser";
-export * from "./PromptType";
-export * from "./PromptBody";
-export * from "./SshConfig";
+export { default as Command } from "./Command";
+export { default as CommandDeclaration } from "./CommandDeclaration";
+export { default as CommandParser } from "./CommandParser";
+export { default as ConfigCreationData } from "./ConfigCreationData";
+export { default as PromptType } from "./PromptType";
+export { default as PromptBody } from "./PromptBody";
+export { default as SshConfig } from "./SshConfig";

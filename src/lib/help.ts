@@ -20,7 +20,7 @@ const help = (command?: Command | null): void => {
   const guardCheckedCommand = command as Command;
   const commandName = isRootHelp
     ? ""
-    : chalk.bold(` ${guardCheckedCommand.fullname}`);
+    : chalk.bold(` ${guardCheckedCommand.fullName}`);
   logger.debug(undefined, {
     functionName: "help",
     meta: { isRootHelp, commandName }
@@ -32,7 +32,7 @@ const help = (command?: Command | null): void => {
     : guardCheckedCommand.subCommands || [command];
 
   commands.forEach(x =>
-    lines.push(toColumns([` ${x.helpname || x.name}`, x.description]))
+    lines.push(toColumns([` ${x.helpName || x.name}`, x.description]))
   );
 
   if (isRootHelp || commands.filter(x => x.subCommands.length > 0)) {

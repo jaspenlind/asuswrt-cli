@@ -73,12 +73,12 @@ const createCommand = (path: FlexiPath): Command => {
 
   const content = requireContent(result);
   return {
-    name: commandName(result),
-    fullname: commandFullName(result),
-    run: content.run,
-    helpname: content.helpname,
-    description: content.description,
     args,
+    description: content.description,
+    fullName: commandFullName(result),
+    helpName: content.helpname,
+    name: commandName(result),
+    run: content.run,
     subCommands: result
       .children()
       .filter(x => isCommand(x) && x.name !== "index")
