@@ -2,8 +2,8 @@
 import { CommandDeclaration } from "../../../types";
 import ssh from "../../ssh";
 
-const firewall = (args: string[]): void => {
-  const firewallArgs = (args || []).join(" ");
+const firewall = (...args: string[]): void => {
+  const firewallArgs = args.join(" ");
   const interactive = firewallArgs === "";
 
   const command = "sh /jffs/scripts/firewall";
@@ -16,7 +16,7 @@ const firewall = (args: string[]): void => {
 };
 
 const declaration: CommandDeclaration = {
-  run: firewall,
+  run: (...args: string[]) => firewall(...args),
   helpName: "firewall [args]",
   description: "Opens the Skynet firewall with (optional) arguments"
 };

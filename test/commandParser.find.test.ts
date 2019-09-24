@@ -7,7 +7,7 @@ describe("commandParser", () => {
       const firewall = "firewall";
       const result = commandParser(firewall).find();
 
-      expect(result).toBeDefined();
+      expect(result).not.toBeNull();
 
       const firewallCommand = result as Command;
 
@@ -15,11 +15,22 @@ describe("commandParser", () => {
       expect(firewallCommand.subCommands).not.toBeEmpty();
     });
 
+    it("can pass arguments to command", () => {
+      const command = commandParser("firewall", "stats").find();
+
+      expect(command).not.toBeNull();
+
+      const firewallCommand = command as Command;
+
+      expect(firewallCommand.args).toContain("stats");
+      expect(firewallCommand.args).toHaveLength(1);
+    });
+
     it("can find info command", () => {
       const info = "info";
       const result = commandParser(info).find();
 
-      expect(result).toBeDefined();
+      expect(result).not.toBeNull();
 
       const infoCommand = result as Command;
 
@@ -31,7 +42,7 @@ describe("commandParser", () => {
       const terminal = "terminal";
       const result = commandParser(terminal).find();
 
-      expect(result).toBeDefined();
+      expect(result).not.toBeNull();
 
       const terminalCommand = result as Command;
 
@@ -45,7 +56,7 @@ describe("commandParser", () => {
       const level2 = "uptime";
       const result = commandParser(level1, level2).find();
 
-      expect(result).toBeDefined();
+      expect(result).not.toBeNull();
 
       const uptimeCommand = result as Command;
 

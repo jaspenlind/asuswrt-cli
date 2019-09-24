@@ -10,7 +10,7 @@ const declaration: CommandDeclaration = {
   description:
     "Opens an ssh connection to the router and executes the args (optional)",
   helpName: "terminal [args]",
-  run: terminal
+  run: (...args: string[]) => terminal(args)
 };
 
 export default declaration;

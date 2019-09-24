@@ -12,10 +12,14 @@ const isHelp = (...args: string[]): boolean => {
 const isDebug = (...args: string[]): boolean =>
   args.filter(x => x === "--debug").length > 0;
 
-const mostSpecificCommand = (args: FlexiPath): WalkedPath<FlexiPath> =>
-  flexi.walk.back(args, {
+const mostSpecificCommand = (args: FlexiPath): WalkedPath<FlexiPath> => {
+  const path = flexi.path(args.path);
+  const walked = flexi.walk.back(path, {
     until: until.exists({ ignoreFileExtensions: true })
   });
+
+  return walked;
+};
 
 const commandName = (args: FlexiPath): string => {
   const { result } = mostSpecificCommand(args);
@@ -73,7 +77,7 @@ const createCommand = (path: FlexiPath): Command => {
 
   const content = requireContent(result);
 
-  return {
+  const command: Command = {
     args,
     description: content.description,
     fullName: commandFullName(result),
@@ -85,6 +89,8 @@ const createCommand = (path: FlexiPath): Command => {
       .filter(x => isCommand(x) && x.name !== "index")
       .map(x => createCommand(x))
   };
+
+  return command;
 };
 
 const allCommands = (): Command[] => {

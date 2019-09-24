@@ -42,7 +42,7 @@ const cli = {
         .check()
         .then(ok => {
           if (ok && currentCommand !== null) {
-            currentCommand.run();
+            currentCommand.run(currentCommand.args);
           }
         })
         .catch((err: Error) => console.log(chalk.red(err.message)));
