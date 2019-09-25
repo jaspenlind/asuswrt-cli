@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import chalk from "chalk";
 import moduleLogger from "./logger";
-import parser from "./commandParser";
+import parser, { empty } from "./commandParser";
 
 import { Command } from "../types";
 
@@ -15,8 +15,8 @@ const toColumns = (strings: string[], width = 40): string => {
   return left.concat(right).join(" ");
 };
 
-const help = (command?: Command | null): void => {
-  const isRootHelp = !command;
+const help = (command?: Command): void => {
+  const isRootHelp = command === undefined || command === empty;
   const guardCheckedCommand = command as Command;
   const commandName = isRootHelp
     ? ""
@@ -25,7 +25,10 @@ const help = (command?: Command | null): void => {
     functionName: "help",
     meta: { isRootHelp, commandName }
   });
-  const lines = [`Usage: router${commandName} options [parameters]`];
+
+  const usage =
+    (!isRootHelp && guardCheckedCommand.usage) || "options [parameters]";
+  const lines = [`Usage: router${commandName} ${usage}`];
 
   const commands = isRootHelp
     ? parser().all()
@@ -38,10 +41,11 @@ const help = (command?: Command | null): void => {
   if (isRootHelp || commands.filter(x => x.subCommands.length > 0)) {
     lines.push("");
     lines.push("Help options:");
+
     lines.push(toColumns([" -h", "Show this help screen about the tool"]));
 
     commands.forEach(x =>
-      lines.push(toColumns([` -h ${x.name}`, `${x.name} options`]))
+      lines.push(toColumns([` -h ${x.fullName}`, `${x.name} options`]))
     );
   }
   console.log(lines.join("\n"));

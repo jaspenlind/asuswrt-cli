@@ -63,5 +63,15 @@ describe("commandParser", () => {
       expect(uptimeCommand.name).toBe(level2);
       expect(uptimeCommand.fullName).toBe(`${level1} ${level2}`);
     });
+
+    it("can find job add command with id", () => {
+      const command = commandParser("jobs", "add", "id").find() as Command;
+
+      expect(command).not.toBeNull();
+
+      expect(command.fullName).toBe("jobs add");
+
+      expect(command.args).toHaveLength(1);
+    });
   });
 });

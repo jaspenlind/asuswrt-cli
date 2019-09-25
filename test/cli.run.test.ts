@@ -36,7 +36,7 @@ describe("cli", () => {
       expect(help.default).toHaveBeenCalled();
     });
 
-    it("should show error invalid command specified", () => {
+    it("should show error when invalid command specified", () => {
       const spy = jest.spyOn(console, "error").mockImplementation();
 
       cli.run("invalid");
@@ -53,6 +53,7 @@ describe("cli", () => {
     });
 
     it("should check config when valid command specified", () => {
+      command.default.run = jest.fn();
       config.check = jest.fn(() => Promise.resolve(true));
 
       cli.run("info", "uptime");

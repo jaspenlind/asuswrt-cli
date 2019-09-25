@@ -2,9 +2,8 @@
 import chalk from "chalk";
 import header from "../resources/header";
 import help from "./help";
-import commandParser from "./commandParser";
+import commandParser, { empty as emptyCommand } from "./commandParser";
 import moduleLogger from "./logger";
-import { Command } from "../types";
 import config from "./ssh/config";
 
 const empty = 0;
@@ -23,11 +22,11 @@ const cli = {
     const currentCommand = parser.find();
 
     const showHelp =
-      parser.isHelp || args.length === empty || currentCommand === null;
+      parser.isHelp || args.length === empty || currentCommand === emptyCommand;
 
     const invalidCommand =
       parser.stripOptions().length > empty &&
-      (currentCommand === null || currentCommand.run === undefined);
+      (currentCommand === emptyCommand || currentCommand.run === undefined);
 
     logger.debug(undefined, { meta: { args, currentCommand } });
 
@@ -41,8 +40,8 @@ const cli = {
       config
         .check()
         .then(ok => {
-          if (ok && currentCommand !== null) {
-            currentCommand.run(currentCommand.args);
+          if (ok) {
+            currentCommand.run(...currentCommand.args);
           }
         })
         .catch((err: Error) => console.log(chalk.red(err.message)));

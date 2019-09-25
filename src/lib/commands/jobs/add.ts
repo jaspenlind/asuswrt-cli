@@ -1,0 +1,23 @@
+import promptly from "promptly";
+
+import ssh from "../../ssh";
+
+import { CommandDeclaration } from "../../../types";
+
+const add = async (...args: string[]) => {
+  let [id, command] = args;
+  id = id || (await promptly.prompt("Unique id for the job to add: "));
+  command = command || (await promptly.prompt("Command to execute: "));
+
+  ssh.execute(`cru a ${id} "${command}"`);
+
+  console.log(`Job with id '${id}' was successfully added`);
+};
+
+const declaration: CommandDeclaration = {
+  description: "Creates a new cron job",
+  run: (...args) => add(...args),
+  usage: "<uniquieJobId> <command to schedule>"
+};
+
+export default declaration;
