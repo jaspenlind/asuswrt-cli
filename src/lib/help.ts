@@ -27,7 +27,7 @@ const help = (command?: Command): void => {
   });
 
   const usage =
-    (!isRootHelp && guardCheckedCommand.usage) || "options [parameters]";
+    (!isRootHelp && guardCheckedCommand.hint) || "options [parameters]";
   const lines = [`Usage: router${commandName} ${usage}`];
 
   const commands = isRootHelp

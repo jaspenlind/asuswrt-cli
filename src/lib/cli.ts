@@ -25,6 +25,7 @@ const cli = {
       parser.isHelp || args.length === empty || currentCommand === emptyCommand;
 
     const invalidCommand =
+      parser.isHelp === false &&
       parser.stripOptions().length > empty &&
       (currentCommand === emptyCommand || currentCommand.run === undefined);
 
@@ -41,6 +42,11 @@ const cli = {
         .check()
         .then(ok => {
           if (ok) {
+            console.log(
+              `Excuting: router ${chalk.bold(currentCommand.fullName)} ${
+                currentCommand.args
+              } ...`
+            );
             currentCommand.run(...currentCommand.args);
           }
         })

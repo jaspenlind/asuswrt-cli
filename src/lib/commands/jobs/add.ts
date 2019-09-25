@@ -10,14 +10,12 @@ const add = async (...args: string[]) => {
   command = command || (await promptly.prompt("Command to execute: "));
 
   ssh.execute(`cru a ${id} "${command}"`);
-
-  console.log(`Job with id '${id}' was successfully added`);
 };
 
 const declaration: CommandDeclaration = {
   description: "Creates a new cron job",
   run: (...args) => add(...args),
-  usage: "<uniquieJobId> <command to schedule>"
+  hint: "<unique id> <'min hour day month week command'>"
 };
 
 export default declaration;

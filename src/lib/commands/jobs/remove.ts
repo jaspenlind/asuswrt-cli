@@ -8,15 +8,13 @@ const remove = async (...args: string[]) => {
   let [id] = args;
   id = id || (await promptly.prompt("Id of the job to remove: "));
 
-  // ssh.execute(`cru a ${id} "${command}"`);
-
-  console.log(`Job with id '${id}' was successfully removed`);
+  ssh.execute(`cru d ${id}`);
 };
 
 const declaration: CommandDeclaration = {
   description: "Removes a cron job",
   run: remove,
-  usage: "<id>"
+  hint: "<unique id>"
 };
 
 export default declaration;

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import flexi, { FlexiPath, Path, PathType, until } from "flexi-path";
+import flexi, { FlexiPath, Path, until } from "flexi-path";
 
-import { Command, CommandParser } from "../types";
+import { Command, CommandParser, CommandDeclaration } from "../types";
 
 const rootCommandPath = flexi.path(__dirname).append("commands/");
 
@@ -37,7 +37,7 @@ const mostSpecificCommand = (path: Path): [FlexiPath, ...string[]] => {
 };
 
 /* eslint-disable import/no-dynamic-require,global-require,@typescript-eslint/no-var-requires */
-const requireContent = (path: FlexiPath): any | undefined =>
+const requireContent = (path: FlexiPath): CommandDeclaration =>
   require(path.path).default;
 /* eslint-enable import/no-dynamic-require,global-require,@typescript-eslint/no-var-requires */
 
@@ -46,10 +46,10 @@ export const empty: Command = {
   description: "",
   fullName: "",
   helpName: "",
-  run: undefined,
+  run: () => {},
   subCommands: [],
   name: "empty",
-  usage: ""
+  hint: ""
 };
 
 const createCommand = (currentPath: Path): Command => {
@@ -72,19 +72,15 @@ const createCommand = (currentPath: Path): Command => {
     parent.isEmpty() || parent.isRoot() ? "" : `${parent.name} `;
   const fullName = `${parentName}${name}`;
 
-  const command: Command = {
-    args,
-    description: content.description,
-    fullName,
-    helpName: content.helpname,
-    name,
-    run: content.run,
-    subCommands: path
-      .children()
-      .filter(x => x !== undefined && !x.isEmpty() && x.name !== "index")
-      .map(x => createCommand(x)),
-    usage: content.usage
-  };
+  const subCommands = path
+    .children()
+    .filter(x => x !== undefined && !x.isEmpty() && x.name !== "index")
+    .map(x => createCommand(x));
+
+  const command = {
+    ...{ args, fullName, name, subCommands },
+    ...content
+  } as Command;
 
   return command;
 };
