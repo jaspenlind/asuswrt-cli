@@ -1,5 +1,7 @@
 import commandParser from "../src/lib/commandParser";
-import { Command } from "../src/types";
+import declaration, {
+  CommandDeclaration
+} from "../src/types/CommandDeclaration";
 
 describe("commandParser", () => {
   describe("find", () => {
@@ -7,48 +9,34 @@ describe("commandParser", () => {
       const firewall = "firewall";
       const result = commandParser(firewall).find();
 
-      expect(result).not.toBeNull();
+      expect(result).not.toBe(declaration.empty);
 
-      const firewallCommand = result as Command;
-
-      expect(firewallCommand.name).toBe(firewall);
-      expect(firewallCommand.subCommands).not.toBeEmpty();
+      expect(result.name).toBe(firewall);
+      expect(result.subCommands).not.toBeEmpty();
     });
 
     it("can pass arguments to command", () => {
       const command = commandParser("firewall", "stats").find();
 
-      expect(command).not.toBeNull();
-
-      const firewallCommand = command as Command;
-
-      expect(firewallCommand.args).toContain("stats");
-      expect(firewallCommand.args).toHaveLength(1);
+      expect(command.args).toContain("stats");
+      expect(command.args).toHaveLength(1);
     });
 
     it("can find info command", () => {
       const info = "info";
       const result = commandParser(info).find();
 
-      expect(result).not.toBeNull();
-
-      const infoCommand = result as Command;
-
-      expect(infoCommand.name).toBe(info);
-      expect(infoCommand.subCommands).not.toBeEmpty();
+      expect(result.name).toBe(info);
+      expect(result.subCommands).not.toBeEmpty();
     });
 
     it("can find terminal command", () => {
       const terminal = "terminal";
       const result = commandParser(terminal).find();
 
-      expect(result).not.toBeNull();
-
-      const terminalCommand = result as Command;
-
-      expect(terminalCommand.name).toBe(terminal);
-      expect(terminalCommand.fullName).toBe(terminal);
-      expect(terminalCommand.subCommands).toBeEmpty();
+      expect(result.name).toBe(terminal);
+      expect(result.fullName).toBe(terminal);
+      expect(result.subCommands).toBeEmpty();
     });
 
     it("can find sub commands", () => {
@@ -56,16 +44,16 @@ describe("commandParser", () => {
       const level2 = "uptime";
       const result = commandParser(level1, level2).find();
 
-      expect(result).not.toBeNull();
-
-      const uptimeCommand = result as Command;
-
-      expect(uptimeCommand.name).toBe(level2);
-      expect(uptimeCommand.fullName).toBe(`${level1} ${level2}`);
+      expect(result.name).toBe(level2);
+      expect(result.fullName).toBe(`${level1} ${level2}`);
     });
 
     it("can find job add command with id", () => {
-      const command = commandParser("jobs", "add", "id").find() as Command;
+      const command = commandParser(
+        "jobs",
+        "add",
+        "id"
+      ).find() as CommandDeclaration;
 
       expect(command).not.toBeNull();
 

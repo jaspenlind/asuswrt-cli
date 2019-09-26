@@ -1,7 +1,8 @@
-import { CommandDeclaration } from "../../../types";
+import { Command } from "../../../types";
 
-const declaration: CommandDeclaration = {
-  description: "Cron job commands"
+const declaration: Command = {
+  description: "Cron job commands",
+  run: () => {}
 };
 
 export default declaration;

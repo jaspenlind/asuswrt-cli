@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 import chalk from "chalk";
+import { any } from "./arrayHelper";
+import declaration from "../types/CommandDeclaration";
 import header from "../resources/header";
 import help from "./help";
-import commandParser, { empty as emptyCommand } from "./commandParser";
+import commandParser from "./commandParser";
 import moduleLogger from "./logger";
 import config from "./ssh/config";
-
-const empty = 0;
 
 const cli = {
   run: (...args: string[]) => {
@@ -22,12 +22,15 @@ const cli = {
     const currentCommand = parser.find();
 
     const showHelp =
-      parser.isHelp || args.length === empty || currentCommand === emptyCommand;
+      parser.isHelp ||
+      !any(args) ||
+      currentCommand === declaration.empty ||
+      !currentCommand.canRun;
 
     const invalidCommand =
       parser.isHelp === false &&
-      parser.stripOptions().length > empty &&
-      (currentCommand === emptyCommand || currentCommand.run === undefined);
+      any(parser.stripOptions()) &&
+      currentCommand === declaration.empty;
 
     logger.debug(undefined, { meta: { args, currentCommand } });
 
@@ -47,7 +50,7 @@ const cli = {
                 currentCommand.args
               } ...`
             );
-            currentCommand.run(...currentCommand.args);
+            currentCommand.command.run(...currentCommand.args);
           }
         })
         .catch((err: Error) => console.log(chalk.red(err.message)));

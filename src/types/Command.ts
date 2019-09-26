@@ -1,9 +1,19 @@
 #!/usr/bin/env node
-import { CommandDeclaration } from ".";
 
-export default interface Command extends Required<CommandDeclaration> {
-  args: string[];
-  fullName: string;
-  name: string;
-  subCommands: Command[];
+export interface Command {
+  description?: string;
+  helpName?: string;
+  run: (...args: string[]) => any;
+  hint?: string;
 }
+
+export const empty: Command = {
+  description: "",
+  helpName: "",
+  hint: "",
+  run: () => {}
+};
+
+export default {
+  empty
+};

@@ -2,7 +2,7 @@ import promptly from "promptly";
 
 import ssh from "../../ssh";
 
-import { CommandDeclaration } from "../../../types";
+import { Command } from "../../../types";
 
 const add = async (...args: string[]) => {
   let [id, command] = args;
@@ -12,7 +12,7 @@ const add = async (...args: string[]) => {
   ssh.execute(`cru a ${id} "${command}"`);
 };
 
-const declaration: CommandDeclaration = {
+const declaration: Command = {
   description: "Creates a new cron job",
   run: (...args) => add(...args),
   hint: "<unique id> <'min hour day month week command'>"

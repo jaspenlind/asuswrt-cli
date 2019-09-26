@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-import { Command } from ".";
+import { CommandDeclaration } from ".";
 
 export default interface CommandParser {
   isHelp: boolean;
   isDebug: boolean;
-  all: () => Command[];
-  find: () => Command;
+  all: () => CommandDeclaration[];
+  find: () => CommandDeclaration;
   stripOptions: () => string[];
 }

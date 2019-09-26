@@ -1,5 +1,5 @@
-export { default as Command } from "./Command";
-export { default as CommandDeclaration } from "./CommandDeclaration";
+export { Command } from "./Command";
+export { CommandDeclaration } from "./CommandDeclaration";
 export { default as CommandParser } from "./CommandParser";
 export { default as ConfigCreationData } from "./ConfigCreationData";
 export { default as ExecResult } from "./ExecResult";

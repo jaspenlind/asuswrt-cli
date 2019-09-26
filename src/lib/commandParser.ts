@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 import flexi, { FlexiPath, Path, until } from "flexi-path";
 
-import { Command, CommandParser, CommandDeclaration } from "../types";
+import { CommandParser } from "../types";
+import command, { Command } from "../types/Command";
+import declaration, { CommandDeclaration } from "../types/CommandDeclaration";
 
 const rootCommandPath = flexi.path(__dirname).append("commands/");
 
@@ -37,32 +39,20 @@ const mostSpecificCommand = (path: Path): [FlexiPath, ...string[]] => {
 };
 
 /* eslint-disable import/no-dynamic-require,global-require,@typescript-eslint/no-var-requires */
-const requireContent = (path: FlexiPath): CommandDeclaration =>
-  require(path.path).default;
+const requireContent = (path: FlexiPath): Command => require(path.path).default;
 /* eslint-enable import/no-dynamic-require,global-require,@typescript-eslint/no-var-requires */
 
-export const empty: Command = {
-  args: [],
-  description: "",
-  fullName: "",
-  helpName: "",
-  run: () => {},
-  subCommands: [],
-  name: "empty",
-  hint: ""
-};
-
-const createCommand = (currentPath: Path): Command => {
+const createCommand = (currentPath: Path): CommandDeclaration => {
   const [path, ...args] = mostSpecificCommand(currentPath);
 
   if (!path.exists()) {
-    return empty;
+    return declaration.empty;
   }
 
-  const content = requireContent(path);
+  const currentCommand = requireContent(path);
 
-  if (!content) {
-    return empty;
+  if (!currentCommand) {
+    return declaration.empty;
   }
 
   const name = path.name === "index" ? path.parent().name : path.name;
@@ -77,32 +67,34 @@ const createCommand = (currentPath: Path): Command => {
     .filter(x => x !== undefined && !x.isEmpty() && x.name !== "index")
     .map(x => createCommand(x));
 
-  const command = {
-    ...{ args, fullName, name, subCommands },
-    ...content
-  } as Command;
+  const decl: CommandDeclaration = {
+    args,
+    canRun: currentCommand.run !== command.empty.run,
+    fullName,
+    name,
+    subCommands,
+    command: currentCommand
+  };
 
-  return command;
+  return decl;
 };
 
-const allCommands = (): Command[] => {
+const allCommands = (): CommandDeclaration[] => {
   return rootCommandPath
     .children()
     .map(x => createCommand(x))
-    .filter(x => x !== empty);
+    .filter(x => x !== declaration.empty);
 };
 
 const withoutOptions = (...args: string[]): string[] =>
   args.filter(x => !x.startsWith("-"));
 
-const parse = (path: Path): Command => {
+const parse = (path: Path): CommandDeclaration => {
   if (flexi.isEmpty(path)) {
-    return empty;
+    return declaration.empty;
   }
 
-  const command = createCommand(flexi.path(rootCommandPath).append(path));
-
-  return command;
+  return createCommand(flexi.path(rootCommandPath).append(path));
 };
 
 const commandParser = (...args: string[]): CommandParser => {

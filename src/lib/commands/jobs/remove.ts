@@ -2,7 +2,7 @@ import promptly from "promptly";
 
 import ssh from "../../ssh";
 
-import { CommandDeclaration } from "../../../types";
+import { Command } from "../../../types";
 
 const remove = async (...args: string[]) => {
   let [id] = args;
@@ -11,7 +11,7 @@ const remove = async (...args: string[]) => {
   ssh.execute(`cru d ${id}`);
 };
 
-const declaration: CommandDeclaration = {
+const declaration: Command = {
   description: "Removes a cron job",
   run: remove,
   hint: "<unique id>"

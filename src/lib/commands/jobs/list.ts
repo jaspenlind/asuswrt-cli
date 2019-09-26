@@ -1,12 +1,12 @@
 import ssh from "../../ssh";
 
-import { CommandDeclaration } from "../../../types";
+import { Command } from "../../../types";
 
 const list = () => {
   ssh.execute("cru l");
 };
 
-const declaration: CommandDeclaration = {
+const declaration: Command = {
   description: "Lists existing cron jobs",
   run: list
 };

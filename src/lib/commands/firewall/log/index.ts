@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-import { CommandDeclaration } from "../../../../types";
+import { Command } from "../../../../types";
 
-const declaration: CommandDeclaration = {
-  description: "Copy or analyze firewall log"
+const declaration: Command = {
+  description: "Copy or analyze firewall log",
+  run: () => {}
 };
 
 export default declaration;

@@ -1,14 +1,11 @@
 #!/usr/bin/env node
 import ssh from "../../ssh";
-import { CommandDeclaration } from "../../../types";
+import helper from "../../commandHelper";
 
-const uptime = (): void => {
+const run = (): void => {
   ssh.execute("uptime");
 };
 
-const declaration: CommandDeclaration = {
-  description: "Display router uptime",
-  run: uptime
-};
+const description = "Display router uptime";
 
-export default declaration;
+export default helper.create({ description, run });

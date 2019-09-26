@@ -32,10 +32,13 @@ const prompt = async (): Promise<ConfigCreationData> => {
   const yes = "y";
   const yesNo = "Y/n";
 
-  const host = await line("Router address", defaults.host);
-  const userName = await line("User name", defaults.userName);
-  const privateKey = await line("SSH private key file", defaults.privateKey);
-  const passPhrase = await line(
+  const host = await line<string>("Router address", defaults.host);
+  const userName = await line<string>("User name", defaults.userName);
+  const privateKey = await line<string>(
+    "SSH private key file",
+    defaults.privateKey
+  );
+  const passPhrase = await line<string>(
     "Passphrase for private key",
     defaults.passPhrase,
     PromptType.Password
@@ -54,21 +57,21 @@ const prompt = async (): Promise<ConfigCreationData> => {
     );
   }
 
-  const addKeyToAgent = await line(
+  const addKeyToAgent = await line<boolean>(
     `Do you want to add the key "${privateKey}" to the SSH Agent?`,
     yes,
     PromptType.Confirm,
     yesNo
   );
 
-  const result = {
+  const result: ConfigCreationData = {
     addKeyToAgent,
     createKeyFile,
     host,
     passPhrase,
     privateKey,
     userName
-  } as ConfigCreationData;
+  };
 
   return result;
 };

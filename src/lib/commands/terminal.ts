@@ -1,16 +1,18 @@
 #!/usr/bin/env node
 import ssh from "../ssh";
-import { CommandDeclaration } from "../../types";
+import { Command } from "../../types";
+import helper from "../commandHelper";
 
-const terminal = (args: string[]): void => {
-  ssh.executeInTerminal(args);
-};
+const terminal: Command = helper.create({
+  run: (...args: string[]) => {
+    ssh.executeInTerminal(args);
+  }
+});
 
-const declaration: CommandDeclaration = {
-  description:
-    "Opens an ssh connection to the router and executes the args (optional)",
-  helpName: "terminal [args]",
-  run: (...args: string[]) => terminal(args)
-};
+export default terminal;
 
-export default declaration;
+// export default class Terminal extends EmptyCommand {
+//   public run(...args: string[]) {
+//     ssh.executeInTerminal(args);
+//   }
+// }

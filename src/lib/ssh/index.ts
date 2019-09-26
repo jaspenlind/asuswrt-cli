@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-import chalk from "chalk";
 import { ExecResult } from "../../types";
 
 import sh = require("shelljs");

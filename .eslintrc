@@ -25,6 +25,7 @@
   "rules": {
     "prettier/prettier": "error",
     "semi": "off",
+    "class-methods-use-this": ["off"],
     "@typescript-eslint/semi": ["off"],
     "quotes": ["error", "double"],
     "@typescript-eslint/explicit-function-return-type": "off",
