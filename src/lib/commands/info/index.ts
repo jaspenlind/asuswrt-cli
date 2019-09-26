@@ -1,9 +1,6 @@
 #!/usr/bin/env node
-import { Command } from "../../../types";
-import helper from "../../commandHelper";
+import { create } from "../../../types/Command";
 
-const info: Command = helper.create({
-  description: "Shows router information"
-});
+const description = "Shows router information";
 
-export default info;
+export default create({ description });

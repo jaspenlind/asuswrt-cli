@@ -14,6 +14,12 @@ export const empty: Command = {
   run: () => {}
 };
 
+export const create = (fields?: Partial<Command>): Command => ({
+  ...empty,
+  ...fields
+});
+
 export default {
+  create,
   empty
 };

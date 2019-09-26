@@ -1,14 +1,11 @@
 #!/usr/bin/env node
-import { Command } from "../../../types";
+import { create } from "../../../types/Command";
 import ssh from "../../ssh";
 
-const commands = (): void => {
+const description = "Lists files in /usr/bin";
+
+const run = (): void => {
   ssh.execute("ls -1 /usr/bin/ | grep -v '^d'");
 };
 
-const declaration: Command = {
-  description: "Lists files in /usr/bin",
-  run: commands
-};
-
-export default declaration;
+export default create({ description, run });

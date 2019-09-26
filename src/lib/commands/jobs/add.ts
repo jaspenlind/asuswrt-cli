@@ -1,10 +1,12 @@
 import promptly from "promptly";
-
 import ssh from "../../ssh";
+import { create } from "../../../types/Command";
 
-import { Command } from "../../../types";
+const description = "Creates a new cron job";
 
-const add = async (...args: string[]) => {
+const hint = "<unique id> <'min hour day month week command'>";
+
+const run = async (...args: string[]) => {
   let [id, command] = args;
   id = id || (await promptly.prompt("Unique id for the job to add: "));
   command = command || (await promptly.prompt("Command to execute: "));
@@ -12,10 +14,4 @@ const add = async (...args: string[]) => {
   ssh.execute(`cru a ${id} "${command}"`);
 };
 
-const declaration: Command = {
-  description: "Creates a new cron job",
-  run: (...args) => add(...args),
-  hint: "<unique id> <'min hour day month week command'>"
-};
-
-export default declaration;
+export default create({ description, hint, run });

@@ -1,14 +1,10 @@
 import ssh from "../../ssh";
+import { create } from "../../../types/Command";
 
-import { Command } from "../../../types";
+const description = "Lists existing cron jobs";
 
-const list = () => {
+const run = () => {
   ssh.execute("cru l");
 };
 
-const declaration: Command = {
-  description: "Lists existing cron jobs",
-  run: list
-};
-
-export default declaration;
+export default create({ description, run });

@@ -1,8 +1,12 @@
 #!/usr/bin/env node
-import { Command } from "../../../types";
+import { create } from "../../../types/Command";
 import ssh from "../../ssh";
 
-const firewall = (...args: string[]): void => {
+const description = "Opens the Skynet firewall with (optional) arguments";
+
+const helpName = "firewall [args]";
+
+const run = (...args: string[]): void => {
   const firewallArgs = args.join(" ");
   const interactive = firewallArgs === "";
 
@@ -15,10 +19,4 @@ const firewall = (...args: string[]): void => {
   }
 };
 
-const declaration: Command = {
-  run: (...args: string[]) => firewall(...args),
-  helpName: "firewall [args]",
-  description: "Opens the Skynet firewall with (optional) arguments"
-};
-
-export default declaration;
+export default create({ description, helpName, run });

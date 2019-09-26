@@ -1,15 +1,12 @@
 #!/usr/bin/env node
-import { Command } from "../../../../types";
+import { create } from "../../../../types/Command";
 import ssh from "../../../ssh";
 
-const transfer = (): void => {
+const description = "Transfers the firewall log";
+
+const run = (): void => {
   // TODO
   ssh.execute("cat /tmp/mnt/USB/skynet/skynet.log");
 };
 
-const declaration: Command = {
-  run: transfer,
-  description: "Transfers the firewall log"
-};
-
-export default declaration;
+export default create({ description, run });
