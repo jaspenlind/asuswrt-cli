@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import chalk from "chalk";
+import { any } from "./arrayHelper";
 import declaration from "../types/CommandDeclaration";
 import moduleLogger from "./logger";
 import parser from "./commandParser";
@@ -44,7 +45,7 @@ const help = (command?: CommandDeclaration): void => {
     )
   );
 
-  if (isRootHelp || commands.filter(x => x.subCommands.length > 0)) {
+  if (isRootHelp || (command !== undefined && any(command.subCommands))) {
     lines.push("");
     lines.push("Help options:");
 

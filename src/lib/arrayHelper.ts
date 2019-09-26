@@ -1,2 +1,4 @@
 // eslint-disable-next-line import/prefer-default-export
-export const any = (...array: any[]) => array !== undefined && array.length > 0;
+export const any = (array: ArrayLike<any>) => {
+  return array.length > 0;
+};
