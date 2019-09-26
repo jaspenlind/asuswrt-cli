@@ -55,12 +55,15 @@ const createCommand = (currentPath: Path): CommandDeclaration => {
     return declaration.empty;
   }
 
-  const name = path.name === "index" ? path.parent().name : path.name;
-  const parent = path.parent().except(rootCommandPath);
+  const withoutIndex = path
+    .except(rootCommandPath)
+    .parent(x => x.name !== "index");
 
-  const parentName =
-    parent.isEmpty() || parent.isRoot() ? "" : `${parent.name} `;
-  const fullName = `${parentName}${name}`;
+  const { name } = withoutIndex;
+  const fullName = withoutIndex
+    .flatten()
+    .map(x => x.name)
+    .join(" ");
 
   const subCommands = path
     .children()
