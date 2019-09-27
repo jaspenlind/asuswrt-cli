@@ -5,9 +5,9 @@ export interface SshConfig {
 }
 
 export const empty: SshConfig = {
-  host: "n/a",
-  privateKey: "n/a",
-  userName: "n/a"
+  host: "",
+  privateKey: "",
+  userName: ""
 };
 
 export const sshConfig = (fields?: Partial<SshConfig>): SshConfig => ({

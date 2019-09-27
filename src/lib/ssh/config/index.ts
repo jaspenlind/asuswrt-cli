@@ -16,6 +16,8 @@ let file = flexi.path({
   path: ".ssh.config.json"
 });
 
+export { ConfigCreationData, SshConfig } from "../../../types";
+
 export const exists = () => file.exists();
 
 export const get = (): SshConfig | null => {

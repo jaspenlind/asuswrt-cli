@@ -1,7 +1,9 @@
-import { homedir } from "os";
 import flexi from "flexi-path";
 
-import { ConfigCreationData, PromptBody, PromptType } from "../../../types";
+import configCreationData, {
+  ConfigCreationData
+} from "../../../types/ConfigCreationData";
+import { PromptBody, PromptType } from "../../../types";
 import promptTypes from "./promptTypes";
 
 const line = async <T>(
@@ -19,36 +21,59 @@ const line = async <T>(
   });
 };
 
-export const defaults: ConfigCreationData = {
-  host: "192.168.1.1",
-  userName: "admin",
-  privateKey: flexi.path(homedir()).append(".ssh/id_rsa").path,
-  passPhrase: "",
-  createKeyFile: true,
-  addKeyToAgent: true
+const promptOrDisplayInitialValue = async <T>(
+  title: string,
+  initialValue: T | undefined,
+  fallbackValue: string,
+  promptType: PromptType = PromptType.Text
+): Promise<T> => {
+  if (initialValue !== undefined) {
+    console.log(`${title}: ${initialValue}`);
+    return Promise.resolve(initialValue);
+  }
+
+  return line<T>(title, fallbackValue, promptType);
 };
 
-const prompt = async (): Promise<ConfigCreationData> => {
+const prompt = async (
+  fields?: Partial<ConfigCreationData>
+): Promise<ConfigCreationData> => {
   const yes = "y";
   const yesNo = "Y/n";
 
-  const host = await line<string>("Router address", defaults.host);
-  const userName = await line<string>("User name", defaults.userName);
-  const privateKey = await line<string>(
+  const initialValues = fields || {}; // || configCreationData.empty();
+  const { defaults } = configCreationData;
+
+  const host = await promptOrDisplayInitialValue(
+    "Router address",
+    initialValues.host,
+    defaults.host
+  );
+
+  const userName = await promptOrDisplayInitialValue(
+    "User name",
+    initialValues.userName,
+    defaults.userName
+  );
+
+  const privateKey = await promptOrDisplayInitialValue(
     "SSH private key file",
+    initialValues.privateKey,
     defaults.privateKey
   );
-  const passPhrase = await line<string>(
+
+  const passPhrase = await promptOrDisplayInitialValue(
     "Passphrase for private key",
+    initialValues.passPhrase,
     defaults.passPhrase,
     PromptType.Password
   );
 
   const keyFileExists = flexi.exists(privateKey as string);
 
-  let createKeyFile = false;
+  let createKeyFile = initialValues.createKeyFile || false;
 
-  if (!keyFileExists) {
+  if (!keyFileExists && !createKeyFile) {
     createKeyFile = await line(
       `The key file "${privateKey}" does not exist. Do you want to create it?`,
       yes,
@@ -57,12 +82,14 @@ const prompt = async (): Promise<ConfigCreationData> => {
     );
   }
 
-  const addKeyToAgent = await line<boolean>(
-    `Do you want to add the key "${privateKey}" to the SSH Agent?`,
-    yes,
-    PromptType.Confirm,
-    yesNo
-  );
+  const addKeyToAgent =
+    initialValues.addKeyToAgent ||
+    (await line<boolean>(
+      `Do you want to add the key "${privateKey}" to the SSH Agent?`,
+      yes,
+      PromptType.Confirm,
+      yesNo
+    ));
 
   const result: ConfigCreationData = {
     addKeyToAgent,
