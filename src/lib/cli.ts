@@ -41,19 +41,16 @@ const cli = {
         console.error(chalk.red("\nUnknown command\n"));
       }
     } else {
-      config
-        .check()
-        .then(ok => {
-          if (ok) {
-            console.log(
-              `Excuting: router ${chalk.bold(currentCommand.fullName)} ${
-                currentCommand.args
-              } ...`
-            );
-            currentCommand.command.run(...currentCommand.args);
-          }
-        })
-        .catch((err: Error) => console.log(chalk.red(err.message)));
+      config.check().then(ok => {
+        if (ok) {
+          console.log(
+            `Excuting: router ${chalk.bold(currentCommand.fullName)} ${
+              currentCommand.args
+            } ...`
+          );
+          currentCommand.command.run(...currentCommand.args);
+        }
+      });
     }
   }
 };

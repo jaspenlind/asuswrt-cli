@@ -1,15 +1,12 @@
-import promptly from "promptly";
-
-import edit from "./edit";
 import {
   ConfigCreationData,
   empty
 } from "../../../../types/ConfigCreationData";
 import { command } from "../../../../types/Command";
-import { exists, prompt } from "../../../ssh/config";
+import { get, prompt } from "../../../ssh/config";
 import { proceed } from "../../../ssh/config/check";
 
-const description = "Creates new SSH configuration";
+const description = "Edits current SSH configuration";
 
 const hint =
   "<hostName> <userName> <keyFile> <passPhrase> <addToAgent> <createKeyFile>";
@@ -24,20 +21,6 @@ const run = (...args: string[]): void => {
     createKeyFile
   ] = args;
 
-  if (exists()) {
-    promptly
-      .confirm(
-        "SSH configuration does already exist. Do you want to update instead? [y/N]: "
-      )
-      .then(response => {
-        if (response) {
-          edit.run(...args);
-        }
-      });
-
-    return;
-  }
-
   const initialValues: ConfigCreationData = {
     ...empty,
     ...{
@@ -50,7 +33,11 @@ const run = (...args: string[]): void => {
     }
   };
 
-  prompt(initialValues).then(config => proceed(config));
+  const existingValues: Partial<ConfigCreationData> = get() || {};
+
+  prompt(initialValues, existingValues).then(config =>
+    proceed(config, { overwrite: true })
+  );
 };
 
 export default command({ description, hint, run });

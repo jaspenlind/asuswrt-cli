@@ -26,10 +26,15 @@ export const get = (): SshConfig | null => {
 
 const jsonProperties = Object.keys(sshConfig.empty);
 
-export const set = (current: SshConfig): Promise<SshConfig> => {
+export const set = (
+  current: SshConfig,
+  options?: { overwrite?: boolean }
+): Promise<SshConfig> => {
   return new Promise<SshConfig>((resolve, reject) => {
     try {
-      file = file.write(JSON.stringify(current, jsonProperties, 2));
+      file = file.write(JSON.stringify(current, jsonProperties, 2), {
+        overwrite: options && options.overwrite
+      });
 
       resolve(get() || sshConfig.empty);
     } catch (err) {

@@ -36,13 +36,17 @@ const promptOrDisplayInitialValue = async <T>(
 };
 
 const prompt = async (
-  fields?: Partial<ConfigCreationData>
+  prefilledValues?: Partial<ConfigCreationData>,
+  defaultValues?: Partial<ConfigCreationData>
 ): Promise<ConfigCreationData> => {
   const yes = "y";
   const yesNo = "Y/n";
 
-  const initialValues = fields || {}; // || configCreationData.empty();
-  const { defaults } = configCreationData;
+  const initialValues = prefilledValues || {};
+  const defaults: ConfigCreationData = {
+    ...configCreationData.defaults,
+    ...defaultValues
+  };
 
   const host = await promptOrDisplayInitialValue(
     "Router address",

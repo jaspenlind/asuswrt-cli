@@ -1,6 +1,25 @@
 import promptly from "promptly";
 
+import { ConfigCreationData } from "../../../types";
 import { exists, generateSshKey, prompt, routerInfo, set } from ".";
+
+/**
+ * @ignore
+ */
+export const proceed = async (
+  config: ConfigCreationData,
+  options?: { overwrite?: boolean }
+): Promise<void> => {
+  await set(config, options);
+
+  let pubKey: string | undefined;
+  if (config.createKeyFile) {
+    const keyCreationData = await generateSshKey(config);
+    ({ pubKey } = keyCreationData);
+  }
+
+  routerInfo(pubKey);
+};
 
 const check = async (): Promise<boolean> => {
   if (exists()) {
@@ -19,15 +38,8 @@ const check = async (): Promise<boolean> => {
   }
 
   const newConfig = await prompt();
-  await set(newConfig);
 
-  let pubKey: string | undefined;
-  if (newConfig.createKeyFile) {
-    const keyCreationData = await generateSshKey(newConfig);
-    ({ pubKey } = keyCreationData);
-  }
-
-  routerInfo(pubKey);
+  proceed(newConfig);
 
   return true;
 };

@@ -49,7 +49,7 @@ const rootLogger = createLogger({
   ),
   level: isDebug ? "debug" : "info",
   transports: [
-    new transports.Console(),
+    // new transports.Console(),
     new transports.File({ filename: "combined.log", handleExceptions: true })
   ]
 });
