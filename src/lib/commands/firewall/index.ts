@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { create } from "../../../types/Command";
+import { command } from "../../../types/Command";
 import ssh from "../../ssh";
 
 const description = "Opens the Skynet firewall with (optional) arguments";
@@ -10,13 +10,13 @@ const run = (...args: string[]): void => {
   const firewallArgs = args.join(" ");
   const interactive = firewallArgs === "";
 
-  const command = "sh /jffs/scripts/firewall";
+  const firewallCommand = "sh /jffs/scripts/firewall";
 
   if (interactive) {
-    ssh.executeInTerminal(command);
+    ssh.executeInTerminal(firewallCommand);
   } else {
-    ssh.execute(`${command} ${firewallArgs}`);
+    ssh.execute(`${firewallCommand} ${firewallArgs}`);
   }
 };
 
-export default create({ description, helpName, run });
+export default command({ description, helpName, run });

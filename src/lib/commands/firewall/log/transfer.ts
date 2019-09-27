@@ -2,7 +2,7 @@
 import chalk from "chalk";
 import flexi, { FlexiPath } from "flexi-path";
 import sh from "shelljs";
-import { create } from "../../../../types/Command";
+import { command } from "../../../../types/Command";
 import ssh from "../../../ssh";
 
 const defaultOpener = "xdg-open";
@@ -31,4 +31,4 @@ const run = (): void => {
   open(downloadedFile);
 };
 
-export default create({ description, run });
+export default command({ description, run });

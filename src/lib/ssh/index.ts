@@ -3,12 +3,13 @@ import os from "os";
 import flexi, { FlexiPath } from "flexi-path";
 
 import { ExecResult } from "../../types";
+import { empty } from "../../types/SshConfig";
 
 import sh = require("shelljs");
 import config = require("./config");
 
 export const download = (file: FlexiPath): FlexiPath => {
-  const sshConfig = config.get() || config.empty;
+  const sshConfig = config.get() || empty;
 
   const command = `scp -i ${sshConfig.privateKey} "${sshConfig.userName}@${
     sshConfig.host
@@ -24,7 +25,7 @@ export const download = (file: FlexiPath): FlexiPath => {
 };
 
 const execute = (...args: string[]): ExecResult => {
-  const sshConfig = config.get() || config.empty;
+  const sshConfig = config.get() || empty;
 
   const ssh = `ssh -i '${sshConfig.privateKey}' ${sshConfig.userName}@${sshConfig.host}`;
 
@@ -36,7 +37,7 @@ const execute = (...args: string[]): ExecResult => {
 };
 
 const executeInTerminal = (args: any) => {
-  const sshConfig = config.get() || config.empty;
+  const sshConfig = config.get() || empty;
 
   const ssh = `ssh -i  '${sshConfig.privateKey}' ${sshConfig.userName}@${sshConfig.host}`;
 

@@ -17,6 +17,11 @@ export const empty: CommandDeclaration = {
   name: "empty"
 };
 
+export const commandDeclaration = (
+  fields?: Partial<CommandDeclaration>
+): CommandDeclaration => ({ ...empty, ...fields });
+
 export default {
+  create: commandDeclaration,
   empty
 };

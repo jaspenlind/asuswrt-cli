@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import { create } from "../../../types/Command";
+import { command } from "../../../types/Command";
 
 const description = "Shows router information";
 
-export default create({ description });
+export default command({ description });

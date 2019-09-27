@@ -1,6 +1,6 @@
 import promptly from "promptly";
 import ssh from "../../ssh";
-import { create } from "../../../types/Command";
+import { command } from "../../../types/Command";
 
 const description = "Removes a cron job";
 
@@ -13,4 +13,4 @@ const run = async (...args: string[]) => {
   ssh.execute(`cru d ${id}`);
 };
 
-export default create({ description, hint, run });
+export default command({ description, hint, run });

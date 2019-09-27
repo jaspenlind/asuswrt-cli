@@ -1,17 +1,18 @@
 import promptly from "promptly";
 import ssh from "../../ssh";
-import { create } from "../../../types/Command";
+import { command } from "../../../types/Command";
 
 const description = "Creates a new cron job";
 
 const hint = "<unique id> <'min hour day month week command'>";
 
 const run = async (...args: string[]) => {
-  let [id, command] = args;
+  let [id, commandToAdd] = args;
   id = id || (await promptly.prompt("Unique id for the job to add: "));
-  command = command || (await promptly.prompt("Command to execute: "));
+  commandToAdd =
+    commandToAdd || (await promptly.prompt("Command to execute: "));
 
-  ssh.execute(`cru a ${id} "${command}"`);
+  ssh.execute(`cru a ${id} "${commandToAdd}"`);
 };
 
-export default create({ description, hint, run });
+export default command({ description, hint, run });
