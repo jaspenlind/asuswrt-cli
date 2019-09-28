@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2019",
+    "noImplicitAny": true,
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "resolveJsonModule": true,
+    "strict": true,
+    "declaration": true,
+    "paths": {
+      "*": ["src/types/*", "*"]
+    }
+  },
+  "include": ["src/**/*", "test/**/*"]
+}

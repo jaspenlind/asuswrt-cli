@@ -1,2 +1,1 @@
-brew "npm"
-brew "shellcheck"
+brew "node"
