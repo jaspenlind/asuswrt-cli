@@ -1,38 +1,22 @@
-import {
-  ConfigCreationData,
-  empty
-} from "../../../../types/ConfigCreationData";
+import configCreationData, {
+  ConfigCreationData
+} from "../../../../models/configCreationData";
 import { command } from "../../../../types/Command";
 import { get, prompt } from "../../../ssh/config";
 import { proceed } from "../../../ssh/config/check";
 
 const description = "Edits current SSH configuration";
 
-const hint =
-  "<hostName> <userName> <keyFile> <passPhrase> <addToAgent> <createKeyFile>";
+const hint = `[-host <name or IP of the router>]
+                             [-userName <admin login>]
+                             [-keyFile <path to SSH keyfile>]
+                             [-passPhrase <passphrase of SSH keyfile]
+                             [-addToAgent]
+                             [-createKeyFile]`;
 
 const run = (...args: string[]): void => {
-  const [
-    host,
-    userName,
-    privateKey,
-    passPhrase,
-    addKeyToAgent,
-    createKeyFile
-  ] = args;
-
-  const initialValues: ConfigCreationData = {
-    ...empty,
-    ...{
-      host,
-      userName,
-      privateKey,
-      passPhrase,
-      addKeyToAgent: addKeyToAgent === "true",
-      createKeyFile: createKeyFile === "true"
-    }
-  };
-
+  const initialValues = configCreationData.fromArgs(...args);
+  console.log(initialValues);
   const existingValues: Partial<ConfigCreationData> = get() || {};
 
   prompt(initialValues, existingValues).then(config =>

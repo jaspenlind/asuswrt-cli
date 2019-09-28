@@ -1,8 +1,9 @@
 import flexi from "flexi-path";
 
-import configCreationData, {
-  ConfigCreationData
-} from "../../../types/ConfigCreationData";
+import {
+  ConfigCreationData,
+  defaults as dataDefaults
+} from "../../../models/configCreationData";
 import { PromptBody, PromptType } from "../../../types";
 import promptTypes from "./promptTypes";
 
@@ -44,7 +45,7 @@ const prompt = async (
 
   const initialValues = prefilledValues || {};
   const defaults: ConfigCreationData = {
-    ...configCreationData.defaults,
+    ...dataDefaults,
     ...defaultValues
   };
 

@@ -44,9 +44,9 @@ const cli = {
       config.check().then(ok => {
         if (ok) {
           console.log(
-            `Excuting: router ${chalk.bold(currentCommand.fullName)} ${
-              currentCommand.args
-            } ...`
+            `Excuting: router ${chalk.bold(
+              currentCommand.fullName
+            )} with options ${currentCommand.args.join(" ")} ...`
           );
           currentCommand.command.run(...currentCommand.args);
         }

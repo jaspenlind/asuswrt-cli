@@ -42,6 +42,9 @@ const mostSpecificCommand = (path: Path): [FlexiPath, ...string[]] => {
 const requireContent = (path: FlexiPath): Command => require(path.path).default;
 /* eslint-enable import/no-dynamic-require,global-require,@typescript-eslint/no-var-requires */
 
+const withoutOptions = (...args: string[]): string[] =>
+  args.filter(x => !x.startsWith("-"));
+
 const createCommand = (currentPath: Path): CommandDeclaration => {
   const [path, ...args] = mostSpecificCommand(currentPath);
 
@@ -55,12 +58,12 @@ const createCommand = (currentPath: Path): CommandDeclaration => {
     return declaration.empty;
   }
 
-  const withoutIndex = path
+  const trimmedPath = path
     .except(rootCommandPath)
     .parent(x => x.name !== "index");
 
-  const { name } = withoutIndex;
-  const fullName = withoutIndex
+  const { name } = trimmedPath;
+  const fullName = trimmedPath
     .flatten()
     .map(x => x.name)
     .join(" ");
@@ -89,9 +92,6 @@ const allCommands = (): CommandDeclaration[] => {
     .filter(x => x !== declaration.empty);
 };
 
-const withoutOptions = (...args: string[]): string[] =>
-  args.filter(x => !x.startsWith("-"));
-
 const parse = (path: Path): CommandDeclaration => {
   if (flexi.isEmpty(path)) {
     return declaration.empty;
@@ -105,7 +105,7 @@ const commandParser = (...args: string[]): CommandParser => {
 
   return {
     all: () => allCommands(),
-    find: () => parse(cleanArgs),
+    find: () => parse(args),
     isHelp: isHelp(...args),
     isDebug: isDebug(...args),
     stripOptions: () => cleanArgs

@@ -1,29 +1,23 @@
 import promptly from "promptly";
 
 import edit from "./edit";
-import {
-  ConfigCreationData,
-  empty
-} from "../../../../types/ConfigCreationData";
+import configCreationData, {
+  ConfigCreationData
+} from "../../../../models/configCreationData";
 import { command } from "../../../../types/Command";
 import { exists, prompt } from "../../../ssh/config";
 import { proceed } from "../../../ssh/config/check";
 
 const description = "Creates new SSH configuration";
 
-const hint =
-  "<hostName> <userName> <keyFile> <passPhrase> <addToAgent> <createKeyFile>";
+const hint = `[-host <name or IP of the router>]
+                             [-userName <admin login>]
+                             [-keyFile <path to SSH keyfile>]
+                             [-passPhrase <passphrase of SSH keyfile]
+                             [-addToAgent]
+                             [-createKeyFile]`;
 
 const run = (...args: string[]): void => {
-  const [
-    host,
-    userName,
-    privateKey,
-    passPhrase,
-    addKeyToAgent,
-    createKeyFile
-  ] = args;
-
   if (exists()) {
     promptly
       .confirm(
@@ -38,17 +32,9 @@ const run = (...args: string[]): void => {
     return;
   }
 
-  const initialValues: ConfigCreationData = {
-    ...empty,
-    ...{
-      host,
-      userName,
-      privateKey,
-      passPhrase,
-      addKeyToAgent: addKeyToAgent === "true",
-      createKeyFile: createKeyFile === "true"
-    }
-  };
+  const initialValues: Partial<
+    ConfigCreationData
+  > = configCreationData.fromArgs(...args);
 
   prompt(initialValues).then(config => proceed(config));
 };
