@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import chalk from "chalk";
 import { any } from "./arrayHelper";
-import declaration from "../types/CommandDeclaration";
+import declaration from "../models/commandDeclaration";
 import header from "../resources/header";
 import help from "./help";
 import commandParser from "./commandParser";

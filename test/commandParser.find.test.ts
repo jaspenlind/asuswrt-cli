@@ -1,7 +1,7 @@
 import commandParser from "../src/lib/commandParser";
 import declaration, {
   CommandDeclaration
-} from "../src/types/CommandDeclaration";
+} from "../src/models/commandDeclaration";
 
 describe("commandParser", () => {
   describe("find", () => {

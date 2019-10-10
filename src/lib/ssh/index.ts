@@ -3,7 +3,7 @@ import os from "os";
 import flexi, { FlexiPath } from "flexi-path";
 
 import { ExecResult } from "../../types";
-import { empty } from "../../types/SshConfig";
+import { empty } from "../../models/sshConfig";
 
 import sh = require("shelljs");
 import config = require("./config");

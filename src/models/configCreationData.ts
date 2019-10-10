@@ -1,20 +1,22 @@
 import flexi from "flexi-path";
 import { homedir } from "os";
 
-import { ConfigCreationData, sshConfig } from "../types";
+import { ConfigCreationData } from "../types";
+import sshConfig from "./sshConfig";
 import { toObject } from "../lib/mapHelper";
 import { parse } from "../lib/optionParser";
 
 export { ConfigCreationData };
 
-export const empty = (): ConfigCreationData => ({
-  ...sshConfig.empty,
-  ...{
-    passPhrase: "",
-    createKeyFile: false,
-    addKeyToAgent: false
-  }
-});
+export const empty = (): ConfigCreationData =>
+  Object.freeze({
+    ...sshConfig.empty,
+    ...{
+      passPhrase: "",
+      createKeyFile: false,
+      addKeyToAgent: false
+    }
+  });
 
 export const defaults: ConfigCreationData = {
   host: "192.168.1.1",

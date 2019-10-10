@@ -1,5 +1,5 @@
 import flexi, { TextTransform } from "flexi-path";
-import { sshConfig, SshConfig } from "../../../types";
+import { empty, SshConfig } from "../../../models/sshConfig";
 import check from "./check";
 import generateSshKey from "./generateSshKey";
 
@@ -24,7 +24,7 @@ export const get = (): SshConfig | null => {
   return exists() ? file.read({ transform: TextTransform.JSON }) : null;
 };
 
-const jsonProperties = Object.keys(sshConfig.empty);
+const jsonProperties = Object.keys(empty);
 
 export const set = (
   current: SshConfig,
@@ -36,7 +36,7 @@ export const set = (
         overwrite: options && options.overwrite
       });
 
-      resolve(get() || sshConfig.empty);
+      resolve(get() || empty);
     } catch (err) {
       reject(err);
     }

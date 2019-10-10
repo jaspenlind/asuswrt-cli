@@ -1,7 +1,7 @@
 import configCreationData, {
   ConfigCreationData
 } from "../../../../models/configCreationData";
-import { command } from "../../../../types/Command";
+import { create } from "../../../../models/command";
 import { get, prompt } from "../../../ssh/config";
 import { proceed } from "../../../ssh/config/check";
 
@@ -24,4 +24,4 @@ const run = (...args: string[]): void => {
   );
 };
 
-export default command({ description, hint, run });
+export default create({ description, hint, run });

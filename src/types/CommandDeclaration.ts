@@ -1,5 +1,6 @@
-import command, { Command } from "./Command";
-export interface CommandDeclaration {
+import { Command } from ".";
+
+export default interface CommandDeclaration {
   args: string[];
   canRun: boolean;
   command: Command;
@@ -7,21 +8,3 @@ export interface CommandDeclaration {
   name: string;
   subCommands: CommandDeclaration[];
 }
-
-export const empty: CommandDeclaration = {
-  args: [],
-  canRun: false,
-  command: command.empty,
-  fullName: "",
-  subCommands: [],
-  name: "empty"
-};
-
-export const commandDeclaration = (
-  fields?: Partial<CommandDeclaration>
-): CommandDeclaration => ({ ...empty, ...fields });
-
-export default {
-  create: commandDeclaration,
-  empty
-};

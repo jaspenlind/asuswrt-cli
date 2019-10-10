@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import { command } from "../../../../types/Command";
+import { create } from "../../../../models/command";
 
 const description = "Copy or analyze firewall log";
 
-export default command({ description });
+export default create({ description });

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import ssh from "../../ssh";
-import { command } from "../../../types/Command";
+import { create } from "../../../models/command";
 
 const description = "Display router uptime";
 
@@ -8,4 +8,4 @@ const run = (): void => {
   ssh.execute("uptime");
 };
 
-export default command({ description, run });
+export default create({ description, run });

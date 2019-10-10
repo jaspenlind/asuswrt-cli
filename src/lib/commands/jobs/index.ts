@@ -1,5 +1,5 @@
-import { command } from "../../../types/Command";
+import { create } from "../../../models/command";
 
 const description = "Cron job commands";
 
-export default command({ description });
+export default create({ description });

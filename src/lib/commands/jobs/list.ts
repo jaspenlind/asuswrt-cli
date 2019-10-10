@@ -1,5 +1,5 @@
 import ssh from "../../ssh";
-import { command } from "../../../types/Command";
+import { create } from "../../../models/command";
 
 const description = "Lists existing cron jobs";
 
@@ -7,4 +7,4 @@ const run = () => {
   ssh.execute("cru l");
 };
 
-export default command({ description, run });
+export default create({ description, run });

@@ -2,8 +2,8 @@
 import flexi, { FlexiPath, Path, until } from "flexi-path";
 
 import { CommandParser } from "../types";
-import command, { Command } from "../types/Command";
-import declaration, { CommandDeclaration } from "../types/CommandDeclaration";
+import command, { Command } from "../models/command";
+import declaration, { CommandDeclaration } from "../models/commandDeclaration";
 
 const rootCommandPath = flexi.path(__dirname).append("commands/");
 

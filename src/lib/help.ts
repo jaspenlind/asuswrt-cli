@@ -1,11 +1,9 @@
 #!/usr/bin/env node
 import chalk from "chalk";
 import { any } from "./arrayHelper";
-import declaration from "../types/CommandDeclaration";
+import { CommandDeclaration, empty } from "../models/commandDeclaration";
 import moduleLogger from "./logger";
 import parser from "./commandParser";
-
-import { CommandDeclaration } from "../types";
 
 const logger = moduleLogger.createLogger(module);
 
@@ -18,7 +16,7 @@ const toColumns = (strings: string[], width = 40): string => {
 };
 
 const help = (command?: CommandDeclaration): void => {
-  const isRootHelp = command === undefined || command === declaration.empty;
+  const isRootHelp = command === undefined || command === empty;
   const guardCheckedCommand = command as CommandDeclaration;
   const commandName = isRootHelp
     ? ""

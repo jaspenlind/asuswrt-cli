@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { command } from "../../../types/Command";
+import { create } from "../../../models/command";
 import ssh from "../../ssh";
 
 const description = "Opens the Skynet firewall with (optional) arguments";
@@ -19,4 +19,4 @@ const run = (...args: string[]): void => {
   }
 };
 
-export default command({ description, helpName, run });
+export default create({ description, helpName, run });
