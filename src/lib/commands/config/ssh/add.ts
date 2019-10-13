@@ -4,7 +4,7 @@ import edit from "./edit";
 import configCreationData, {
   ConfigCreationData
 } from "../../../../models/configCreationData";
-import { create } from "../../../../models/command";
+import { configCommand } from "../../../../models/command";
 import { exists, prompt } from "../../../ssh/config";
 import { proceed } from "../../../ssh/config/check";
 
@@ -39,4 +39,4 @@ const run = (...args: string[]): void => {
   prompt(initialValues).then(config => proceed(config));
 };
 
-export default create({ description, hint, run });
+export default configCommand({ description, hint, run });

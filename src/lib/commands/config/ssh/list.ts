@@ -2,7 +2,7 @@ import chalk from "chalk";
 import flexi from "flexi-path";
 
 import config, { SshConfig } from "../../../ssh/config";
-import { create } from "../../../../models/command";
+import { configCommand } from "../../../../models/command";
 
 interface ConfigOptions extends SshConfig {
   keyFileExists: boolean;
@@ -29,4 +29,4 @@ const run = (): void => {
   console.log(JSON.stringify(result, null, 2));
 };
 
-export default create({ description, run });
+export default configCommand({ description, run });

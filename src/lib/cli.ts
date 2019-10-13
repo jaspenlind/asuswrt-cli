@@ -41,7 +41,7 @@ const cli = {
         console.error(chalk.red("\nUnknown command\n"));
       }
     } else {
-      config.check().then(ok => {
+      config.check(currentCommand).then(ok => {
         if (ok) {
           console.log(
             `Excuting: router ${chalk.bold(

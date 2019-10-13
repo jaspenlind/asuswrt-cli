@@ -1,10 +1,9 @@
 import flexi from "flexi-path";
 import { homedir } from "os";
+import optionParser from "option-parser";
 
 import { ConfigCreationData } from "../types";
 import sshConfig from "./sshConfig";
-import { toObject } from "../lib/mapHelper";
-import { parse } from "../lib/optionParser";
 
 export { ConfigCreationData };
 
@@ -28,9 +27,9 @@ export const defaults: ConfigCreationData = {
 };
 
 export const fromArgs = (...args: string[]): Partial<ConfigCreationData> => {
-  const options = parse(...args);
+  const options = optionParser.parse(args);
 
-  return toObject(options);
+  return options.asPartial();
 };
 
 export default {

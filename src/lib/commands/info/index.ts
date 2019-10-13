@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import { create } from "../../../models/command";
+import { merlinCommand } from "../../../models/command";
 
 const description = "Shows router information";
 
-export default create({ description });
+export default merlinCommand({ description });

@@ -1,50 +1,62 @@
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": ["prettier"],
   "extends": [
     "airbnb-base",
     "plugin:@typescript-eslint/recommended",
-    "plugin:jest/recommended",
-    "plugin:prettier/recommended",
+    "prettier/@typescript-eslint",
     "prettier",
-    "prettier/@typescript-eslint"
+    "prettier/react",
+    "plugin:prettier/recommended",
+    "plugin:jest/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": 2018,
-    "sourceType": "module"
-  },
-  "overrides": [
-    {
-      "env": {
-        "jest": true
-      },
-      "files": ["**/*.test.ts"],
-      "plugins": ["jest"]
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
     }
-  ],
-  "rules": {
-    "prettier/prettier": "error",
-    "semi": "off",
-    "class-methods-use-this": ["off"],
-    "@typescript-eslint/semi": ["off"],
-    "quotes": ["error", "double"],
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "no-console": "off",
-    "indent": "off",
-    "prefer-template": "warn",
-    "@typescript-eslint/indent": ["off"],
-    "jest/no-disabled-tests": "warn",
-    "jest/no-focused-tests": "error",
-    "jest/no-identical-title": "off",
-    "jest/prefer-to-have-length": "warn",
-    "jest/valid-expect": "error"
   },
+  "plugins": ["@typescript-eslint", "jest", "react"],
   "settings": {
+    "react": {
+      "version": "detect"
+    },
     "import/resolver": {
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
+  },
+  "env": {
+    "jest/globals": true
+  },
+  "rules": {
+    "import/prefer-default-export": ["off"],
+    "no-restricted-syntax": ["off", "ForOfStatement"],
+    "no-console": "off",
+    "@typescript-eslint/explicit-function-return-type": ["off"],
+    "@typescript-eslint/explicit-member-accessibility": [
+      "error",
+      {
+        "accessibility": "explicit",
+        "overrides": {
+          "constructors": "no-public"
+        }
+      }
+    ],
+    "react/no-unescaped-entities": [
+      "error",
+      {
+        "forbid": [
+          { "char": ">", "alternatives": ["&gt;"] },
+          { "char": "}", "alternatives": ["&#125;"] }
+        ]
+      }
+    ],
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error"
   }
 }

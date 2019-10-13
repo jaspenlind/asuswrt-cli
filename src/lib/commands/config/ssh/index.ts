@@ -1,5 +1,5 @@
-import { create } from "../../../../models/command";
+import { configCommand } from "../../../../models/command";
 
 const description = "SSH Config commands";
 
-export default create({ description });
+export default configCommand({ description });

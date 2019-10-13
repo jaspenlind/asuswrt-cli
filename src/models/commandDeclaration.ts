@@ -1,7 +1,7 @@
-import { CommandDeclaration } from "../types";
+import { Command, CommandDeclaration, CommandRequirement } from "../types";
 import command from "./command";
 
-export { CommandDeclaration };
+export { Command, CommandDeclaration };
 
 export const empty: CommandDeclaration = Object.freeze({
   args: [],
@@ -9,12 +9,23 @@ export const empty: CommandDeclaration = Object.freeze({
   command: command.empty,
   fullName: "",
   subCommands: [],
-  name: "empty"
+  name: "empty",
+  requires: () => false
 });
 
 export const create = (
   fields?: Partial<CommandDeclaration>
-): CommandDeclaration => ({ ...empty, ...fields });
+): CommandDeclaration => {
+  const declaration: CommandDeclaration = {
+    ...empty,
+    ...fields
+  };
+
+  declaration.requires = (feature: CommandRequirement) =>
+    declaration.command.requirements.find(x => x === feature) !== undefined;
+
+  return Object.freeze(declaration);
+};
 
 export default {
   create,

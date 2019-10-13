@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 import flexi, { FlexiPath, Path, until } from "flexi-path";
-
+import optionParser from "option-parser";
 import { CommandParser } from "../types";
 import command, { Command } from "../models/command";
-import declaration, { CommandDeclaration } from "../models/commandDeclaration";
+import declaration, {
+  create,
+  CommandDeclaration
+} from "../models/commandDeclaration";
 
 const rootCommandPath = flexi.path(__dirname).append("commands/");
 
@@ -14,16 +17,27 @@ const isHelp = (...args: string[]): boolean => {
 const isDebug = (...args: string[]): boolean =>
   args.filter(x => x === "--debug").length > 0;
 
-const mostSpecificCommand = (path: Path): [FlexiPath, ...string[]] => {
-  const walked = flexi.walk.back(path, {
+const isCommandRoot = (path: FlexiPath) => {
+  const pathString = path.path.endsWith("/") ? path.path : `${path.path}/`;
+
+  return pathString === rootCommandPath.path;
+};
+
+const mostSpecificCommand = (path: FlexiPath): [FlexiPath, ...string[]] => {
+  const pathSegments = path.segments;
+
+  const options = optionParser.parse(pathSegments);
+  const pathWithoutOptions = options.args.other();
+
+  const walked = flexi.walk.back(pathWithoutOptions, {
     until: until.exists({ ignoreFileExtensions: true })
   });
 
-  const args = walked.diff.segments;
+  const args = walked.diff.prepend(...options.args.options()).segments;
 
   let matchedCommand = walked.result;
 
-  if (walked.result.isEmpty() || walked.result.path === rootCommandPath.path) {
+  if (walked.result.isEmpty() || isCommandRoot(walked.result)) {
     return [flexi.empty(), ...args];
   }
 
@@ -45,20 +59,20 @@ const requireContent = (path: FlexiPath): Command => require(path.path).default;
 const withoutOptions = (...args: string[]): string[] =>
   args.filter(x => !x.startsWith("-"));
 
-const createCommand = (currentPath: Path): CommandDeclaration => {
-  const [path, ...args] = mostSpecificCommand(currentPath);
+const createCommand = (path: FlexiPath): CommandDeclaration => {
+  const [commandPath, ...args] = mostSpecificCommand(path);
 
-  if (!path.exists()) {
+  if (!commandPath.exists()) {
     return declaration.empty;
   }
 
-  const currentCommand = requireContent(path);
+  const currentCommand = requireContent(commandPath);
 
   if (!currentCommand) {
     return declaration.empty;
   }
 
-  const trimmedPath = path
+  const trimmedPath = commandPath
     .except(rootCommandPath)
     .parent(x => x.name !== "index");
 
@@ -68,19 +82,19 @@ const createCommand = (currentPath: Path): CommandDeclaration => {
     .map(x => x.name)
     .join(" ");
 
-  const subCommands = path
+  const subCommands = commandPath
     .children()
     .filter(x => x !== undefined && !x.isEmpty() && x.name !== "index")
     .map(x => createCommand(x));
 
-  const decl: CommandDeclaration = {
+  const decl: CommandDeclaration = create({
     args,
     canRun: currentCommand.run !== command.empty.run,
     fullName,
     name,
     subCommands,
     command: currentCommand
-  };
+  });
 
   return decl;
 };

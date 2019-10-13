@@ -1,6 +1,10 @@
 import promptly from "promptly";
 
-import { ConfigCreationData } from "../../../types";
+import {
+  ConfigCreationData,
+  CommandDeclaration,
+  CommandRequirement
+} from "../../../types";
 import { exists, generateSshKey, prompt, routerInfo, set } from ".";
 
 /**
@@ -21,8 +25,12 @@ export const proceed = async (
   routerInfo(pubKey);
 };
 
-const check = async (): Promise<boolean> => {
-  if (exists()) {
+const check = async (currentCommand?: CommandDeclaration): Promise<boolean> => {
+  const requiresConfig =
+    (currentCommand && currentCommand.requires(CommandRequirement.SshConfig)) ||
+    currentCommand === undefined;
+
+  if (exists() || !requiresConfig) {
     return true;
   }
 

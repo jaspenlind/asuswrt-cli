@@ -1,4 +1,4 @@
-import { Command } from ".";
+import { Command, CommandRequirement } from ".";
 
 export default interface CommandDeclaration {
   args: string[];
@@ -7,4 +7,5 @@ export default interface CommandDeclaration {
   fullName: string;
   name: string;
   subCommands: CommandDeclaration[];
+  requires: (feature: CommandRequirement) => boolean;
 }

@@ -1,8 +1,10 @@
 #!/usr/bin/env node
+import { CommandRequirement } from ".";
 
 export default interface Command {
   description?: string;
   helpName?: string;
-  run: (...args: string[]) => any;
   hint?: string;
+  requirements: CommandRequirement[];
+  run: (...args: string[]) => any;
 }

@@ -53,7 +53,7 @@ describe("cli", () => {
     });
 
     it("should check config when valid command specified", () => {
-      command.default.run = jest.fn();
+      command.default = { run: jest.fn() };
       config.check = jest.fn(() => Promise.resolve(true));
 
       cli.run("info", "uptime");
@@ -76,7 +76,7 @@ describe("cli", () => {
     });
 
     it("should not run command when config check is not ok", () => {
-      test.todo("todo");
+      test.todo("todo config check ok");
     });
   });
 });

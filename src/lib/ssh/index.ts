@@ -36,7 +36,7 @@ const execute = (...args: string[]): ExecResult => {
   return result;
 };
 
-const executeInTerminal = (args: any) => {
+const executeInTerminal = (args: string | string[]) => {
   const sshConfig = config.get() || empty;
 
   const ssh = `ssh -i  '${sshConfig.privateKey}' ${sshConfig.userName}@${sshConfig.host}`;
