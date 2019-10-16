@@ -6,6 +6,10 @@ const description = "Creates a new cron job";
 
 const hint = "<unique id> <'min hour day month week command'>";
 
+interface CronJob {
+  uniqueId: string;
+}
+
 const run = async (...args: string[]) => {
   let [id, commandToAdd] = args;
   id = id || (await promptly.prompt("Unique id for the job to add: "));
