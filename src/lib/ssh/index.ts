@@ -2,7 +2,7 @@
 import os from "os";
 import flexi, { FlexiPath } from "flexi-path";
 
-import { ExecResult } from "../../types";
+import { ExecOptions, ExecResult } from "../../types";
 import { empty } from "../../models/sshConfig";
 
 import sh = require("shelljs");
@@ -24,14 +24,16 @@ export const download = (file: FlexiPath): FlexiPath => {
   return flexi.empty();
 };
 
-const execute = (...args: string[]): ExecResult => {
+const execute = (
+  command: string,
+  options?: Partial<ExecOptions>
+): ExecResult => {
   const sshConfig = config.get() || empty;
+  const silent = (options && options.silent) || false;
 
   const ssh = `ssh -i '${sshConfig.privateKey}' ${sshConfig.userName}@${sshConfig.host}`;
 
-  const command = args.join(" ");
-
-  const result: ExecResult = sh.exec(`${ssh} "${command}"`);
+  const result: ExecResult = sh.exec(`${ssh} "${command}"`, { silent });
 
   return result;
 };
