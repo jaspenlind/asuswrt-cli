@@ -9,4 +9,5 @@ export { ParseResult } from "./ParseResult";
 export { default as PromptType } from "./PromptType";
 export { default as PromptBody } from "./PromptBody";
 export { default as SshConfig } from "./SshConfig";
+export { ScheduledItem } from "./ScheduledItem";
 export { StringComparison } from "./StringComparison";

@@ -46,6 +46,7 @@
     "@types/shelljs": "^0.8.5",
     "@types/table": "^4.0.7",
     "chalk": "^2.4.2",
+    "cron-parser": "^2.13.0",
     "flexi-path": "^0.1.2-beta.16",
     "nordvpn-server-lister": "https://github.com/jaspenlind/nordvpn-server-lister/releases/download/v0.0.1-alpha.3/nordvpn-server-lister-0.0.1-alpha.3.tgz",
     "option-parser": "https://github.com/jaspenlind/option-parser/releases/download/v0.0.1-alpha.6/option-parser-0.0.1-alpha.6.tgz",

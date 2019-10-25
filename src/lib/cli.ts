@@ -40,7 +40,7 @@ const runCommand = (command: CommandDeclaration, options: OptionMap) => {
     const message = [`Excuting: router ${chalk.bold(command.fullName)}`];
 
     if (any(command.args)) {
-      message.push(`with options ${command.args.join(" ")}`);
+      message.push(` with options '${command.args.join(" ")}'`);
     }
 
     message.push(" ...");
