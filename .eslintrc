@@ -33,7 +33,6 @@
   "rules": {
     "import/prefer-default-export": ["off"],
     "no-restricted-syntax": ["off", "ForOfStatement"],
-    "no-console": "off",
     "@typescript-eslint/explicit-function-return-type": ["off"],
     "@typescript-eslint/explicit-member-accessibility": [
       "error",
@@ -47,10 +46,7 @@
     "react/no-unescaped-entities": [
       "error",
       {
-        "forbid": [
-          { "char": ">", "alternatives": ["&gt;"] },
-          { "char": "}", "alternatives": ["&#125;"] }
-        ]
+        "forbid": [{ "char": ">", "alternatives": ["&gt;"] }, { "char": "}", "alternatives": ["&#125;"] }]
       }
     ],
     "jest/no-disabled-tests": "warn",
