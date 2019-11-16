@@ -18,9 +18,6 @@ const run = async (...args: string[]) => {
 
   const result = await fetch().then(response => response.items.filter(x => x.country === country));
 
-  /**  const tabularSettings = table(nvramSettings, {
-    columnDefault: { width: 40 }
-  }); */
   const data = result.map(x => ({ ip: x.ip_address, name: x.name }));
 
   const tabular = data.map(x => {
