@@ -42,11 +42,11 @@
     "version": "git add -A src"
   },
   "dependencies": {
+    "args-any": "0.0.1-beta.9",
     "chalk": "^2.4.2",
     "cron-parser": "^2.13.0",
     "flexi-path": "^0.2.0",
     "nordvpn-server-lister": "https://github.com/jaspenlind/nordvpn-server-lister/releases/download/v0.1.0/nordvpn-server-lister-0.1.0.tgz",
-    "option-parser": "https://github.com/jaspenlind/option-parser/releases/download/v0.0.1-alpha.6/option-parser-0.0.1-alpha.6.tgz",
     "promptly": "^3.0.3",
     "shelljs": "^0.8.3",
     "ssh-keygen": "^0.4.2",

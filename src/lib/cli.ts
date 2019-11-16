@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import chalk from "chalk";
-import optionParser from "option-parser";
-import { OptionMap } from "option-parser/dist/src/types/OptionMap";
+import { parse, OptionMap } from "args-any";
 import { any } from "./arrayHelper";
 import declaration, { CommandDeclaration } from "../models/commandDeclaration";
 import header from "../resources/header";
@@ -16,10 +15,7 @@ const hasHelp = (options: OptionMap) => options.has("h") || options.has("help");
 const isEmpty = (command: CommandDeclaration) => command === declaration.empty;
 
 const isHelp = (command: CommandDeclaration, options: OptionMap) =>
-  options.args.all().length === 0 ||
-  hasHelp(options) ||
-  isEmpty(command) ||
-  !command.canRun;
+  options.args.all().length === 0 || hasHelp(options) || isEmpty(command) || !command.canRun;
 
 const showHelp = (command: CommandDeclaration, options: OptionMap) => {
   if (!isHelp(command, options) && !isEmpty(command)) return;
@@ -54,7 +50,7 @@ const cli = {
     const logger = moduleLogger.createLogger(module);
 
     const parser = commandParser(...args);
-    const options = optionParser.parse(args);
+    const options = parse(args);
 
     const currentCommand = parser.find();
 

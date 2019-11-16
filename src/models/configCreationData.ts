@@ -1,6 +1,6 @@
 import flexi from "flexi-path";
 import { homedir } from "os";
-import optionParser from "option-parser";
+import { parse } from "args-any";
 
 import { ConfigCreationData } from "../types";
 import sshConfig from "./sshConfig";
@@ -27,7 +27,7 @@ export const defaults: ConfigCreationData = {
 };
 
 export const fromArgs = (...args: string[]): Partial<ConfigCreationData> => {
-  const options = optionParser.parse(args);
+  const options = parse(args);
 
   return options.asPartial();
 };

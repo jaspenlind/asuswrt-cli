@@ -1,12 +1,9 @@
 #!/usr/bin/env node
 import flexi, { FlexiPath, Path, until } from "flexi-path";
-import optionParser from "option-parser";
+import argsAny from "args-any";
 import { CommandParser } from "../types";
 import command, { Command } from "../models/command";
-import declaration, {
-  create,
-  CommandDeclaration
-} from "../models/commandDeclaration";
+import declaration, { create, CommandDeclaration } from "../models/commandDeclaration";
 
 const rootCommandPath = flexi.path(__dirname).append("commands/");
 
@@ -14,8 +11,7 @@ const isHelp = (...args: string[]): boolean => {
   return (args.length > 0 && args[0] === "-h") || false;
 };
 
-const isDebug = (...args: string[]): boolean =>
-  args.filter(x => x === "--debug").length > 0;
+const isDebug = (...args: string[]): boolean => args.filter(x => x === "--debug").length > 0;
 
 const isCommandRoot = (path: FlexiPath) => {
   const pathString = path.path.endsWith("/") ? path.path : `${path.path}/`;
@@ -26,7 +22,7 @@ const isCommandRoot = (path: FlexiPath) => {
 const mostSpecificCommand = (path: FlexiPath): [FlexiPath, ...string[]] => {
   const pathSegments = path.segments;
 
-  const options = optionParser.parse(pathSegments);
+  const options = argsAny.parse(pathSegments);
   const pathWithoutOptions = options.args.other();
 
   const walked = flexi.walk.back(pathWithoutOptions, {
@@ -56,8 +52,7 @@ const mostSpecificCommand = (path: FlexiPath): [FlexiPath, ...string[]] => {
 const requireContent = (path: FlexiPath): Command => require(path.path).default;
 /* eslint-enable import/no-dynamic-require,global-require,@typescript-eslint/no-var-requires */
 
-const withoutOptions = (...args: string[]): string[] =>
-  args.filter(x => !x.startsWith("-"));
+const withoutOptions = (...args: string[]): string[] => args.filter(x => !x.startsWith("-"));
 
 const createCommand = (path: FlexiPath): CommandDeclaration => {
   const [commandPath, ...args] = mostSpecificCommand(path);
@@ -72,9 +67,7 @@ const createCommand = (path: FlexiPath): CommandDeclaration => {
     return declaration.empty;
   }
 
-  const trimmedPath = commandPath
-    .except(rootCommandPath)
-    .parent(x => x.name !== "index");
+  const trimmedPath = commandPath.except(rootCommandPath).parent(x => x.name !== "index");
 
   const { name } = trimmedPath;
   const fullName = trimmedPath

@@ -11,10 +11,7 @@ export const empty: Command = Object.freeze({
   requirements: []
 });
 
-export const create = (
-  fields?: Partial<Command>,
-  baseCommand?: Partial<Command>
-): Command => {
+export const create = (fields?: Partial<Command>, baseCommand?: Partial<Command>): Command => {
   const command: Command = {
     ...empty,
     ...baseCommand,
@@ -38,11 +35,7 @@ export const merlinCommand = (fields?: Partial<Command>): Command => {
 
 export const skynetCommand = (fields?: Partial<Command>): Command => {
   return create(fields, {
-    requirements: [
-      CommandRequirement.SshConfig,
-      CommandRequirement.Merlin,
-      CommandRequirement.Skynet
-    ]
+    requirements: [CommandRequirement.SshConfig, CommandRequirement.Merlin, CommandRequirement.Skynet]
   });
 };
 

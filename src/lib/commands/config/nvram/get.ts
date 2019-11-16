@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import optionParser from "option-parser";
+import { parse } from "args-any";
 import promptly from "promptly";
 import ssh from "../../../ssh";
 import { merlinCommand } from "../../../../models/command";
@@ -7,14 +7,13 @@ import { merlinCommand } from "../../../../models/command";
 const description = "Fetches a nvram config setting";
 const hint = "[-key <name of nvram key to fetch>";
 
-export const get = (key: string): string =>
-  ssh.execute(`nvram get ${key}`, { silent: true }).stdout;
+export const get = (key: string): string => ssh.execute(`nvram get ${key}`, { silent: true }).stdout;
 
 const run = async (...args: string[]) => {
-  const typedArgs = optionParser.parse(args);
+  const typedArgs = parse(args);
+  const option = typedArgs.get("key");
 
-  const key =
-    typedArgs.get("key") || (await promptly.prompt("Enter nvram key to get:"));
+  const key = (option && option.value) || (await promptly.prompt("Enter nvram key to get:"));
 
   console.log(get(key));
 };

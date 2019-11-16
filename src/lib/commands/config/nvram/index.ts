@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import optionParser from "option-parser";
+import { parse } from "args-any";
 import { table } from "table";
 import { get } from "./get";
 import ssh from "../../../ssh";
@@ -29,9 +29,7 @@ export const list = (query?: Partial<NvramQuery>): string[][] => {
 };
 
 const run = (...args: string[]) => {
-  const query = optionParser
-    .parse(args, { keyPrefix: "filter" })
-    .asPartial<NvramQuery>();
+  const query = parse(args, { keyPrefix: "filter" }).asPartial<NvramQuery>();
 
   const nvramSettings = list(query);
 
