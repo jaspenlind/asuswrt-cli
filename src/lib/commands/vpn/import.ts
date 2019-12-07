@@ -1,7 +1,8 @@
 import { parse } from "args-any";
 import promptly from "promptly";
 import { table } from "table";
-import fetch from "nordvpn-server-lister/dist/src";
+import vpn from "nordvpn-server-lister";
+
 import { skynetCommand } from "../../../models/command";
 
 const description = "Import vpn endpoints";
@@ -16,7 +17,7 @@ const run = async (...args: string[]) => {
 
   const country = filter.country || (await promptly.prompt("Country"));
 
-  const result = await fetch().then(response => response.items.filter(x => x.country === country));
+  const result = await vpn.fetch().then(response => response.items.filter(x => x.country === country));
 
   const data = result.map(x => ({ ip: x.ip_address, name: x.name }));
 
