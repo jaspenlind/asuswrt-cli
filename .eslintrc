@@ -32,6 +32,7 @@
   },
   "rules": {
     "no-console": ["off"],
+    "import/extensions": ["error", { "ts": "never" }],
     "import/prefer-default-export": ["off"],
     "no-restricted-syntax": ["off", "ForOfStatement"],
     "@typescript-eslint/explicit-function-return-type": ["off"],
