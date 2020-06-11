@@ -7,7 +7,7 @@ export const empty: Command = Object.freeze({
   description: "",
   helpName: "",
   hint: "",
-  run: () => {},
+  run: () => "",
   requirements: []
 });
 

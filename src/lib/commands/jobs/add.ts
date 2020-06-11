@@ -13,8 +13,7 @@ interface CronJob {
 const run = async (...args: string[]) => {
   let [id, commandToAdd] = args;
   id = id || (await promptly.prompt("Unique id for the job to add: "));
-  commandToAdd =
-    commandToAdd || (await promptly.prompt("Command to execute: "));
+  commandToAdd = commandToAdd || (await promptly.prompt("Command to execute: "));
 
   ssh.execute(`cru a ${id} "${commandToAdd}"`);
 };

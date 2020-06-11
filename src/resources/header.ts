@@ -5,10 +5,7 @@ const header = (): string => {
   const placeholderWidth = 18;
   const logo = flexi.path({ basePath: __dirname, path: "logo" }).read();
 
-  return logo.replace(
-    "{{   version    }}",
-    `v${version}`.padEnd(placeholderWidth)
-  );
+  return logo.replace("{{   version    }}", `v${version}`.padEnd(placeholderWidth));
 };
 
 export default header;

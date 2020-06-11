@@ -100,9 +100,7 @@ const createModuleLogger = (module: NodeModule): Logger => {
   ): void => {
     const category = createCategory(name || "", options.functionName);
 
-    const categoryShouldBeLogged =
-      filterCategories.length === 0 ||
-      filterCategories.find(x => category.startsWith(x));
+    const categoryShouldBeLogged = filterCategories.length === 0 || filterCategories.find(x => category.startsWith(x));
 
     if (!categoryShouldBeLogged || (!message && !options.meta)) {
       // Nothing to log
@@ -110,27 +108,18 @@ const createModuleLogger = (module: NodeModule): Logger => {
     }
     moduleLogger.log(level, message || "", {
       category,
-      meta:
-        options.meta && typeof options.meta === "function"
-          ? options.meta()
-          : options.meta
+      meta: options.meta && typeof options.meta === "function" ? options.meta() : options.meta
     });
   };
 
   const logger = {
     name: moduleName,
-    verbose: (message?: string, options?: any) =>
-      log(null, "verbose", message || "", options),
-    debug: (message?: string, options?: any) =>
-      log(moduleName, "debug", message || "", options),
-    info: (message?: string, options?: any) =>
-      log(moduleName, "info", message || "", options),
-    warn: (message?: string, options?: any) =>
-      log(moduleName, "warn", message || "", options),
-    error: (message?: string, options?: any) =>
-      log(moduleName, "error", message || "", options),
-    fatal: (message?: string, options?: any) =>
-      log(moduleName, "fatal", message || "", options)
+    verbose: (message?: string, options?: any) => log(null, "verbose", message || "", options),
+    debug: (message?: string, options?: any) => log(moduleName, "debug", message || "", options),
+    info: (message?: string, options?: any) => log(moduleName, "info", message || "", options),
+    warn: (message?: string, options?: any) => log(moduleName, "warn", message || "", options),
+    error: (message?: string, options?: any) => log(moduleName, "error", message || "", options),
+    fatal: (message?: string, options?: any) => log(moduleName, "fatal", message || "", options)
   };
 
   logger.info(`Logger for module ${moduleName} created`, {

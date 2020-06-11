@@ -6,7 +6,6 @@ import declaration, { CommandDeclaration } from "../models/commandDeclaration";
 import header from "../resources/header";
 import help from "./help";
 import commandParser from "./commandParser";
-import moduleLogger from "./logger";
 import config from "./ssh/config";
 
 const hasDebug = (options: OptionMap) => options.has("debug");
@@ -46,9 +45,8 @@ const runCommand = (command: CommandDeclaration, options: OptionMap) => {
 };
 
 const cli = {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   run: (...args: string[]) => {
-    const logger = moduleLogger.createLogger(module);
-
     const parser = commandParser(...args);
     const options = parse(args);
 

@@ -31,9 +31,7 @@ describe("ssh", () => {
         setup();
 
         return prompt().then(() => {
-          expect(
-            messages.find(x => x.startsWith("Router address"))
-          ).toBeDefined();
+          expect(messages.find(x => x.startsWith("Router address"))).toBeDefined();
         });
       });
 
@@ -49,9 +47,7 @@ describe("ssh", () => {
         setup();
 
         return prompt().then(() => {
-          expect(
-            messages.find(x => x.startsWith("SSH private key file"))
-          ).toBeDefined();
+          expect(messages.find(x => x.startsWith("SSH private key file"))).toBeDefined();
         });
       });
 

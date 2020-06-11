@@ -13,9 +13,7 @@ export const empty: CommandDeclaration = Object.freeze({
   requires: () => false
 });
 
-export const create = (
-  fields?: Partial<CommandDeclaration>
-): CommandDeclaration => {
+export const create = (fields?: Partial<CommandDeclaration>): CommandDeclaration => {
   const declaration: CommandDeclaration = {
     ...empty,
     ...fields

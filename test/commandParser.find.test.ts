@@ -1,7 +1,5 @@
 import commandParser from "../src/lib/commandParser";
-import declaration, {
-  CommandDeclaration
-} from "../src/models/commandDeclaration";
+import declaration, { CommandDeclaration } from "../src/models/commandDeclaration";
 
 describe("commandParser", () => {
   describe("find", () => {
@@ -49,11 +47,7 @@ describe("commandParser", () => {
     });
 
     it("can find job add command with id", () => {
-      const command = commandParser(
-        "jobs",
-        "add",
-        "id"
-      ).find() as CommandDeclaration;
+      const command = commandParser("jobs", "add", "id").find() as CommandDeclaration;
 
       expect(command).not.toBeNull();
 

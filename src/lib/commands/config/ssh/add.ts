@@ -1,9 +1,7 @@
 import promptly from "promptly";
 
 import edit from "./edit";
-import configCreationData, {
-  ConfigCreationData
-} from "../../../../models/configCreationData";
+import configCreationData, { ConfigCreationData } from "../../../../models/configCreationData";
 import { configCommand } from "../../../../models/command";
 import { exists, prompt } from "../../../ssh/config";
 import { proceed } from "../../../ssh/config/check";
@@ -19,22 +17,16 @@ const hint = `[-host <name or IP of the router>]
 
 const run = (...args: string[]): void => {
   if (exists()) {
-    promptly
-      .confirm(
-        "SSH configuration does already exist. Do you want to update instead? [y/N]: "
-      )
-      .then(response => {
-        if (response) {
-          edit.run(...args);
-        }
-      });
+    promptly.confirm("SSH configuration does already exist. Do you want to update instead? [y/N]: ").then(response => {
+      if (response) {
+        edit.run(...args);
+      }
+    });
 
     return;
   }
 
-  const initialValues: Partial<
-    ConfigCreationData
-  > = configCreationData.fromArgs(...args);
+  const initialValues: Partial<ConfigCreationData> = configCreationData.fromArgs(...args);
 
   prompt(initialValues).then(config => proceed(config));
 };

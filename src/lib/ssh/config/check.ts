@@ -1,19 +1,12 @@
 import promptly from "promptly";
 
-import {
-  ConfigCreationData,
-  CommandDeclaration,
-  CommandRequirement
-} from "../../../types";
+import { ConfigCreationData, CommandDeclaration, CommandRequirement } from "../../../types";
 import { exists, generateSshKey, prompt, routerInfo, set } from ".";
 
 /**
  * @ignore
  */
-export const proceed = async (
-  config: ConfigCreationData,
-  options?: { overwrite?: boolean }
-): Promise<void> => {
+export const proceed = async (config: ConfigCreationData, options?: { overwrite?: boolean }): Promise<void> => {
   await set(config, options);
 
   let pubKey: string | undefined;
@@ -27,8 +20,7 @@ export const proceed = async (
 
 const check = async (currentCommand?: CommandDeclaration): Promise<boolean> => {
   const requiresConfig =
-    (currentCommand && currentCommand.requires(CommandRequirement.SshConfig)) ||
-    currentCommand === undefined;
+    (currentCommand && currentCommand.requires(CommandRequirement.SshConfig)) || currentCommand === undefined;
 
   if (exists() || !requiresConfig) {
     return true;

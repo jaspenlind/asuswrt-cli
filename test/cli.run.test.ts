@@ -19,6 +19,7 @@ afterEach(() => {
 describe("cli", () => {
   describe("run", () => {
     it("should show header", () => {
+      console.error = jest.fn();
       cli.run();
 
       expect(header.default).toHaveBeenCalled();
@@ -61,6 +62,7 @@ describe("cli", () => {
       expect(config.check).toHaveBeenCalled();
     });
 
+    // eslint-disable-next-line jest/expect-expect
     it("should run command when config check is ok", () => {
       test.todo("todo");
     });
@@ -75,6 +77,7 @@ describe("cli", () => {
       expect(spy).toHaveBeenCalled();
     });
 
+    // eslint-disable-next-line jest/expect-expect
     it("should not run command when config check is not ok", () => {
       test.todo("todo config check ok");
     });

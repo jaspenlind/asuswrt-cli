@@ -18,30 +18,18 @@ const toColumns = (strings: string[], width = 40): string => {
 const help = (command?: CommandDeclaration): void => {
   const isRootHelp = command === undefined || command === empty;
   const guardCheckedCommand = command as CommandDeclaration;
-  const commandName = isRootHelp
-    ? ""
-    : chalk.bold(` ${guardCheckedCommand.fullName}`);
+  const commandName = isRootHelp ? "" : chalk.bold(` ${guardCheckedCommand.fullName}`);
   logger.debug(undefined, {
     functionName: "help",
     meta: { isRootHelp, commandName }
   });
 
-  const usage =
-    (!isRootHelp && guardCheckedCommand.command.hint) || "options [parameters]";
+  const usage = (!isRootHelp && guardCheckedCommand.command.hint) || "options [parameters]";
   const lines = [`Usage: router${commandName} ${usage}`];
 
-  const commands = isRootHelp
-    ? parser().all()
-    : guardCheckedCommand.subCommands || [command];
+  const commands = isRootHelp ? parser().all() : guardCheckedCommand.subCommands || [command];
 
-  commands.forEach(x =>
-    lines.push(
-      toColumns([
-        ` ${x.command.helpName || x.name}`,
-        x.command.description || ""
-      ])
-    )
-  );
+  commands.forEach(x => lines.push(toColumns([` ${x.command.helpName || x.name}`, x.command.description || ""])));
 
   if (isRootHelp || (command !== undefined && any(command.subCommands))) {
     lines.push("");
@@ -49,9 +37,7 @@ const help = (command?: CommandDeclaration): void => {
 
     lines.push(toColumns([" -h", "Show this help screen about the tool"]));
 
-    commands.forEach(x =>
-      lines.push(toColumns([` -h ${x.fullName}`, `${x.name} options`]))
-    );
+    commands.forEach(x => lines.push(toColumns([` -h ${x.fullName}`, `${x.name} options`])));
   }
   console.log(lines.join("\n"));
 };

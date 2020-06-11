@@ -13,9 +13,7 @@ export const parse = <T>(
   };
 
   const matchingKey = Object.keys(enumType).find(x =>
-    comparision === StringComparison.OrdinalIgnoreCase
-      ? x.toLowerCase() === value.toLowerCase()
-      : x === value
+    comparision === StringComparison.OrdinalIgnoreCase ? x.toLowerCase() === value.toLowerCase() : x === value
   );
 
   if (matchingKey !== undefined) {

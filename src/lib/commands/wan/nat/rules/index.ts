@@ -5,14 +5,7 @@ import { merlinCommand } from "../../../../../models/command";
 
 const description = "NAT rules";
 
-const header = [
-  "name",
-  "ext. port",
-  "int. port",
-  "int. ip",
-  "protocol",
-  "src ip"
-];
+const header = ["name", "ext. port", "int. port", "int. ip", "protocol", "src ip"];
 
 const run = () => {
   const rules = get("vts_rulelist")

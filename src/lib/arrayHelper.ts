@@ -6,32 +6,21 @@ export const indeces = {
   lastIndexSubtrahend: 1
 };
 
-export const any = <T>(array: NullableArray<T>) =>
-  (array && array.length > indeces.empty) || false;
+export const any = <T>(array: NullableArray<T>): boolean => (array && array.length > indeces.empty) || false;
 
-export const isEmpty = <T>(array: NullableArray<T>) => !any(array);
+export const isEmpty = <T>(array: NullableArray<T>): boolean => !any(array);
 
-export const firstOrDefault = <T>(
-  array: NullableArray<T>,
-  defaultValue: T | null = null
-): T | null => (array && array[indeces.first]) || defaultValue;
+export const firstOrDefault = <T>(array: NullableArray<T>, defaultValue: T | null = null): T | null =>
+  (array && array[indeces.first]) || defaultValue;
 
-export const first = <T>(array: NullableArray<T>) =>
-  firstOrDefault(array) || undefined;
+export const first = <T>(array: NullableArray<T>): T | undefined => firstOrDefault(array) || undefined;
 
-export const lastOrDefault = <T>(
-  array: NullableArray<T>,
-  defaultValue: T | null = null
-): T | null =>
+export const lastOrDefault = <T>(array: NullableArray<T>, defaultValue: T | null = null): T | null =>
   (array && array[array.length - indeces.lastIndexSubtrahend]) || defaultValue;
 
-export const last = <T>(array: NullableArray<T>) =>
-  lastOrDefault(array) || undefined;
+export const last = <T>(array: NullableArray<T>): T | undefined => lastOrDefault(array) || undefined;
 
-export const takeWhile = <T>(
-  array: T[],
-  predicate: (item: T) => boolean
-): T[] => {
+export const takeWhile = <T>(array: T[], predicate: (item: T) => boolean): T[] => {
   const items: T[] = [];
 
   for (const item of array) {
@@ -45,10 +34,7 @@ export const takeWhile = <T>(
   return items;
 };
 
-export const takeWhileAll = <T>(
-  array: T[],
-  predicate: (current: T[]) => boolean
-): T[] => {
+export const takeWhileAll = <T>(array: T[], predicate: (current: T[]) => boolean): T[] => {
   const result: T[] = [];
 
   for (let index = 0; index < array.length; index += 1) {

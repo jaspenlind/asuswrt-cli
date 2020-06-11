@@ -1,9 +1,6 @@
 import flexi from "flexi-path";
 
-import {
-  ConfigCreationData,
-  defaults as dataDefaults
-} from "../../../models/configCreationData";
+import { ConfigCreationData, defaults as dataDefaults } from "../../../models/configCreationData";
 import { PromptBody, PromptType } from "../../../types";
 import promptTypes from "./promptTypes";
 
@@ -49,17 +46,9 @@ const prompt = async (
     ...defaultValues
   };
 
-  const host = await promptOrDisplayInitialValue(
-    "Router address",
-    initialValues.host,
-    defaults.host
-  );
+  const host = await promptOrDisplayInitialValue("Router address", initialValues.host, defaults.host);
 
-  const userName = await promptOrDisplayInitialValue(
-    "User name",
-    initialValues.userName,
-    defaults.userName
-  );
+  const userName = await promptOrDisplayInitialValue("User name", initialValues.userName, defaults.userName);
 
   const privateKey = await promptOrDisplayInitialValue(
     "SSH private key file",

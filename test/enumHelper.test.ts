@@ -16,9 +16,7 @@ describe("enumHelper", () => {
     });
 
     it("should have hasValue set to true when value matches enum value and ignoring case", () => {
-      expect(
-        parse(TestEnum, "second", StringComparison.OrdinalIgnoreCase).hasValue
-      ).toBe(true);
+      expect(parse(TestEnum, "second", StringComparison.OrdinalIgnoreCase).hasValue).toBe(true);
     });
 
     it("should have hasValue set to false when value is invalid", () => {
@@ -27,16 +25,12 @@ describe("enumHelper", () => {
 
     it("should have value defined", () => {
       expect(parse(TestEnum, "Second").value).toBeDefined();
-      expect(
-        parse(TestEnum, "second", StringComparison.OrdinalIgnoreCase).value
-      ).toBeDefined();
+      expect(parse(TestEnum, "second", StringComparison.OrdinalIgnoreCase).value).toBeDefined();
     });
 
     it("should have value undefined", () => {
       expect(parse(TestEnum, "invalid").value).toBeUndefined();
-      expect(
-        parse(TestEnum, "second", StringComparison.Ordinal).value
-      ).toBeUndefined();
+      expect(parse(TestEnum, "second", StringComparison.Ordinal).value).toBeUndefined();
     });
   });
 });
