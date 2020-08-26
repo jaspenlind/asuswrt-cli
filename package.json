@@ -15,7 +15,7 @@
   ],
   "main": "dist/src/bin/router.js",
   "name": "asuswrt-cli",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.1",
   "types": "dist/src/types/index.d.ts",
   "repository": "github:jaspenlind/asuswrt-cli",
   "readme": "https://github.com/jaspenlind/asuswrt-cli#readme",
