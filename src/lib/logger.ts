@@ -63,16 +63,6 @@ addColors({
   warn: "yellow"
 });
 
-export interface Logger {
-  debug: LogMethod;
-  error: LogMethod;
-  fatal: LogMethod;
-  info: LogMethod;
-  name: string;
-  verbose: LogMethod;
-  warn: LogMethod;
-}
-
 export interface LogMethod {
   (
     message?: string,
@@ -81,6 +71,16 @@ export interface LogMethod {
       meta?: any;
     }
   ): void;
+}
+
+export interface Logger {
+  debug: LogMethod;
+  error: LogMethod;
+  fatal: LogMethod;
+  info: LogMethod;
+  name: string;
+  verbose: LogMethod;
+  warn: LogMethod;
 }
 
 const createModuleLogger = (module: NodeModule): Logger => {

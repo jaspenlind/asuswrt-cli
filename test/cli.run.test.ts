@@ -63,9 +63,7 @@ describe("cli", () => {
     });
 
     // eslint-disable-next-line jest/expect-expect
-    it("should run command when config check is ok", () => {
-      test.todo("todo");
-    });
+    it.todo("should run command when config check is ok");
 
     it("should show error when config check not ok", () => {
       const spy = jest.spyOn(console, "log").mockImplementation();
@@ -78,8 +76,6 @@ describe("cli", () => {
     });
 
     // eslint-disable-next-line jest/expect-expect
-    it("should not run command when config check is not ok", () => {
-      test.todo("todo config check ok");
-    });
+    it.todo("should not run command when config check is not ok");
   });
 });

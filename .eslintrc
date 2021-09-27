@@ -3,9 +3,7 @@
   "extends": [
     "airbnb-base",
     "plugin:@typescript-eslint/recommended",
-    "prettier/@typescript-eslint",
     "prettier",
-    "prettier/react",
     "plugin:prettier/recommended",
     "plugin:jest/recommended"
   ],
@@ -31,6 +29,8 @@
     "jest/globals": true
   },
   "rules": {
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
     "no-console": ["off"],
     "import/extensions": ["error", { "ts": "never" }],
     "import/prefer-default-export": ["off"],
