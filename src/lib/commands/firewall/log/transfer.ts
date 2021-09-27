@@ -23,8 +23,9 @@ const open = (file: FlexiPath): void => {
 
 const description = "Transfers the firewall log";
 
+// TODO: Parameterize sda1 folder
 const run = (): void => {
-  const log = flexi.path("/tmp/mnt/USB/skynet/skynet.log");
+  const log = flexi.path("/tmp/mnt/sda1/skynet/skynet.log");
 
   const downloadedFile = ssh.download(log);
 
