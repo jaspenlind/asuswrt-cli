@@ -1,9 +1,9 @@
 import cron from "cron-parser";
 import { table } from "table";
-import { isEmpty } from "../../arrayHelper";
+import { isEmpty } from "../../helpers/array.helpers";
 import { ScheduledItem } from "../../../types";
-import { parse } from "../../scheduledItemParser";
-import ssh from "../../ssh";
+import { parse } from "../../parsers/scheduled-item.parser";
+import { execute } from "../../ssh";
 import { create } from "../../../models/command";
 
 const description = "Lists existing cron jobs";
@@ -28,7 +28,7 @@ const asTabular = (data: ScheduledItem[]): any[] => {
 };
 
 const run = () => {
-  const result = ssh.execute("cru l", { silent: true });
+  const result = execute("cru l", { silent: true });
 
   const parsed = result.stdout
     .split("\n")

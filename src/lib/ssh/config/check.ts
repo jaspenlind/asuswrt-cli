@@ -18,7 +18,7 @@ export const proceed = async (config: ConfigCreationData, options?: { overwrite?
   routerInfo(pubKey);
 };
 
-const check = async (currentCommand?: CommandDeclaration): Promise<boolean> => {
+export const check = async (currentCommand?: CommandDeclaration): Promise<boolean> => {
   const requiresConfig =
     (currentCommand && currentCommand.requires(CommandRequirement.SshConfig)) || currentCommand === undefined;
 
@@ -43,5 +43,3 @@ const check = async (currentCommand?: CommandDeclaration): Promise<boolean> => {
 
   return true;
 };
-
-export default check;

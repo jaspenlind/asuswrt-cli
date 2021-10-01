@@ -1,9 +1,9 @@
 /* eslint-disable jest/no-commented-out-tests */
-import check from "../../../src/lib/ssh/config/check";
+// import check from "../../../src/lib/ssh/config/check";
 
 /* eslint-disable @typescript-eslint/no-var-requires */
-const promptly = require("promptly");
-const config = require("../../../src/lib/ssh/config");
+// const promptly = require("promptly");
+// const config = require("../../../src/lib/ssh/config");
 /* eslint-enable @typescript-eslint/no-var-requires */
 
 // afterAll(() => {

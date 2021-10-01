@@ -1,7 +1,9 @@
 import promptly from "promptly";
 
+import { ConfigCreationData } from "../../../../types";
+import { fromArgs } from "../../../../models/config-creation-data";
 import edit from "./edit";
-import configCreationData, { ConfigCreationData } from "../../../../models/configCreationData";
+// import configCreationData, { ConfigCreationData } from "../../../../models/configCreationData";
 import { configCommand } from "../../../../models/command";
 import { exists, prompt } from "../../../ssh/config";
 import { proceed } from "../../../ssh/config/check";
@@ -26,7 +28,7 @@ const run = (...args: string[]): void => {
     return;
   }
 
-  const initialValues: Partial<ConfigCreationData> = configCreationData.fromArgs(...args);
+  const initialValues: Partial<ConfigCreationData> = fromArgs(...args);
 
   prompt(initialValues).then(config => proceed(config));
 };

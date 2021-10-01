@@ -1,4 +1,4 @@
-import { swap } from "../src/lib/mapHelper";
+import { swap } from "../../src/lib/helpers/map.helpers";
 
 describe("mapHelper", () => {
   describe("swap", () => {

@@ -1,4 +1,4 @@
-import { parse, StringComparison } from "../src/lib/enumHelper";
+import { parse, StringComparison } from "../../src/lib/helpers/enum.helpers";
 
 enum TestEnum {
   First,

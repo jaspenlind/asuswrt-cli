@@ -1,4 +1,4 @@
-import { ParseResult, StringComparison } from "../types";
+import { ParseResult, StringComparison } from "../../types";
 
 export { StringComparison };
 

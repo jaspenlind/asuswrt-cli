@@ -72,7 +72,6 @@ export interface LogMethod {
     }
   ): void;
 }
-
 export interface Logger {
   debug: LogMethod;
   error: LogMethod;

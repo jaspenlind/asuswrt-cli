@@ -1,7 +1,6 @@
 import flexi from "flexi-path";
 import { PromptType } from "../../../src/types";
-import prompt from "../../../src/lib/ssh/config/prompt";
-import promptTypes from "../../../src/lib/ssh/config/promptTypes";
+import { prompt, promptTypes } from "../../../src/lib/ssh/config";
 
 const messages: string[] = [];
 

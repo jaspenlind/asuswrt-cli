@@ -1,5 +1,5 @@
-import { ScheduledItem } from "../types";
-import { takeWhile, takeWhileAll } from "./arrayHelper";
+import { ScheduledItem } from "../../types";
+import { takeWhile, takeWhileAll } from "../helpers/array.helpers";
 
 const idMarker = "#";
 
@@ -20,7 +20,7 @@ const parseCommand = (row: string[]): [string, string[]] => {
 const parseId = (row: string[]): string => {
   return row
     .join("")
-    .replace(new RegExp(`${idMarker}`, "g"), "")
+    .replace(/${idMarker}/g, "") // new RegExp(`${idMarker}`, "g"), "")
     .trim();
 };
 

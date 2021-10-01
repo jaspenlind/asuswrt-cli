@@ -1,4 +1,4 @@
-import { any, isEmpty, last } from "../src/lib/arrayHelper";
+import { any, isEmpty, last } from "../../src/lib/helpers/array.helpers";
 
 describe("arrayHelper", () => {
   describe("any", () => {

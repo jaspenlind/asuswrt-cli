@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
-import ssh from "../../../ssh";
+import { execute } from "../../../ssh";
 
 import { merlinCommand } from "../../../../models/command";
 
 const description = "Displays nat configuration";
 
-const get = (key: string): string => ssh.execute(`nvram get ${key}`, { silent: true }).stdout;
+const get = (key: string): string => execute(`nvram get ${key}`, { silent: true }).stdout;
 
 const run = () => {
   const enabled = get("vts_enable_x") === "1";

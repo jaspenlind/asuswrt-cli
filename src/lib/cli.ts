@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 import chalk from "chalk";
 import { parse, OptionMap } from "args-any";
-import { any } from "./arrayHelper";
-import declaration, { CommandDeclaration } from "../models/commandDeclaration";
+import { any } from "./helpers/array.helpers";
+import declaration, { CommandDeclaration } from "../models/command-declaration";
 import header from "../resources/header";
 import help from "./help";
-import commandParser from "./commandParser";
-import config from "./ssh/config";
+import commandParser from "./parsers/command.parser";
+import { check } from "./ssh/config";
 
 const hasDebug = (options: OptionMap) => options.has("debug");
 const hasHelp = (options: OptionMap) => options.has("h") || options.has("help");
@@ -29,7 +29,7 @@ const showHelp = (command: CommandDeclaration, options: OptionMap) => {
 const runCommand = (command: CommandDeclaration, options: OptionMap) => {
   if (isHelp(command, options) || isEmpty(command)) return;
 
-  config.check(command).then(ok => {
+  check(command).then(ok => {
     if (!ok) return;
 
     const message = [`Excuting: router ${chalk.bold(command.fullName)}`];

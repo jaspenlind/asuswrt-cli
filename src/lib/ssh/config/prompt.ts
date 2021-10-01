@@ -1,8 +1,8 @@
 import flexi from "flexi-path";
 
-import { ConfigCreationData, defaults as dataDefaults } from "../../../models/configCreationData";
-import { PromptBody, PromptType } from "../../../types";
-import promptTypes from "./promptTypes";
+import { defaults as dataDefaults } from "../../../models/config-creation-data";
+import { ConfigCreationData, PromptBody, PromptType } from "../../../types";
+import { promptTypes } from ".";
 
 const line = async <T>(
   text: string,
@@ -33,7 +33,7 @@ const promptOrDisplayInitialValue = async <T>(
   return line<T>(title, fallbackValue, promptType);
 };
 
-const prompt = async (
+export const prompt = async (
   prefilledValues?: Partial<ConfigCreationData>,
   defaultValues?: Partial<ConfigCreationData>
 ): Promise<ConfigCreationData> => {
@@ -63,7 +63,8 @@ const prompt = async (
     PromptType.Password
   );
 
-  const keyFileExists = flexi.exists(privateKey as string);
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  const keyFileExists = flexi.exists(privateKey);
 
   let createKeyFile = initialValues.createKeyFile || false;
 
@@ -96,5 +97,3 @@ const prompt = async (
 
   return result;
 };
-
-export default prompt;

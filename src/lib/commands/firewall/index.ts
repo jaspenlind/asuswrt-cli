@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { create } from "../../../models/command";
-import ssh from "../../ssh";
+import { execute, executeInTerminal } from "../../ssh";
 
 const description = "Opens the Skynet firewall with (optional) arguments";
 
@@ -13,9 +13,9 @@ const run = (...args: string[]): void => {
   const firewallCommand = "sh /jffs/scripts/firewall";
 
   if (interactive) {
-    ssh.executeInTerminal(firewallCommand);
+    executeInTerminal(firewallCommand);
   } else {
-    ssh.execute(`${firewallCommand} ${firewallArgs}`);
+    execute(`${firewallCommand} ${firewallArgs}`);
   }
 };
 

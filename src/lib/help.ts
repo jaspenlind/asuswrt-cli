@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import chalk from "chalk";
-import { any } from "./arrayHelper";
-import { CommandDeclaration, empty } from "../models/commandDeclaration";
+import { any } from "./helpers/array.helpers";
+import { CommandDeclaration, empty } from "../models/command-declaration";
 import moduleLogger from "./logger";
-import parser from "./commandParser";
+import parser from "./parsers/command.parser";
 
 const logger = moduleLogger.createLogger(module);
 

@@ -1,11 +1,10 @@
 import flexi from "flexi-path";
 import { homedir } from "os";
 import { parse } from "args-any";
-
 import { ConfigCreationData } from "../types";
 import sshConfig from "./sshConfig";
 
-export { ConfigCreationData };
+// export { ConfigCreationData };
 
 export const empty = (): ConfigCreationData =>
   Object.freeze({

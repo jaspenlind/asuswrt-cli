@@ -5,10 +5,11 @@ import { ExecOptions, ExecResult } from "../../types";
 import { empty } from "../../models/sshConfig";
 // eslint-disable-next-line import/order
 import sh = require("shelljs");
-import config = require("./config");
+import { get } from "./config";
+// import config = require("./config");
 
 export const download = (file: FlexiPath): FlexiPath => {
-  const sshConfig = config.get() || empty;
+  const sshConfig = get() || empty;
 
   const command = `scp -i ${sshConfig.privateKey} "${sshConfig.userName}@${sshConfig.host}:${
     file.path
@@ -23,8 +24,8 @@ export const download = (file: FlexiPath): FlexiPath => {
   return flexi.empty();
 };
 
-const execute = (command: string, options?: Partial<ExecOptions>): ExecResult => {
-  const sshConfig = config.get() || empty;
+export const execute = (command: string, options?: Partial<ExecOptions>): ExecResult => {
+  const sshConfig = get() || empty;
   const silent = (options && options.silent) || false;
 
   const ssh = `ssh -i '${sshConfig.privateKey}' ${sshConfig.userName}@${sshConfig.host}`;
@@ -34,8 +35,8 @@ const execute = (command: string, options?: Partial<ExecOptions>): ExecResult =>
   return result;
 };
 
-const executeInTerminal = (args: string | string[]): void => {
-  const sshConfig = config.get() || empty;
+export const executeInTerminal = (args: string | string[]): void => {
+  const sshConfig = get() || empty;
 
   const ssh = `ssh -i  '${sshConfig.privateKey}' ${sshConfig.userName}@${sshConfig.host}`;
 
@@ -44,5 +45,3 @@ const executeInTerminal = (args: string | string[]): void => {
   do script "${ssh} ${args}"
 end tell'`);
 };
-
-export default { download, execute, executeInTerminal };

@@ -38,7 +38,10 @@ export const takeWhileAll = <T>(array: T[], predicate: (current: T[]) => boolean
   const result: T[] = [];
 
   for (let index = 0; index < array.length; index += 1) {
-    result.push(array[index]);
+    // eslint-disable-next-line security/detect-object-injection
+    const current = array[index];
+
+    result.push(current);
 
     if (!predicate(result)) {
       result.pop();

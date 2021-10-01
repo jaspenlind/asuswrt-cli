@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 import flexi, { FlexiPath, Path, until } from "flexi-path";
 import argsAny from "args-any";
-import { CommandParser } from "../types";
-import command, { Command } from "../models/command";
-import declaration, { create, CommandDeclaration } from "../models/commandDeclaration";
+import { CommandParser } from "../../types";
+import command, { Command } from "../../models/command";
+import declaration, { create, CommandDeclaration } from "../../models/command-declaration";
 
-const rootCommandPath = flexi.path(__dirname).append("commands/");
+const rootCommandPath = flexi.path(__dirname).parent().append("commands/");
 
 const isHelp = (...args: string[]): boolean => {
   return (args.length > 0 && args[0] === "-h") || false;
@@ -26,6 +26,7 @@ const mostSpecificCommand = (path: FlexiPath): [FlexiPath, ...string[]] => {
   const pathWithoutOptions = options.args.other();
 
   const walked = flexi.walk.back(pathWithoutOptions, {
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
     until: until.exists({ ignoreFileExtensions: true })
   });
 

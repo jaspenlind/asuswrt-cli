@@ -1,6 +1,6 @@
-import configCreationData, { ConfigCreationData } from "../../../../models/configCreationData";
+import configCreationData from "../../../../models/config-creation-data";
 import { configCommand } from "../../../../models/command";
-import { get, prompt } from "../../../ssh/config";
+import { ConfigCreationData, get, prompt } from "../../../ssh/config";
 import { proceed } from "../../../ssh/config/check";
 
 const description = "Edits current SSH configuration";

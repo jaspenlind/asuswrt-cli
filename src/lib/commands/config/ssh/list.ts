@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import flexi from "flexi-path";
 
-import config, { SshConfig } from "../../../ssh/config";
+import { get, SshConfig } from "../../../ssh/config";
 import { configCommand } from "../../../../models/command";
 
 interface ConfigOptions extends SshConfig {
@@ -12,13 +12,14 @@ interface ConfigOptions extends SshConfig {
 const description = "Displays current SSH configuration";
 
 const run = (): void => {
-  const currentConfig = config.get();
+  const currentConfig = get();
 
   if (currentConfig === null) {
     console.log(chalk.red("SSH configuration does not exist"));
     return;
   }
 
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
   const keyFileExists = flexi.exists(currentConfig.privateKey);
   const keyFileAddedToAgent = false;
 

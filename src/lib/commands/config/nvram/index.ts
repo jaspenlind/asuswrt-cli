@@ -1,21 +1,21 @@
 #!/usr/bin/env node
 import { parse } from "args-any";
 import { table } from "table";
-import { get } from "./get";
-import ssh from "../../../ssh";
+// import { get } from "./get";
+import { execute } from "../../../ssh";
 import { merlinCommand } from "../../../../models/command";
 
 const description = "lists nvram config";
 const hint = "[-filter.key <key starts with>]";
 
-export { get };
+export { get } from "./get";
 
 export interface NvramQuery {
   key: string;
 }
 
 export const list = (query?: Partial<NvramQuery>): string[][] => {
-  const stdOut = ssh.execute("nvram show", { silent: true }).stdout;
+  const stdOut = execute("nvram show", { silent: true }).stdout;
 
   const keyQuery = query && query.key;
 

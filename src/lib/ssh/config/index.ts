@@ -1,14 +1,15 @@
 import flexi, { TextTransform } from "flexi-path";
 import { empty, SshConfig } from "../../../models/sshConfig";
-import check from "./check";
-import generateSshKey from "./generateSshKey";
+// import check from "./check";
+// import generateSshKey from "./generate-ssh-key";
 
-import prompt from "./prompt";
+// import prompt from "./prompt";
 
-export { default as check } from "./check";
-export { default as generateSshKey } from "./generateSshKey";
-export { default as prompt } from "./prompt";
-export { default as routerInfo } from "./routerInfo";
+export { check } from "./check";
+export { generateSshKey } from "./generate-ssh-key";
+export { prompt } from "./prompt";
+export { promptTypes } from "./prompt-types";
+export { routerInfo } from "./router-info";
 
 let file = flexi.path({
   basePath: __dirname,
@@ -39,11 +40,11 @@ export const set = (current: SshConfig, options?: { overwrite?: boolean }): Prom
   });
 };
 
-export default {
-  check,
-  exists,
-  generateSshKey,
-  get,
-  prompt,
-  set
-};
+// export default {
+//   check,
+//   exists,
+//   generateSshKey,
+//   get,
+//   prompt,
+//   set
+// };

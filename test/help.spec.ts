@@ -1,5 +1,5 @@
 import help from "../src/lib/help";
-import parser from "../src/lib/commandParser";
+import parser from "../src/lib/parsers/command.parser";
 
 describe("help", () => {
   it("can show global help", () => {

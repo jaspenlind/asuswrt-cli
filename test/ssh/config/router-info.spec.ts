@@ -1,4 +1,4 @@
-import routerInfo from "../../../src/lib/ssh/config/routerInfo";
+import { routerInfo } from "../../../src/lib/ssh/config";
 
 describe("ssh", () => {
   describe("config", () => {

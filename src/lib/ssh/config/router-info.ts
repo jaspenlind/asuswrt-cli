@@ -1,4 +1,4 @@
-const routerInfo = (publicKey?: string): void => {
+export const routerInfo = (publicKey?: string): void => {
   console.log(`
 To use this CLI you need to enable SSH in your router.
 
@@ -15,5 +15,3 @@ If you haven't already done that, follow these steps to enable SSH:
   ${publicKey}`);
   }
 };
-
-export default routerInfo;

@@ -1,4 +1,4 @@
-import commandParser from "../src/lib/commandParser";
+import commandParser from "../src/lib/parsers/command.parser";
 
 describe("commandParser", () => {
   describe("all", () => {

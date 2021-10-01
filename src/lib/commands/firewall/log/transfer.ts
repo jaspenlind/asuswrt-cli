@@ -3,7 +3,7 @@ import chalk from "chalk";
 import flexi, { FlexiPath } from "flexi-path";
 import sh from "shelljs";
 import { create } from "../../../../models/command";
-import ssh from "../../../ssh";
+import { download } from "../../../ssh";
 
 const defaultOpener = "xdg-open";
 const opener = new Map<NodeJS.Platform, string>([
@@ -27,7 +27,7 @@ const description = "Transfers the firewall log";
 const run = (): void => {
   const log = flexi.path("/tmp/mnt/sda1/skynet/skynet.log");
 
-  const downloadedFile = ssh.download(log);
+  const downloadedFile = download(log);
 
   open(downloadedFile);
 };
