@@ -1,7 +1,7 @@
 import promptly from "promptly";
 
 import { ConfigCreationData, CommandDeclaration, CommandRequirement } from "../../../types";
-import { exists, generateSshKey, prompt, routerInfo, set } from ".";
+import { addToSshAgent, exists, generateSshKey, prompt, routerInfo, set } from ".";
 
 /**
  * @ignore
@@ -13,6 +13,10 @@ export const proceed = async (config: ConfigCreationData, options?: { overwrite?
   if (config.createKeyFile) {
     const keyCreationData = await generateSshKey(config);
     ({ pubKey } = keyCreationData);
+  }
+
+  if (config.addKeyToAgent) {
+    addToSshAgent(config);
   }
 
   routerInfo(pubKey);

@@ -52,6 +52,7 @@
     "ssh-keygen": "^0.5.0",
     "table": "^6.7.2",
     "tslib": "^2.3.1",
+    "underscore": "^1.13.1",
     "winston": "^3.3.3"
   },
   "devDependencies": {
@@ -86,8 +87,7 @@
     "set-value": "^4.1.0",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.2.1",
-    "typescript": "^4.4.3",
-    "underscore": "^1.13.1"
+    "typescript": "^4.4.3"
   },
   "husky": {
     "hooks": {

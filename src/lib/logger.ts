@@ -1,4 +1,4 @@
-import { createLogger, format, transports, addColors } from "winston";
+import winston, { createLogger, format, transports, addColors } from "winston";
 
 import flexi from "flexi-path";
 
@@ -22,7 +22,7 @@ const createCategory = (loggerName: string, functionName = ""): string => {
   return category;
 };
 
-const createMeta = (meta: any): string => {
+const createMeta = (meta: Record<string, string>): string => {
   if (meta && Object.keys(meta).length && Object.keys(meta).length > 0) {
     return `\n${JSON.stringify(meta, (key, value) => value || null, 2)}`;
   }
@@ -62,70 +62,55 @@ addColors({
   verbose: "grey",
   warn: "yellow"
 });
-
 export interface LogMethod {
-  (
-    message?: string,
-    options?: {
-      functionName?: string;
-      meta?: any;
-    }
-  ): void;
+  (message: string, source?: string): void;
+  (message: Record<string, unknown>, source: string): void;
 }
-export interface Logger {
-  debug: LogMethod;
-  error: LogMethod;
-  fatal: LogMethod;
-  info: LogMethod;
+export interface ModuleLogger {
   name: string;
   verbose: LogMethod;
+  debug: LogMethod;
+  info: LogMethod;
   warn: LogMethod;
+  error: LogMethod;
+  fatal: LogMethod;
 }
 
-const createModuleLogger = (module: NodeModule): Logger => {
-  const moduleName = flexi.path(module.filename).name; // extensionless(pathless(module.filename));
+const createLoggerInstance = (moduleLogger: winston.Logger, level: string, name?: string) => {
+  return (message: string | Record<string, unknown>, source?: string): void => {
+    const record = message as Record<string, string>;
+    const recordValues = (record && Object.values(record)) || [];
+    const logMessage = recordValues.length > 0 ? recordValues[0] : (message as string);
+    const category = createCategory(name || "", source);
+
+    const categoryShouldBeLogged = filterCategories.length === 0 || filterCategories.find(x => category.startsWith(x));
+
+    if (!categoryShouldBeLogged) {
+      return;
+    }
+
+    moduleLogger.log(level, logMessage, {
+      category,
+      meta: record
+    });
+  };
+};
+
+const createModuleLogger = (module: NodeModule): ModuleLogger => {
+  const moduleName = flexi.path(module.filename).name;
   const moduleLogger = rootLogger.child({
     moduleName
   });
 
-  const log = (
-    name: string | null,
-    level: string,
-    message: string,
-    options: {
-      functionName?: string;
-      meta?: any;
-    } = {}
-  ): void => {
-    const category = createCategory(name || "", options.functionName);
-
-    const categoryShouldBeLogged = filterCategories.length === 0 || filterCategories.find(x => category.startsWith(x));
-
-    if (!categoryShouldBeLogged || (!message && !options.meta)) {
-      // Nothing to log
-      return;
-    }
-    moduleLogger.log(level, message || "", {
-      category,
-      meta: options.meta && typeof options.meta === "function" ? options.meta() : options.meta
-    });
-  };
-
-  const logger = {
+  return {
     name: moduleName,
-    verbose: (message?: string, options?: any) => log(null, "verbose", message || "", options),
-    debug: (message?: string, options?: any) => log(moduleName, "debug", message || "", options),
-    info: (message?: string, options?: any) => log(moduleName, "info", message || "", options),
-    warn: (message?: string, options?: any) => log(moduleName, "warn", message || "", options),
-    error: (message?: string, options?: any) => log(moduleName, "error", message || "", options),
-    fatal: (message?: string, options?: any) => log(moduleName, "fatal", message || "", options)
+    verbose: createLoggerInstance(moduleLogger, "verbose"),
+    debug: createLoggerInstance(moduleLogger, "debug", moduleName),
+    info: createLoggerInstance(moduleLogger, "info", moduleName),
+    warn: createLoggerInstance(moduleLogger, "warn", moduleName),
+    error: createLoggerInstance(moduleLogger, "error", moduleName),
+    fatal: createLoggerInstance(moduleLogger, "fatal", moduleName)
   };
-
-  logger.info(`Logger for module ${moduleName} created`, {
-    functionName: createModuleLogger.name
-  });
-
-  return logger;
 };
 
 export default {
