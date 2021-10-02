@@ -44,14 +44,10 @@ const rootLogger = createLogger({
       const logMeta = createMeta(meta);
 
       return `${timestamp} ${logLevel} ${logCategory} ${message}${logMeta}`;
-    }),
-    colorize({ all: true })
+    })
   ),
   level: isDebug ? "debug" : "info",
-  transports: [
-    // new transports.Console(),
-    new transports.File({ filename: "combined.log", handleExceptions: true })
-  ]
+  transports: [new transports.File({ filename: "combined.log", handleExceptions: true })]
 });
 
 addColors({
@@ -79,8 +75,7 @@ export interface ModuleLogger {
 const createLoggerInstance = (moduleLogger: winston.Logger, level: string, name?: string) => {
   return (message: string | Record<string, unknown>, source?: string): void => {
     const record = message as Record<string, string>;
-    const recordValues = (record && Object.values(record)) || [];
-    const logMessage = recordValues.length > 0 ? recordValues[0] : (message as string);
+    const logMessage = typeof message === "string" ? (message as string) : name || "";
     const category = createCategory(name || "", source);
 
     const categoryShouldBeLogged = filterCategories.length === 0 || filterCategories.find(x => category.startsWith(x));
