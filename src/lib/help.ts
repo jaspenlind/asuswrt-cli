@@ -20,7 +20,7 @@ const help = (command?: CommandDeclaration): void => {
   const guardCheckedCommand = command as CommandDeclaration;
   const commandName = isRootHelp ? "" : chalk.bold(` ${guardCheckedCommand.fullName}`);
 
-  logger.debug({ isRootHelp, commandName }, help.name);
+  logger.info({ isRootHelp, commandName }, help.name);
 
   const usage = (!isRootHelp && guardCheckedCommand.command.hint) || "options [parameters]";
   const lines = [`Usage: router${commandName} ${usage}`];
