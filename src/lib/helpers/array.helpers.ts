@@ -23,17 +23,22 @@ export const last = <T>(array: NullableArray<T>): T | undefined => lastOrDefault
 export const takeWhile = <T>(array: T[], predicate: (item: T) => boolean): T[] => {
   const items: T[] = [];
 
-  for (const item of array) {
+  let skip = false;
+
+  array.forEach(item => {
     if (!predicate(item)) {
-      break;
+      skip = true;
     }
 
-    items.push(item);
-  }
+    if (!skip) {
+      items.push(item);
+    }
+  });
 
   return items;
 };
 
+// TODO: what is this?
 export const takeWhileAll = <T>(array: T[], predicate: (current: T[]) => boolean): T[] => {
   const result: T[] = [];
 

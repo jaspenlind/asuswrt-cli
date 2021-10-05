@@ -1,15 +1,15 @@
 import { Logger } from "winston";
-import { createLogger as createRootLogger } from "./root.logger";
 import { createLogger as createModuleLogger, ModuleLogger } from "./module.logger";
+import { createLogger as createRootLogger } from "./root.logger";
 
-let root: Logger;
+let rootLogger: Logger;
 
 export { ModuleLogger } from "./module.logger";
 
 export const createLogger = (module: NodeModule): ModuleLogger => {
-  root ??= createRootLogger();
+  rootLogger ??= createRootLogger();
 
-  return createModuleLogger(module, root);
+  return createModuleLogger(module, rootLogger);
 };
 
 export default {

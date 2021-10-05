@@ -3,7 +3,7 @@ import flexi, { FlexiPath, Path, until } from "flexi-path";
 import argsAny from "args-any";
 import { CommandParser } from "../../types";
 import command, { Command } from "../../models/command";
-import declaration, { create, CommandDeclaration } from "../../models/command-declaration";
+import declaration, { CommandDeclaration, create } from "../../models/command-declaration";
 
 const rootCommandPath = flexi.path(__dirname).parent().append("commands/");
 

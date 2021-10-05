@@ -1,6 +1,5 @@
 import flexi from "flexi-path";
 import { Logger } from "winston";
-
 import { createLogger as create, LogMethod } from "./level.logger";
 
 export interface ModuleLogger {

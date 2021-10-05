@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import flexi from "flexi-path";
-
 import { get, SshConfig } from "../../../ssh/config";
+
 import { configCommand } from "../../../../models/command";
 
 interface ConfigOptions extends SshConfig {

@@ -34,8 +34,18 @@
     "@typescript-eslint/no-shadow": ["error"],
     "no-console": ["off"],
     "import/extensions": ["error", { "ts": "never" }],
-    "import/prefer-default-export": ["off"],
-    "no-restricted-syntax": ["off", "ForOfStatement"],
+    "import/prefer-default-export": ["warn"],
+    // "no-restricted-syntax": ["off", "ForOfStatement"],
+    "sort-imports": [
+      "warn",
+      {
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
+        "allowSeparatedGroups": false
+      }
+    ],
     "@typescript-eslint/explicit-function-return-type": ["off"],
     "@typescript-eslint/explicit-member-accessibility": [
       "error",

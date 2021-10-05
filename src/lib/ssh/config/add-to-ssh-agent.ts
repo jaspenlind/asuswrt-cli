@@ -6,3 +6,5 @@ export const addToSshAgent = (data: ConfigCreationData): void => {
 
   sh.exec("ssh-add");
 };
+
+export default addToSshAgent;

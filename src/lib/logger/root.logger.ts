@@ -1,4 +1,4 @@
-import winston, { format, transports, Logger, addColors } from "winston";
+import winston, { addColors, format, Logger, transports } from "winston";
 
 const DEBUG_ARG = "--debug";
 const levelMinWidth = 9;
@@ -14,7 +14,7 @@ const createMeta = (meta: Record<string, string>): string => {
 
 export const createLogger = (): Logger => {
   const isDebug = process.argv.filter(x => x === DEBUG_ARG).length > 0;
-  const { combine, align, printf } = format;
+  const { align, combine, printf } = format;
 
   addColors({
     debug: "white",
@@ -30,7 +30,7 @@ export const createLogger = (): Logger => {
       format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
       align(),
       printf(info => {
-        const { timestamp, level, message, category, meta } = info;
+        const { category, message, meta, level, timestamp } = info;
         const logLevel = `[${level}]`.padEnd(levelMinWidth);
         const logCategory = `[${category}]`.padEnd(categoryMinWidth);
         const logMeta = createMeta(meta);
@@ -42,3 +42,5 @@ export const createLogger = (): Logger => {
     transports: [new transports.File({ filename: "combined.log", handleExceptions: true })]
   });
 };
+
+export default createLogger;

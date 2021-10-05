@@ -37,3 +37,7 @@ export const parse = (row: string): ScheduledItem => {
 
   return item;
 };
+
+export default {
+  parse
+};

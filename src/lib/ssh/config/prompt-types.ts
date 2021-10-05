@@ -7,3 +7,5 @@ export const promptTypes = new Map<PromptType, PromptBody>([
   [PromptType.Password, promptly.password],
   [PromptType.Confirm, promptly.confirm]
 ]);
+
+export default promptTypes;

@@ -15,3 +15,5 @@ If you haven't already done that, follow these steps to enable SSH:
   ${publicKey}`);
   }
 };
+
+export default routerInfo;

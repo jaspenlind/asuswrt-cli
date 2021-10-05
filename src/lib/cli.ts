@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import chalk from "chalk";
-import { parse, OptionMap } from "args-any";
+import { OptionMap, parse } from "args-any";
 import { any } from "./helpers/array.helpers";
 import declaration, { CommandDeclaration } from "../models/command-declaration";
 import header from "../resources/header";

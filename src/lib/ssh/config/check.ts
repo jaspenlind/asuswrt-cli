@@ -1,6 +1,6 @@
 import promptly from "promptly";
 
-import { ConfigCreationData, CommandDeclaration, CommandRequirement } from "../../../types";
+import { CommandDeclaration, CommandRequirement, ConfigCreationData } from "../../../types";
 import { addToSshAgent, exists, generateSshKey, prompt, routerInfo, set } from ".";
 
 /**
