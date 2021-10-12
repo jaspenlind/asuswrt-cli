@@ -19,6 +19,14 @@ const isCommandRoot = (path: FlexiPath) => {
   return pathString === rootCommandPath.path;
 };
 
+const getParentCommand = (path: FlexiPath) => {
+  const parent = path.parent();
+  const parentCommand =
+    parent.files().find((x) => x.name === path.name) || parent.files().find((x) => x.name === "index") || flexi.empty();
+
+  return parentCommand;
+};
+
 const mostSpecificCommand = (path: FlexiPath): [FlexiPath, ...string[]] => {
   const pathSegments = path.segments;
 
@@ -39,17 +47,14 @@ const mostSpecificCommand = (path: FlexiPath): [FlexiPath, ...string[]] => {
   }
 
   if (!matchedCommand.exists()) {
-    const parent = matchedCommand.parent();
-    matchedCommand =
-      parent.files().find((x) => x.name === matchedCommand.name) ||
-      parent.files().find((x) => x.name === "index") ||
-      flexi.empty();
+    matchedCommand = getParentCommand(matchedCommand);
   }
 
   return [matchedCommand, ...args];
 };
 
 /* eslint-disable import/no-dynamic-require,global-require,@typescript-eslint/no-var-requires */
+// eslint-disable-next-line security/detect-non-literal-require
 const requireContent = (path: FlexiPath): Command => require(path.path).default;
 /* eslint-enable import/no-dynamic-require,global-require,@typescript-eslint/no-var-requires */
 

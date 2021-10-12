@@ -9,7 +9,8 @@
     "plugin:jest/recommended"
   ],
   "globals": {
-    "NodeJS": true
+    "NodeJS": true,
+    "NodeModule": false
   },
   "parserOptions": {
     "ecmaVersion": 2018,
@@ -40,6 +41,7 @@
     "import/prefer-default-export": ["off"],
     "max-len": "off",
     "newline-per-chained-call": "off",
+    "no-console": "off",
     "no-nested-ternary": "error",
     "no-restricted-syntax": ["off", "ForOfStatement"],
     "no-undefined": "error",
