@@ -50,31 +50,25 @@ const initializeConfig = (
 };
 
 const createKey = async (pathToKeyFile: string, config: Partial<ConfigCreationData>): Promise<boolean> => {
-  const keyFileExists = flexi.path(pathToKeyFile).exists();
-  if (!config.createKeyFile || keyFileExists) {
-    return false;
-  }
-  // let createKeyFile = config.createKeyFile || false;
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  const keyFileExists = flexi.exists(pathToKeyFile);
 
-  // if (!keyFileExists && !createKeyFile) {
+  if (!config.createKeyFile || keyFileExists) {
+    return Promise.resolve(false);
+  }
+
   return line(
     `The key file "${pathToKeyFile}" does not exist. Do you want to create it?`,
     yes,
     PromptType.Confirm,
     yesNo
   );
-  // }
 };
 export const prompt = async (
   prefilledValues?: Partial<ConfigCreationData>,
   defaultValues?: Partial<ConfigCreationData>
 ): Promise<ConfigCreationData> => {
   const { initialValues, defaults } = initializeConfig(prefilledValues, defaultValues);
-  // const initialValues = prefilledValues || {};
-  // const defaults: ConfigCreationData = {
-  //   ...dataDefaults,
-  //   ...defaultValues
-  // };
 
   const host = await promptOrDisplayInitialValue("Router address", initialValues.host, defaults.host);
 
@@ -93,7 +87,7 @@ export const prompt = async (
     PromptType.Password
   );
 
-  const createKeyFile = await createKey(privateKey, initialValues);
+  const createKeyFile = await createKey(privateKey, defaults);
   const addKeyToAgent =
     initialValues.addKeyToAgent ||
     (await line<boolean>(

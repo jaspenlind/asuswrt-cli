@@ -64,7 +64,7 @@ describe("ssh", () => {
         setup();
 
         return prompt().then(() => {
-          expect(messages.find((x) => x.match("does not exist"))).toBeDefined();
+          expect(messages.some((x) => x.match("does not exist"))).toBeTrue();
         });
       });
 
@@ -74,7 +74,7 @@ describe("ssh", () => {
         setup();
 
         return prompt().then(() => {
-          expect(messages.find((x) => x.match("does not exist"))).toBeUndefined();
+          expect(messages.some((x) => x.match("does not exist"))).toBeFalse();
         });
       });
     });

@@ -9,7 +9,7 @@ export const generateSshKey = (data: ConfigCreationData): Promise<KeyGenCreation
       if (err) {
         console.log(chalk.red(err));
         reject(new Error(err));
-      } else if (out !== undefined) {
+      } else if (out) {
         console.log("SSH key was successfully generated.");
         resolve(out);
       }
