@@ -7,10 +7,10 @@ const { combine, align, printf, colorize } = format;
 const DEBUG_ARG = "--debug";
 const CATEGORY_ARG = "--log.category=";
 
-const isDebug = process.argv.filter(x => x === DEBUG_ARG).length > 0;
+const isDebug = process.argv.filter((x) => x === DEBUG_ARG).length > 0;
 const filterCategories = process.argv
-  .filter(x => x.startsWith(CATEGORY_ARG))
-  .map(x => x.substring(CATEGORY_ARG.length));
+  .filter((x) => x.startsWith(CATEGORY_ARG))
+  .map((x) => x.substring(CATEGORY_ARG.length));
 
 const createCategory = (loggerName: string, functionName = ""): string => {
   let category = loggerName;
@@ -37,7 +37,7 @@ const rootLogger = createLogger({
   format: combine(
     format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
     align(),
-    printf(info => {
+    printf((info) => {
       const { timestamp, level, message, category, meta } = info;
       const logLevel = `[${level}]`.padEnd(levelMinWidth);
       const logCategory = `[${category}]`.padEnd(categoryMinWidth);
@@ -99,7 +99,8 @@ const createModuleLogger = (module: NodeModule): Logger => {
   ): void => {
     const category = createCategory(name || "", options.functionName);
 
-    const categoryShouldBeLogged = filterCategories.length === 0 || filterCategories.find(x => category.startsWith(x));
+    const categoryShouldBeLogged =
+      filterCategories.length === 0 || filterCategories.find((x) => category.startsWith(x));
 
     if (!categoryShouldBeLogged || (!message && !options.meta)) {
       // Nothing to log

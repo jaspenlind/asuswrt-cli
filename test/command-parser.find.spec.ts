@@ -34,6 +34,7 @@ describe("commandParser", () => {
 
       expect(result.name).toBe(terminal);
       expect(result.fullName).toBe(terminal);
+      console.log(expect);
       expect(result.subCommands).toBeEmpty();
     });
 

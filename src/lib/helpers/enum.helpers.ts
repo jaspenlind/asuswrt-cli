@@ -8,19 +8,18 @@ export const parse = <T>(
   comparision = StringComparison.Ordinal
 ): ParseResult<T[keyof T]> => {
   const result: ParseResult<T[keyof T]> = {
-    hasValue: false,
-    value: undefined
+    hasValue: false
   };
 
-  const matchingKey = Object.keys(enumType).find(x =>
+  const matchingKey = Object.keys(enumType).find((x) =>
     comparision === StringComparison.OrdinalIgnoreCase ? x.toLowerCase() === value.toLowerCase() : x === value
   );
 
-  if (matchingKey !== undefined) {
+  if (typeof matchingKey !== "undefined") {
     result.value = enumType[matchingKey as keyof typeof enumType];
   }
 
-  result.hasValue = result.value !== undefined;
+  result.hasValue = typeof result.value !== "undefined";
 
   return result;
 };

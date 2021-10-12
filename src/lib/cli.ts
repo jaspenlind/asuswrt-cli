@@ -29,7 +29,7 @@ const showHelp = (command: CommandDeclaration, options: OptionMap) => {
 const runCommand = (command: CommandDeclaration, options: OptionMap) => {
   if (isHelp(command, options) || isEmpty(command)) return;
 
-  check(command).then(ok => {
+  check(command).then((ok) => {
     if (!ok) return;
 
     const message = [`Excuting: router ${chalk.bold(command.fullName)}`];

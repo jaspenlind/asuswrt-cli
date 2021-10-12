@@ -28,8 +28,8 @@ describe("arrayHelper", () => {
       expect(last(["first", "second", lastItem])).toBe(lastItem);
     });
 
-    it("should be undefined when array is empty", () => {
-      expect(last([])).toBeUndefined();
+    it("should be null when array is empty", () => {
+      expect(last([])).toBeNull();
     });
   });
 });

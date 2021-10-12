@@ -25,8 +25,8 @@ describe("help", () => {
 
     help(command);
 
-    const commands = messages.find(x => x.match("commands"));
-    const uptime = messages.find(x => x.match("uptime"));
+    const commands = messages.find((x) => x.match("commands"));
+    const uptime = messages.find((x) => x.match("uptime"));
 
     expect(commands).toBeDefined();
     expect(uptime).toBeDefined();
@@ -43,8 +43,8 @@ describe("help", () => {
 
     help(command);
 
-    const commands = messages.find(x => x.match("commands"));
-    const uptime = messages.find(x => x.match("uptime"));
+    const commands = messages.find((x) => x.match("commands"));
+    const uptime = messages.find((x) => x.match("uptime"));
 
     expect(commands).toBeUndefined();
     expect(uptime).toBeDefined();

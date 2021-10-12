@@ -21,11 +21,11 @@ export const list = (query?: Partial<NvramQuery>): string[][] => {
 
   const result = stdOut
     .split(/\n/)
-    .map(x => x.split("="))
-    .filter(x => x.length === 2)
+    .map((x) => x.split("="))
+    .filter((x) => x.length === 2)
     .sort();
 
-  return keyQuery ? result.filter(x => x[0].startsWith(keyQuery)) : result;
+  return keyQuery ? result.filter((x) => x[0].startsWith(keyQuery)) : result;
 };
 
 const run = (...args: string[]) => {

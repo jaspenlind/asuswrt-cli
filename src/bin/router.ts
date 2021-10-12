@@ -4,7 +4,7 @@ import logger from "../lib/logger";
 
 const routerLogger = logger.createLogger(module);
 
-process.once("uncaughtException", err => {
+process.once("uncaughtException", (err) => {
   routerLogger.error(err.stack);
 
   console.error(err.message);
@@ -12,10 +12,10 @@ process.once("uncaughtException", err => {
   process.exitCode = 2;
 });
 
-process.once("unhandledRejection", reason => {
+process.once("unhandledRejection", (reason) => {
   const err = reason as Error;
-  const message = (err && err.message) || "unhandled rejection";
-  const stack = (err && err.stack) || message;
+  const message = err?.message || "unhandled rejection";
+  const stack = err?.stack || message;
 
   const cancelled = message === "canceled";
 

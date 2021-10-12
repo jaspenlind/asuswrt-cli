@@ -5,7 +5,7 @@ describe("commandParser", () => {
     it("should have firewall command", () => {
       const result = commandParser()
         .all()
-        .find(x => x.name === "firewall");
+        .find((x) => x.name === "firewall");
 
       expect(result).toBeDefined();
     });
@@ -13,7 +13,7 @@ describe("commandParser", () => {
     it("should have info command", () => {
       const result = commandParser()
         .all()
-        .find(x => x.name === "info");
+        .find((x) => x.name === "info");
 
       expect(result).toBeDefined();
     });
@@ -21,7 +21,7 @@ describe("commandParser", () => {
     it("should have terminal command", () => {
       const result = commandParser()
         .all()
-        .find(x => x.name === "terminal");
+        .find((x) => x.name === "terminal");
 
       expect(result).toBeDefined();
     });

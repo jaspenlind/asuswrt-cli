@@ -13,12 +13,12 @@ export const isEmpty = <T>(array: NullableArray<T>): boolean => !any(array);
 export const firstOrDefault = <T>(array: NullableArray<T>, defaultValue: T | null = null): T | null =>
   (array && array[indeces.first]) || defaultValue;
 
-export const first = <T>(array: NullableArray<T>): T | undefined => firstOrDefault(array) || undefined;
+export const first = <T>(array: NullableArray<T>): T | null => firstOrDefault(array) || null;
 
 export const lastOrDefault = <T>(array: NullableArray<T>, defaultValue: T | null = null): T | null =>
   (array && array[array.length - indeces.lastIndexSubtrahend]) || defaultValue;
 
-export const last = <T>(array: NullableArray<T>): T | undefined => lastOrDefault(array) || undefined;
+export const last = <T>(array: NullableArray<T>): T | null => lastOrDefault(array) || null;
 
 export const takeWhile = <T>(array: T[], predicate: (item: T) => boolean): T[] => {
   const items: T[] = [];

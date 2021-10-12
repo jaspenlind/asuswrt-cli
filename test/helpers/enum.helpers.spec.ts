@@ -1,5 +1,6 @@
 import { parse, StringComparison } from "../../src/lib/helpers/enum.helpers";
 
+// eslint-disable-next-line no-shadow
 enum TestEnum {
   First,
   Second

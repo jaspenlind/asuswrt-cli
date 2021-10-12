@@ -4,14 +4,14 @@ import { takeWhile, takeWhileAll } from "../helpers/array.helpers";
 const idMarker = "#";
 
 const parseCronExpression = (row: string[]): [string, string[]] => {
-  const result = takeWhileAll(row, x => x.filter(z => z === " ").length < 5);
+  const result = takeWhileAll(row, (x) => x.filter((z) => z === " ").length < 5);
   const remainder = row.slice(result.length + 1);
 
   return [result.join("").trim(), remainder];
 };
 
 const parseCommand = (row: string[]): [string, string[]] => {
-  const result = takeWhile(row, x => x !== idMarker);
+  const result = takeWhile(row, (x) => x !== idMarker);
   const remainder = row.slice(result.length + 1);
 
   return [result.join("").trim(), remainder];

@@ -12,7 +12,7 @@ const description = "Lists existing cron jobs";
 const asTabular = (data: ScheduledItem[]): any[] => {
   if (isEmpty(data)) return [];
 
-  const tableValues = data.map(x => {
+  const tableValues = data.map((x) => {
     const values = Object.values(x);
     const expression = cron.parseExpression(x.cronExpression);
     values.push(expression.hasNext() ? expression.next() : "");
@@ -32,8 +32,8 @@ const run = () => {
 
   const parsed = result.stdout
     .split("\n")
-    .map(x => parse(x))
-    .filter(x => x.id);
+    .map((x) => parse(x))
+    .filter((x) => x.id);
 
   const tabularData = asTabular(parsed);
   console.log(parsed);

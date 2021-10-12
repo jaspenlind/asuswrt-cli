@@ -30,7 +30,7 @@ describe("ssh", () => {
         setup();
 
         return prompt().then(() => {
-          expect(messages.find(x => x.startsWith("Router address"))).toBeDefined();
+          expect(messages.find((x) => x.startsWith("Router address"))).toBeDefined();
         });
       });
 
@@ -38,7 +38,7 @@ describe("ssh", () => {
         setup();
 
         return prompt().then(() => {
-          expect(messages.find(x => x.startsWith("User name"))).toBeDefined();
+          expect(messages.find((x) => x.startsWith("User name"))).toBeDefined();
         });
       });
 
@@ -46,7 +46,7 @@ describe("ssh", () => {
         setup();
 
         return prompt().then(() => {
-          expect(messages.find(x => x.startsWith("SSH private key file"))).toBeDefined();
+          expect(messages.find((x) => x.startsWith("SSH private key file"))).toBeDefined();
         });
       });
 
@@ -54,7 +54,7 @@ describe("ssh", () => {
         setup();
 
         return prompt().then(() => {
-          expect(messages.find(x => x.startsWith("Passphrase"))).toBeDefined();
+          expect(messages.find((x) => x.startsWith("Passphrase"))).toBeDefined();
         });
       });
 
@@ -64,7 +64,7 @@ describe("ssh", () => {
         setup();
 
         return prompt().then(() => {
-          expect(messages.find(x => x.match("does not exist"))).toBeDefined();
+          expect(messages.find((x) => x.match("does not exist"))).toBeDefined();
         });
       });
 
@@ -74,7 +74,7 @@ describe("ssh", () => {
         setup();
 
         return prompt().then(() => {
-          expect(messages.find(x => x.match("does not exist"))).toBeUndefined();
+          expect(messages.find((x) => x.match("does not exist"))).toBeUndefined();
         });
       });
     });

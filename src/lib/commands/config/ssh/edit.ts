@@ -17,7 +17,7 @@ const run = (...args: string[]): void => {
   console.log(initialValues);
   const existingValues: Partial<ConfigCreationData> = get() || {};
 
-  prompt(initialValues, existingValues).then(config => proceed(config, { overwrite: true }));
+  prompt(initialValues, existingValues).then((config) => proceed(config, { overwrite: true }));
 };
 
 export default configCommand({ description, hint, run });

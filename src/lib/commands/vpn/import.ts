@@ -17,11 +17,11 @@ const run = async (...args: string[]) => {
 
   const country = filter.country || (await promptly.prompt("Country"));
 
-  const result = await vpn.fetch().then(response => response.items.filter(x => x.country === country));
+  const result = await vpn.fetch().then((response) => response.items.filter((x) => x.country === country));
 
-  const data = result.map(x => ({ ip: x.ip_address, name: x.name }));
+  const data = result.map((x) => ({ ip: x.ip_address, name: x.name }));
 
-  const tabular = data.map(x => {
+  const tabular = data.map((x) => {
     return Object.values(x);
   });
 

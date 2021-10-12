@@ -4,5 +4,5 @@
   "printWidth": 120,
   "singleQuote": false,
   "trailingComma": "none",
-  "arrowParens": "avoid"
+  "arrowParens": "always"
 }

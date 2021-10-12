@@ -10,8 +10,8 @@ const header = ["name", "ext. port", "int. port", "int. ip", "protocol", "src ip
 const run = () => {
   const rules = get("vts_rulelist")
     .split("<")
-    .map(x => x.split(">"))
-    .filter(x => x.length > 1);
+    .map((x) => x.split(">"))
+    .filter((x) => x.length > 1);
 
   if (rules.length === 0) {
     console.log("No nat rules has been configured");

@@ -5,9 +5,12 @@
     "plugin:@typescript-eslint/recommended",
     "prettier",
     "plugin:prettier/recommended",
-    "plugin:jest/recommended",
-    "plugin:security/recommended"
+    "plugin:security/recommended",
+    "plugin:jest/recommended"
   ],
+  "globals": {
+    "NodeJS": true
+  },
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module",
@@ -15,7 +18,7 @@
       "jsx": true
     }
   },
-  "plugins": ["@typescript-eslint", "jest", "react", "security"],
+  "plugins": ["@typescript-eslint", "jest", "security", "react"],
   "settings": {
     "react": {
       "version": "detect"
@@ -30,12 +33,16 @@
     "jest/globals": true
   },
   "rules": {
-    "no-shadow": "off",
-    "@typescript-eslint/no-shadow": ["error"],
-    "no-console": ["off"],
+    "arrow-parens": ["error", "always"],
+    "complexity": ["error", 4],
     "import/extensions": ["error", { "ts": "never" }],
     "import/prefer-default-export": ["off"],
+    "max-len": "off",
+    "newline-per-chained-call": "off",
+    "no-nested-ternary": "error",
     "no-restricted-syntax": ["off", "ForOfStatement"],
+    "no-undefined": "error",
+    "no-undef": "error",
     "@typescript-eslint/explicit-function-return-type": ["off"],
     "@typescript-eslint/explicit-member-accessibility": [
       "error",

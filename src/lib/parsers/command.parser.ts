@@ -11,7 +11,7 @@ const isHelp = (...args: string[]): boolean => {
   return (args.length > 0 && args[0] === "-h") || false;
 };
 
-const isDebug = (...args: string[]): boolean => args.filter(x => x === "--debug").length > 0;
+const isDebug = (...args: string[]): boolean => args.filter((x) => x === "--debug").length > 0;
 
 const isCommandRoot = (path: FlexiPath) => {
   const pathString = path.path.endsWith("/") ? path.path : `${path.path}/`;
@@ -41,8 +41,8 @@ const mostSpecificCommand = (path: FlexiPath): [FlexiPath, ...string[]] => {
   if (!matchedCommand.exists()) {
     const parent = matchedCommand.parent();
     matchedCommand =
-      parent.files().find(x => x.name === matchedCommand.name) ||
-      parent.files().find(x => x.name === "index") ||
+      parent.files().find((x) => x.name === matchedCommand.name) ||
+      parent.files().find((x) => x.name === "index") ||
       flexi.empty();
   }
 
@@ -53,7 +53,7 @@ const mostSpecificCommand = (path: FlexiPath): [FlexiPath, ...string[]] => {
 const requireContent = (path: FlexiPath): Command => require(path.path).default;
 /* eslint-enable import/no-dynamic-require,global-require,@typescript-eslint/no-var-requires */
 
-const withoutOptions = (...args: string[]): string[] => args.filter(x => !x.startsWith("-"));
+const withoutOptions = (...args: string[]): string[] => args.filter((x) => !x.startsWith("-"));
 
 const createCommand = (path: FlexiPath): CommandDeclaration => {
   const [commandPath, ...args] = mostSpecificCommand(path);
@@ -68,18 +68,18 @@ const createCommand = (path: FlexiPath): CommandDeclaration => {
     return declaration.empty;
   }
 
-  const trimmedPath = commandPath.except(rootCommandPath).parent(x => x.name !== "index");
+  const trimmedPath = commandPath.except(rootCommandPath).parent((x) => x.name !== "index");
 
   const { name } = trimmedPath;
   const fullName = trimmedPath
     .flatten()
-    .map(x => x.name)
+    .map((x) => x.name)
     .join(" ");
 
   const subCommands = commandPath
     .children()
-    .filter(x => x !== undefined && !x.isEmpty() && x.name !== "index")
-    .map(x => createCommand(x));
+    .filter((x) => !x.isEmpty() && x.name !== "index")
+    .map((x) => createCommand(x));
 
   const decl: CommandDeclaration = create({
     args,
@@ -96,8 +96,8 @@ const createCommand = (path: FlexiPath): CommandDeclaration => {
 const allCommands = (): CommandDeclaration[] => {
   return rootCommandPath
     .children()
-    .map(x => createCommand(x))
-    .filter(x => x !== declaration.empty);
+    .map((x) => createCommand(x))
+    .filter((x) => x !== declaration.empty);
 };
 
 const parse = (path: Path): CommandDeclaration => {

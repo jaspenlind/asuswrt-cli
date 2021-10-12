@@ -3,3 +3,4 @@
 **/coverage/*
 **/*.d.ts
 **/src/types/
+**/docs
