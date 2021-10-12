@@ -5,3 +5,7 @@ export const empty: ScheduledItem = {
   cronExpression: "* * * * *",
   command: ""
 };
+
+export default {
+  empty
+};

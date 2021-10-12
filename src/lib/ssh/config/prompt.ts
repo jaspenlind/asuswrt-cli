@@ -97,3 +97,5 @@ export const prompt = async (
 
   return result;
 };
+
+export default prompt;

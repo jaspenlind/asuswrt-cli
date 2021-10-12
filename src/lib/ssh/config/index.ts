@@ -5,6 +5,7 @@ import { empty, SshConfig } from "../../../models/sshConfig";
 
 // import prompt from "./prompt";
 
+export { addToSshAgent } from "./add-to-ssh-agent";
 export { check } from "./check";
 export { generateSshKey } from "./generate-ssh-key";
 export { prompt } from "./prompt";
@@ -30,7 +31,7 @@ export const set = (current: SshConfig, options?: { overwrite?: boolean }): Prom
   return new Promise<SshConfig>((resolve, reject) => {
     try {
       file = file.write(JSON.stringify(current, jsonProperties, 2), {
-        overwrite: options && options.overwrite
+        overwrite: options?.overwrite || false
       });
 
       resolve(get() || empty);

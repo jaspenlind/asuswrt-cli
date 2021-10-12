@@ -11,7 +11,7 @@ import { get } from "./config";
 export const download = (file: FlexiPath): FlexiPath => {
   const sshConfig = get() || empty;
 
-  const command = `scp -i ${sshConfig.privateKey} "${sshConfig.userName}@${sshConfig.host}:${
+  const command = `sudo scp -i ${sshConfig.privateKey} "${sshConfig.userName}@${sshConfig.host}:${
     file.path
   }" "${os.tmpdir()}/."`;
 

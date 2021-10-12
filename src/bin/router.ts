@@ -5,7 +5,7 @@ import logger from "../lib/logger";
 const routerLogger = logger.createLogger(module);
 
 process.once("uncaughtException", (err) => {
-  routerLogger.error(err.stack);
+  routerLogger.error(err.stack || err.message);
 
   console.error(err.message);
 

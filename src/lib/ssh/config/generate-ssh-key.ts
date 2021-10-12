@@ -20,3 +20,5 @@ export const generateSshKey = (data: ConfigCreationData): Promise<KeyGenCreation
 
   return promise;
 };
+
+export default generateSshKey;
