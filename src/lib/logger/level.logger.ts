@@ -23,7 +23,7 @@ export interface LogMethod {
 export const createLogger = (moduleLogger: winston.Logger, level: string, name?: string) => {
   return (message: string | Record<string, unknown>, source?: string): void => {
     const record = message as Record<string, string>;
-    const logMessage = typeof message === "string" ? (message as string) : name || "";
+    const logMessage = typeof message === "string" ? message : name || "";
     const category = createCategory(name || "", source);
 
     const filter = filterCategories();

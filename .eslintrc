@@ -30,7 +30,8 @@
     }
   },
   "env": {
-    "jest/globals": true
+    "jest/globals": true,
+    "node": true
   },
   "rules": {
     "arrow-parens": ["error", "always"],

@@ -19,8 +19,7 @@ export const create = (fields?: Partial<CommandDeclaration>): CommandDeclaration
     ...fields
   };
 
-  declaration.requires = (feature: CommandRequirement) =>
-    declaration.command.requirements.find((x) => x === feature) !== undefined;
+  declaration.requires = (feature: CommandRequirement) => declaration.command.requirements.some((x) => x === feature);
 
   return Object.freeze(declaration);
 };

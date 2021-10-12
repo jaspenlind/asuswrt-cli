@@ -3,6 +3,11 @@ import promptly from "promptly";
 import { CommandDeclaration, CommandRequirement, ConfigCreationData } from "../../../types";
 import { addToSshAgent, exists, generateSshKey, prompt, routerInfo, set } from ".";
 
+const runSetup = async (): Promise<boolean> =>
+  promptly.confirm("Router connection is not configured. Do you want to run the setup now? [Y/n]: ", {
+    default: "y"
+  });
+
 /**
  * @ignore
  */
@@ -23,21 +28,12 @@ export const proceed = async (config: ConfigCreationData, options?: { overwrite?
 };
 
 export const check = async (currentCommand?: CommandDeclaration): Promise<boolean> => {
-  const requiresConfig =
-    (currentCommand && currentCommand.requires(CommandRequirement.SshConfig)) || currentCommand === undefined;
+  const requiresConfig = currentCommand?.requires(CommandRequirement.SshConfig);
 
   if (exists() || !requiresConfig) {
     return true;
   }
-
-  const runSetup = await promptly.confirm(
-    "Router connection is not configured. Do you want to run the setup now? [Y/n]: ",
-    {
-      default: "y"
-    }
-  );
-
-  if (!runSetup) {
+  if (!(await runSetup())) {
     return false;
   }
 

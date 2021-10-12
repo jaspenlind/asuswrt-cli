@@ -5,8 +5,8 @@ const levelMinWidth = 9;
 const categoryMinWidth = 40;
 
 const createMeta = (meta: Record<string, string>): string => {
-  if (meta && Object.keys(meta).length && Object.keys(meta).length > 0) {
-    return `\n${JSON.stringify(meta, (key, value) => value || null, 2)}`;
+  if (Object.keys(meta).length > 0) {
+    return `\n${JSON.stringify(meta, (_, value) => value || null, 2)}`;
   }
 
   return (meta && `=${meta}`) || "";
