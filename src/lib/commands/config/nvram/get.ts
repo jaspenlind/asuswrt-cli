@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import { parse } from "args-any";
 import promptly from "promptly";
-import { execute } from "../../../ssh";
 import { merlinCommand } from "../../../../models/command";
+import { execute } from "../../../ssh";
 
 const description = "Fetches a nvram config setting";
 const hint = "[-key <name of nvram key to fetch>";

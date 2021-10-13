@@ -1,6 +1,6 @@
 import promptly from "promptly";
-import { execute } from "../../ssh";
 import { create } from "../../../models/command";
+import { execute } from "../../ssh";
 
 const description = "Removes a cron job";
 

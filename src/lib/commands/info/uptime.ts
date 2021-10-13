@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import { execute } from "../../ssh";
 import { merlinCommand } from "../../../models/command";
+import { execute } from "../../ssh";
 
 const description = "Display router uptime";
 

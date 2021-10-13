@@ -1,8 +1,8 @@
+import { parse } from "args-any";
 import flexi from "flexi-path";
 import { homedir } from "os";
-import { parse } from "args-any";
-import { ConfigCreationData } from "../types";
 import sshConfig from "./sshConfig";
+import { ConfigCreationData } from "../types";
 
 // export { ConfigCreationData };
 

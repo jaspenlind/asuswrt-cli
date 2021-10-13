@@ -35,17 +35,6 @@
     "node": true
   },
   "rules": {
-    "arrow-parens": ["error", "always"],
-    "complexity": ["error", 4],
-    "import/extensions": ["error", { "ts": "never" }],
-    "import/prefer-default-export": ["off"],
-    "max-len": "off",
-    "newline-per-chained-call": "off",
-    "no-console": "off",
-    "no-nested-ternary": "error",
-    "no-restricted-syntax": ["off", "ForOfStatement"],
-    "no-undefined": "error",
-    "no-undef": "error",
     "@typescript-eslint/explicit-function-return-type": ["off"],
     "@typescript-eslint/explicit-member-accessibility": [
       "error",
@@ -56,6 +45,38 @@
         }
       }
     ],
+    "arrow-parens": ["error", "always"],
+    "complexity": ["error", 4],
+    "import/extensions": ["error", { "ts": "never" }],
+    "import/order": [
+      1,
+      {
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "groups": ["external", "builtin", "internal", "sibling", "parent", "index"],
+        "pathGroups": [
+                  { "pattern": "components", "group": "internal" },
+                  { "pattern": "common", "group": "internal" },
+                  { "pattern": "routes/**", "group": "internal" },
+                  { "pattern": "assets/**", "group": "internal", "position": "after" }
+                ],
+        "pathGroupsExcludedImportTypes": ["internal"]
+      }],
+    "import/prefer-default-export": ["off"],
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error",
+    "max-len": "off",
+    "newline-per-chained-call": "off",
+    "no-console": "off",
+    "no-nested-ternary": "error",
+    "no-restricted-syntax": ["off", "ForOfStatement"],
+    "no-undefined": "error",
+    "no-undef": "error",
     "react/no-unescaped-entities": [
       "error",
       {
@@ -65,10 +86,6 @@
         ]
       }
     ],
-    "jest/no-disabled-tests": "warn",
-    "jest/no-focused-tests": "error",
-    "jest/no-identical-title": "error",
-    "jest/prefer-to-have-length": "warn",
-    "jest/valid-expect": "error"
+    "sort-imports": ["warn", { "ignoreCase": true, "ignoreDeclarationSort": true }]
   }
 }

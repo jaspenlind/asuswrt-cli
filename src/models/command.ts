@@ -1,5 +1,5 @@
-import { Command, CommandRequirement } from "../types";
 import { distinct } from "../lib/helpers/array.helpers";
+import { Command, CommandRequirement } from "../types";
 
 export { Command, CommandRequirement };
 

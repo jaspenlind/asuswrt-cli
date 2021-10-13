@@ -1,5 +1,5 @@
-import configCreationData from "../../../../models/config-creation-data";
 import { configCommand } from "../../../../models/command";
+import configCreationData from "../../../../models/config-creation-data";
 import { ConfigCreationData, get, prompt } from "../../../ssh/config";
 import { proceed } from "../../../ssh/config/check";
 

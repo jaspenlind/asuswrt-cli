@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import chalk from "chalk";
-import { CommandDeclaration, empty } from "../models/command-declaration";
 import parser from "./parsers/command.parser";
+import { CommandDeclaration, empty } from "../models/command-declaration";
 
 // const logger = moduleLogger.createLogger(module);
 const isRoot = (command?: CommandDeclaration) => typeof command === "undefined" || command === empty;

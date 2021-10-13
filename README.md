@@ -3,7 +3,7 @@
 ASUS Router CLI
 
 [![Build Status](https://travis-ci.com/jaspenlind/asuswrt-cli.svg)](https://travis-ci.com/jaspenlind/asuswrt-cli)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/93451c5afd954bd0a56d2417d2dbe301)](https://www.codacy.com/manual/jaspenlind/asuswrt-cli?utm_source=github.com&utm_medium=referral&utm_content=jaspenlind/asuswrt-cli&utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/93451c5afd954bd0a56d2417d2dbe301)](https://www.codacy.com/gh/jaspenlind/asuswrt-cli/dashboard?utm_source=github.com&utm_medium=referral&utm_content=jaspenlind/asuswrt-cli&utm_campaign=Badge_Grade)
 ![GitHub top language](https://img.shields.io/github/languages/top/jaspenlind/asuswrt-cli)
 [![Coverage Status](https://coveralls.io/repos/jaspenlind/asuswrt-cli/badge.svg)](https://coveralls.io/r/jaspenlind/asuswrt-cli)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)

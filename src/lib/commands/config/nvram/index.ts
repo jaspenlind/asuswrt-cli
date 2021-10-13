@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 import { parse } from "args-any";
 import { table } from "table";
-// import { get } from "./get";
-import { execute } from "../../../ssh";
 import { merlinCommand } from "../../../../models/command";
+import { execute } from "../../../ssh";
 
 const description = "lists nvram config";
 const hint = "[-filter.key <key starts with>]";

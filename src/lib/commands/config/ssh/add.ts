@@ -1,10 +1,10 @@
 import promptly from "promptly";
-import { exists, prompt } from "../../../ssh/config";
 
-import { configCommand } from "../../../../models/command";
-import { ConfigCreationData } from "../../../../types";
 import edit from "./edit";
+import { configCommand } from "../../../../models/command";
 import { fromArgs } from "../../../../models/config-creation-data";
+import { ConfigCreationData } from "../../../../types";
+import { exists, prompt } from "../../../ssh/config";
 import { proceed } from "../../../ssh/config/check";
 
 const description = "Creates new SSH configuration";

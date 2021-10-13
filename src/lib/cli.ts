@@ -1,12 +1,13 @@
 #!/usr/bin/env node
-import chalk from "chalk";
 import { OptionMap, parse } from "args-any";
-import { any } from "./helpers/array.helpers";
-import declaration, { CommandDeclaration } from "../models/command-declaration";
-import header from "../resources/header";
+import chalk from "chalk";
+
 import help from "./help";
+import { any } from "./helpers/array.helpers";
 import commandParser from "./parsers/command.parser";
 import { check } from "./ssh/config";
+import declaration, { CommandDeclaration } from "../models/command-declaration";
+import header from "../resources/header";
 
 const hasDebug = (options: OptionMap) => options.has("debug");
 const hasHelp = (options: OptionMap) => options.has("h") || options.has("help");

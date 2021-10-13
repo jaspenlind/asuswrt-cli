@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-import os from "os";
 import flexi, { FlexiPath } from "flexi-path";
-import { ExecOptions, ExecResult } from "../../types";
-import { empty } from "../../models/sshConfig";
 // eslint-disable-next-line import/order
 import sh = require("shelljs");
+import os from "os";
 import { get } from "./config";
+import { empty } from "../../models/sshConfig";
+import { ExecOptions, ExecResult } from "../../types";
 // import config = require("./config");
 
 export const download = (file: FlexiPath): FlexiPath => {

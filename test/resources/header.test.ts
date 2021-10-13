@@ -1,5 +1,5 @@
-import header from "../../src/resources/header";
 import { version } from "../../package.json";
+import header from "../../src/resources/header";
 
 describe("header", () => {
   it("can read header", () => {

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 import { create } from "../../../models/command";
 import { execute, executeInTerminal } from "../../ssh";
 

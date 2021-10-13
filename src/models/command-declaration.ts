@@ -1,5 +1,5 @@
-import { Command, CommandDeclaration, CommandRequirement } from "../types";
 import command from "./command";
+import { Command, CommandDeclaration, CommandRequirement } from "../types";
 
 export { Command, CommandDeclaration };
 

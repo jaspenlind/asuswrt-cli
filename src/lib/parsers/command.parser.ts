@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-import flexi, { FlexiPath, Path, until } from "flexi-path";
 import argsAny from "args-any";
-import { CommandParser } from "../../types";
+import flexi, { FlexiPath, Path, until } from "flexi-path";
 import command, { Command } from "../../models/command";
 import declaration, { CommandDeclaration, create } from "../../models/command-declaration";
+import { CommandParser } from "../../types";
 
 const rootCommandPath = flexi.path(__dirname).parent().append("commands/");
 

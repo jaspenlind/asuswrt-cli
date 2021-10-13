@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { table } from "table";
-import { get } from "../../../config/nvram";
 import { merlinCommand } from "../../../../../models/command";
+import { get } from "../../../config/nvram";
 
 const description = "NAT rules";
 

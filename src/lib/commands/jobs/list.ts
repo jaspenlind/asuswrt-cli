@@ -1,10 +1,10 @@
 import cron from "cron-parser";
 import { table } from "table";
-import { isEmpty } from "../../helpers/array.helpers";
+import { create } from "../../../models/command";
 import { ScheduledItem } from "../../../types";
+import { isEmpty } from "../../helpers/array.helpers";
 import { parse } from "../../parsers/scheduled-item.parser";
 import { execute } from "../../ssh";
-import { create } from "../../../models/command";
 
 const description = "Lists existing cron jobs";
 

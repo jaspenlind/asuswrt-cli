@@ -1,7 +1,7 @@
 import { parse } from "args-any";
+import vpn from "nordvpn-server-lister";
 import promptly from "promptly";
 import { table } from "table";
-import vpn from "nordvpn-server-lister";
 
 import { skynetCommand } from "../../../models/command";
 
