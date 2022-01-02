@@ -25,7 +25,7 @@ const description = "Transfers the firewall log";
 
 // TODO: Parameterize sda1 folder
 const run = (): void => {
-  const log = flexi.path("/tmp/mnt/sda1/skynet/skynet.log");
+  const log = flexi.path("/tmp/mnt/SANDISK/skynet/skynet.log");
 
   const downloadedFile = download(log);
 

@@ -1,6 +1,6 @@
 import { PromptBody, PromptType } from "../../../types";
 // eslint-disable-next-line import/order
-import promptly = require("promptly");
+import * as promptly from "promptly";
 
 export const promptTypes = new Map<PromptType, PromptBody>([
   [PromptType.Text, promptly.prompt],

@@ -1,10 +1,32 @@
+// {
+//   "compilerOptions": {
+//     "module": "commonjs",
+//     "esModuleInterop": true,
+//     "experimentalDecorators": true,
+//     "allowSyntheticDefaultImports": true,
+//     "target": "es2019",
+//     "noImplicitAny": true,
+//     "importHelpers": true,
+//     "moduleResolution": "node",
+//     "sourceMap": true,
+//     "outDir": "dist",
+//     "baseUrl": ".",
+//     "resolveJsonModule": true,
+//     "strict": true,
+//     "declaration": true,
+//     "paths": {
+//       "*": ["src/types/*", "*"]
+//     }
+//   },
+//   "include": ["src/**/*", "test/**/*"]
+// }
 {
   "compilerOptions": {
+    "lib": ["es2020"],
     "module": "commonjs",
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
     "target": "es2019",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "importHelpers": true,
     "moduleResolution": "node",
@@ -16,7 +38,8 @@
     "declaration": true,
     "paths": {
       "*": ["src/types/*", "*"]
-    }
+    },
   },
+  "files": ["src/types/global.d.ts"],
   "include": ["src/**/*", "test/**/*"]
 }

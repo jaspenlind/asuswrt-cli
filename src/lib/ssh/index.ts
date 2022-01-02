@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import flexi, { FlexiPath } from "flexi-path";
 // eslint-disable-next-line import/order
-import sh = require("shelljs");
+import * as sh from "shelljs";
 import os from "os";
 import { get } from "./config";
 import { empty } from "../../models/sshConfig";
@@ -11,7 +11,7 @@ import { ExecOptions, ExecResult } from "../../types";
 export const download = (file: FlexiPath): FlexiPath => {
   const sshConfig = get() || empty;
 
-  const command = `sudo scp -i ${sshConfig.privateKey} "${sshConfig.userName}@${sshConfig.host}:${
+  const command = `scp -i ${sshConfig.privateKey} "${sshConfig.userName}@${sshConfig.host}:${
     file.path
   }" "${os.tmpdir()}/."`;
 
