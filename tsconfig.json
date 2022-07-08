@@ -1,45 +1,21 @@
-// {
-//   "compilerOptions": {
-//     "module": "commonjs",
-//     "esModuleInterop": true,
-//     "experimentalDecorators": true,
-//     "allowSyntheticDefaultImports": true,
-//     "target": "es2019",
-//     "noImplicitAny": true,
-//     "importHelpers": true,
-//     "moduleResolution": "node",
-//     "sourceMap": true,
-//     "outDir": "dist",
-//     "baseUrl": ".",
-//     "resolveJsonModule": true,
-//     "strict": true,
-//     "declaration": true,
-//     "paths": {
-//       "*": ["src/types/*", "*"]
-//     }
-//   },
-//   "include": ["src/**/*", "test/**/*"]
-// }
 {
   "compilerOptions": {
-    "lib": ["es2020"],
-    "module": "commonjs",
-    "target": "es2019",
+    "lib": ["es2019", "es2020.promise", "es2020.bigint", "es2020.string"],
+    "module": "esnext",
+    "moduleResolution":"nodenext", // vs node? default import?
+    "target": "es2020",
+    "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "noImplicitAny": true,
-    "importHelpers": true,
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "outDir": "dist",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
-    "resolveJsonModule": true,
-    "strict": true,
-    "declaration": true,
     "paths": {
       "*": ["src/types/*", "*"]
     },
+    "outDir": "dist"
   },
-  "files": ["src/types/global.d.ts"],
-  "include": ["src/**/*", "test/**/*"]
+  "ts-node": {
+    "esm": true
+  }
 }

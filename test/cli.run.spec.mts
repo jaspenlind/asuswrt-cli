@@ -1,0 +1,83 @@
+import { run } from "../src/lib/cli.mjs";
+// import { config } from "../src/lib/ssh";
+
+/* eslint-disable */
+const command = require("../src/lib/commands/info/uptime");
+const header = require("../src/resources/header");
+const help = require("../src/lib/help");
+/* eslint-enable */
+
+beforeEach(() => {
+  header.default = jest.fn();
+  help.default = jest.fn();
+});
+
+afterEach(() => {
+  jest.restoreAllMocks();
+});
+
+describe("cli", () => {
+  describe("run", () => {
+    it("should show header", async () => {
+      console.error = jest.fn();
+      await run();
+
+      expect(header.default).toHaveBeenCalled();
+    });
+
+    it("should show help when help option specified", async () => {
+      await run("-h");
+
+      expect(help.default).toHaveBeenCalled();
+    });
+
+    it("should show help when no command specified", async () => {
+      await run();
+
+      expect(help.default).toHaveBeenCalled();
+    });
+
+    it("should show error when invalid command specified", async () => {
+      const spy = jest.spyOn(console, "error").mockImplementation();
+
+      await run("invalid");
+
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it("should show help when invalid command specified", async () => {
+      const spy = jest.spyOn(help, "default").mockImplementation();
+
+      await run("invalid");
+
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it.todo("should check config when valid command specified");
+    // it("should check config when valid command specified", () => {
+    //   command.default = { run: jest.fn() };
+    //   config.check = jest.fn(() => Promise.resolve(true));
+
+    //   cli.run("info", "uptime");
+
+    //   expect(config.check).toHaveBeenCalled();
+    // });
+
+    // eslint-disable-next-line jest/expect-expect
+    it.todo("should run command when config check is ok");
+    it.todo("should show error when config check not ok");
+
+    // it("should show error when config check not ok", () => {
+    //   const spy = jest.spyOn(console, "log").mockImplementation();
+
+    //   config.check = jest.fn(() => Promise.reject(new Error("error")));
+
+    //   cli.run("info", "uptime");
+
+    //   expect(spy).toHaveBeenCalled();
+    // });
+
+    // eslint-disable-next-line jest/expect-expect
+    it.todo("should not run command when config check is not ok");
+  });
+});

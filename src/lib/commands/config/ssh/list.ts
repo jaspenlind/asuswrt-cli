@@ -1,7 +1,7 @@
 import chalk from "chalk";
-import flexi from "flexi-path";
-import { configCommand } from "../../../../models/command";
-import { get, SshConfig } from "../../../ssh/config";
+import { flexi } from "flexi-path";
+import { configCommand } from "../../../../models/command.mjs";
+import { get, SshConfig } from "../../../ssh/config/index.mjs";
 
 interface ConfigOptions extends SshConfig {
   keyFileExists: boolean;

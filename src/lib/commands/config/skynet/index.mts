@@ -1,5 +1,5 @@
 import { create } from "../../../../models/command.mjs";
 
-const description = "Installs the firewall on the router";
+const description = "Skynet firewall config commands";
 
 export default create({ description });
