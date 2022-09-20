@@ -2,7 +2,7 @@ import { ParseResult, StringComparison } from "../../types";
 
 export { StringComparison };
 
-export const parse = <T>(
+export const parse = <T extends object>(
   enumType: T,
   value: string,
   comparision = StringComparison.Ordinal
