@@ -7,7 +7,7 @@ module.exports = {
   modulePathIgnorePatterns: ["<rootDir>/dist/"],
   preset: "ts-jest",
   roots: ["<rootDir>/src", "<rootDir>/test"],
-  setupFilesAfterEnv: ["jest-extended"],
+  setupFilesAfterEnv: ["jest-extended/all"],
   testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
   transform: {
     "^.+\\.tsx?$": "ts-jest"
