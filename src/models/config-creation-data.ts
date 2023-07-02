@@ -18,8 +18,8 @@ export const empty = (): ConfigCreationData =>
 
 export const defaults: ConfigCreationData = {
   host: "192.168.1.1",
-  userName: "admin",
-  privateKey: flexi.path(homedir()).append(".ssh/id_rsa").path,
+  user: "admin",
+  privateKeyFile: flexi.path(homedir()).append(".ssh/id_rsa").path,
   passPhrase: "",
   createKeyFile: true,
   addKeyToAgent: true

@@ -72,12 +72,12 @@ export const prompt = async (
 
   const host = await promptOrDisplayInitialValue("Router address", initialValues.host, defaults.host);
 
-  const userName = await promptOrDisplayInitialValue("User name", initialValues.userName, defaults.userName);
+  const userName = await promptOrDisplayInitialValue("User name", initialValues.user, defaults.user);
 
   const privateKey = await promptOrDisplayInitialValue(
     "SSH private key file",
-    initialValues.privateKey,
-    defaults.privateKey
+    initialValues.privateKeyFile,
+    defaults.privateKeyFile
   );
 
   const passPhrase = await promptOrDisplayInitialValue(
@@ -102,8 +102,8 @@ export const prompt = async (
     createKeyFile,
     host,
     passPhrase,
-    privateKey,
-    userName
+    privateKeyFile: privateKey,
+    user: userName
   };
 
   return result;

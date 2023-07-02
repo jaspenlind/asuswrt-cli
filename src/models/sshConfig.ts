@@ -4,8 +4,8 @@ export { SshConfig };
 
 export const empty: SshConfig = Object.freeze({
   host: "",
-  privateKey: "",
-  userName: ""
+  privateKeyFile: "",
+  user: ""
 });
 
 export const create = (fields?: Partial<SshConfig>): SshConfig => ({

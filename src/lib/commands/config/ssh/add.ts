@@ -18,13 +18,11 @@ const hint = `[-host <name or IP of the router>]
 
 const run = (...args: string[]): void => {
   if (exists()) {
-    promptly
-      .confirm("SSH configuration does already exist. Do you want to update instead? [y/N]: ")
-      .then((response) => {
-        if (response) {
-          edit.run(...args);
-        }
-      });
+    promptly.confirm("SSH configuration already exists. Do you want to update instead? [y/N]: ").then((response) => {
+      if (response) {
+        edit.run(...args);
+      }
+    });
 
     return;
   }

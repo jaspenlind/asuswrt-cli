@@ -19,7 +19,7 @@ const run = (): void => {
   }
 
   // eslint-disable-next-line security/detect-non-literal-fs-filename
-  const keyFileExists = flexi.exists(currentConfig.privateKey);
+  const keyFileExists = flexi.exists(currentConfig.privateKeyFile);
   const keyFileAddedToAgent = false;
 
   const result: ConfigOptions = {

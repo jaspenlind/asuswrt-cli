@@ -5,7 +5,7 @@ import { ConfigCreationData } from "../../../types";
 
 export const generateSshKey = (data: ConfigCreationData): Promise<KeyGenCreationData> => {
   const promise = new Promise<KeyGenCreationData>((resolve, reject) => {
-    keygen({ location: data.privateKey, password: data.passPhrase }, (err, out) => {
+    keygen({ location: data.privateKeyFile, password: data.passPhrase }, (err, out) => {
       if (err) {
         console.log(chalk.red(err));
         reject(new Error(err));

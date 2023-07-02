@@ -40,12 +40,3 @@ export const set = (current: SshConfig, options?: { overwrite?: boolean }): Prom
     }
   });
 };
-
-// export default {
-//   check,
-//   exists,
-//   generateSshKey,
-//   get,
-//   prompt,
-//   set
-// };

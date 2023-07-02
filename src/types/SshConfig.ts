@@ -1,5 +1,6 @@
 export default interface SshConfig {
   host: string;
-  userName: string;
-  privateKey: string;
+  user: string;
+  privateKeyFile: string;
+  passphrase?: string;
 }
