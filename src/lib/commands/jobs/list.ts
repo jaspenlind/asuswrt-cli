@@ -1,10 +1,10 @@
-import cron from "cron-parser";
 import { table } from "table";
 import { create } from "../../../models/command";
 import { ScheduledItem } from "../../../types";
 import { isEmpty } from "../../helpers/array.helpers";
+import { tryParseExpression } from "../../helpers/cron.helpers";
 import { parse } from "../../parsers/scheduled-item.parser";
-import { execute } from "../../ssh";
+import { createSSH } from "../../ssh";
 
 const description = "Lists existing cron jobs";
 
@@ -13,13 +13,17 @@ const asTabular = (data: ScheduledItem[]): any[] => {
   if (isEmpty(data)) return [];
 
   const tableValues = data.map((x) => {
+    const { expression } = tryParseExpression(x.cronExpression);
+
     const values = Object.values(x);
-    const expression = cron.parseExpression(x.cronExpression);
-    values.push(expression.hasNext() ? expression.next() : "");
+
+    values.push(expression?.hasNext() ? expression?.next() : "");
+
     return values;
   });
 
   const headings = Object.getOwnPropertyNames(data[0]);
+
   headings.push("next run");
 
   tableValues.unshift(headings);
@@ -27,17 +31,23 @@ const asTabular = (data: ScheduledItem[]): any[] => {
   return tableValues;
 };
 
-const run = () => {
-  const result = execute("cru l", { silent: true });
+const getJobList = () => {
+  const ssh = createSSH();
 
-  const parsed = result.stdout
+  return new Promise<string>((resolve, reject) => {
+    ssh.exec("cru l", { out: (stdOut) => resolve(stdOut), err: (stdErr) => reject(stdErr) }).start();
+  });
+};
+
+const run = async () => {
+  const result = await getJobList();
+
+  const parsed = result
     .split("\n")
-    .map((x) => parse(x))
+    .map(parse)
     .filter((x) => x.id);
 
-  const tabularData = asTabular(parsed);
-  console.log(parsed);
-  console.log(table(tabularData));
+  console.log(table(asTabular(parsed)));
 };
 
 export default create({ description, run });
